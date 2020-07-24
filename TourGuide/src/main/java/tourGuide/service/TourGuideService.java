@@ -66,7 +66,7 @@ public class TourGuideService {
 	// TODO OBA (In progress)  - getAllUsersCurrentLocation
 
 	/**
-	 * Method to get the last location for all user
+	 * Method to get the last location for all users
 	 * @return al list of UserCurrentLocation
 	 */
 	public List<UserCurrentLocation> getAllUsersCurrentLocation () {
@@ -102,7 +102,6 @@ public class TourGuideService {
 	}
 	
 	public VisitedLocation trackUserLocation(User user) {
-		logger.debug("======> trackUserLocation :" + user.getUserId());
 		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);

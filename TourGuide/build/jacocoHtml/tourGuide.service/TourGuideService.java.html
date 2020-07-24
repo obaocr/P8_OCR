@@ -105,8 +105,8 @@ public class TourGuideService {
 <span class="fc" id="L105">		logger.debug(&quot;======&gt; trackUserLocation :&quot; + user.getUserId());</span>
 <span class="fc" id="L106">		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());</span>
 <span class="fc" id="L107">		user.addToVisitedLocations(visitedLocation);</span>
-<span class="nc" id="L108">		rewardsService.calculateRewards(user);</span>
-<span class="nc" id="L109">		return visitedLocation;</span>
+<span class="fc" id="L108">		rewardsService.calculateRewards(user);</span>
+<span class="fc" id="L109">		return visitedLocation;</span>
 	}
 
 	public List&lt;Attraction&gt; getNearByAttractions(VisitedLocation visitedLocation) {

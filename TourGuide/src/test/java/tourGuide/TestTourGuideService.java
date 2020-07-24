@@ -36,13 +36,15 @@ public class TestTourGuideService {
 
 	// TODO OBA - Tests getAllUsersCurrentLocation
 	// TODO OBA -  Tester plus finement ... par exemple les résultats attendus comme les UserName.. et que la location ne soit pas vide ...
+	// TODO A voir pour mocker ?
 	@Test
 	public void getAllUsersCurrentLocationShouldReturnUsersLocations() {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
-		InternalTestHelper.setInternalUserNumber(5);
+		InternalTestHelper.setInternalUserNumber(55);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
-		assertTrue(tourGuideService.getAllUsersCurrentLocation().size() == 5);
+		tourGuideService.tracker.stopTracking();
+		assertTrue(tourGuideService.getAllUsersCurrentLocation().size() == 55);
 	}
 	
 	@Test
