@@ -54,6 +54,7 @@ import tripPricer.Provider;
     @RequestMapping(&quot;/getAllCurrentLocations&quot;)
     public String getAllCurrentLocations() {
     	// TODO: Get a list of every user's most recent location as JSON
+        // TODO OBA - In progress
     	//- Note: does not use gpsUtil to query for their current location, 
     	//        but rather gathers the user's current location from their stored location history.
     	//
@@ -63,17 +64,17 @@ import tripPricer.Provider;
     	//        ...
     	//     }
     	
-<span class="nc" id="L66">    	return JsonStream.serialize(&quot;&quot;);</span>
+<span class="nc" id="L67">    	return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());</span>
     }
     
     @RequestMapping(&quot;/getTripDeals&quot;)
     public String getTripDeals(@RequestParam String userName) {
-<span class="nc" id="L71">    	List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
-<span class="nc" id="L72">    	return JsonStream.serialize(providers);</span>
+<span class="nc" id="L72">    	List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
+<span class="nc" id="L73">    	return JsonStream.serialize(providers);</span>
     }
     
     private User getUser(String userName) {
-<span class="nc" id="L76">    	return tourGuideService.getUser(userName);</span>
+<span class="nc" id="L77">    	return tourGuideService.getUser(userName);</span>
     }
    
 

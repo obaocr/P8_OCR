@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestTourGuideService" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-07-24T13:30:22" hostname="DESKTOP-KCJMAHV" time="0.327">
+  <properties/>
+  <testcase name="getAllUsersCurrentLocationShouldReturnUsersLocations" classname="tourGuide.TestTourGuideService" time="0.327"/>
+  <system-out><![CDATA[15:30:22.183 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+15:30:22.193 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+15:30:22.362 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 5 internal test users.
+15:30:22.362 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+]]></system-out>
+  <system-err><![CDATA[Jul 24, 2020 3:30:22 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
+INFO: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
+]]></system-err>
+</testsuite>

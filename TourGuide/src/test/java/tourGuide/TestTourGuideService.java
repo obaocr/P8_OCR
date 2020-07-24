@@ -33,6 +33,17 @@ public class TestTourGuideService {
 		tourGuideService.tracker.stopTracking();
 		assertTrue(visitedLocation.userId.equals(user.getUserId()));
 	}
+
+	// TODO OBA - Tests getAllUsersCurrentLocation
+	// TODO OBA -  Tester plus finement ... par exemple les résultats attendus comme les UserName.. et que la location ne soit pas vide ...
+	@Test
+	public void getAllUsersCurrentLocationShouldReturnUsersLocations() {
+		GpsUtil gpsUtil = new GpsUtil();
+		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
+		InternalTestHelper.setInternalUserNumber(5);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+		assertTrue(tourGuideService.getAllUsersCurrentLocation().size() == 5);
+	}
 	
 	@Test
 	public void addUser() {
@@ -109,7 +120,9 @@ public class TestTourGuideService {
 		
 		assertEquals(5, attractions.size());
 	}
-	
+
+	// TODO OBA => à voir, pas d'annotations / j'ai ajouté ?
+	@Test
 	public void getTripDeals() {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());

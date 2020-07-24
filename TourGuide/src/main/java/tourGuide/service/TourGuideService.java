@@ -14,6 +14,7 @@ import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import tourGuide.Model.UserCurrentLocation;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
@@ -29,9 +30,14 @@ public class TourGuideService {
 	private final TripPricer tripPricer = new TripPricer();
 	public final Tracker tracker;
 	boolean testMode = true;
-	
+
+	/**
+	 * TourGuideService constructor
+	 * @param gpsUtil
+	 * @param rewardsService
+	 */
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
-		// Ajout pour probleme crash selon locale FR
+		// Set Locale to "US" to fix the crash of the gpsUtil JAR ...
 		Locale.setDefault(Locale.US);
 		this.gpsUtil = gpsUtil;
 		this.rewardsService = rewardsService;
@@ -56,7 +62,23 @@ public class TourGuideService {
 			trackUserLocation(user);
 		return visitedLocation;
 	}
-	
+
+	// TODO OBA (In progress)  - getAllUsersCurrentLocation
+
+	/**
+	 * Method to get the last location for all user
+	 * @return al list of UserCurrentLocation
+	 */
+	public List<UserCurrentLocation> getAllUsersCurrentLocation () {
+		List<UserCurrentLocation> userCurrentLocations = new ArrayList<>();
+		for (User u : internalUserMap.values()) {
+			if (u.getVisitedLocations().size() > 0) {
+				userCurrentLocations.add(new UserCurrentLocation(u.getUserName(), u.getLastVisitedLocation().location));
+			}
+		}
+		return  userCurrentLocations;
+	}
+
 	public User getUser(String userName) {
 		return internalUserMap.get(userName);
 	}
