@@ -108,6 +108,7 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
+	// TODO a corriger les 5 attractions les plus proches
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 		for(Attraction attraction : gpsUtil.getAttractions()) {
