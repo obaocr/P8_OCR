@@ -15,7 +15,7 @@ import tourGuide.user.User;
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
 	// TODO OBA set to seconds for the development
-	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(300);
+	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(15);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;

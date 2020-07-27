@@ -14,6 +14,7 @@ import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import tourGuide.Model.AttractionResponse;
 import tourGuide.Model.UserCurrentLocation;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
@@ -109,15 +110,35 @@ public class TourGuideService {
 	}
 
 	// TODO a corriger les 5 attractions les plus proches
-	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
+	// TODO A voir si ça devient obsolete
+	/*public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 		for(Attraction attraction : gpsUtil.getAttractions()) {
 			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
 			}
 		}
-		
 		return nearbyAttractions;
+	}*/
+	// TODO Calculer les rewards
+	// TODO faire classe de test
+	public List<AttractionResponse> getNearByAttractions(String userName) {
+		List<AttractionResponse> attractionResponses = new ArrayList<>();
+		VisitedLocation visitedLocation = getUserLocation(getUser(userName));
+		for(Attraction attraction : gpsUtil.getAttractions()) {
+			Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
+			AttractionResponse attractionResponse = new AttractionResponse();
+			attractionResponse.setAttractionName(attraction.attractionName);
+			attractionResponse.setCity(attraction.city);
+			attractionResponse.setState(attraction.state);
+			attractionResponse.setLatitude(attraction.latitude);
+			attractionResponse.setLongitude(attraction.longitude);
+			attractionResponse.setDistanceWithCurrLoc(distance);
+			attractionResponse.setRewardsPoints(0);
+			attractionResponses.add(attractionResponse);
+		}
+		// TODO ne retourner que les 5 attractions les plus proches
+		return attractionResponses;
 	}
 	
 	private void addShutDownHook() {

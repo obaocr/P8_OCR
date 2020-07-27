@@ -3,6 +3,7 @@ package tourGuide;
 import java.util.ArrayList;
 import java.util.List;
 
+import gpsUtil.location.Attraction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,10 +45,7 @@ public class TourGuideController {
         //    Note: Attraction reward points can be gathered from RewardsCentral
     @RequestMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) {
-    	//VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-    	//return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));
-        List<AttractionResponse> attractionResponses = new ArrayList<>();
-        return JsonStream.serialize(attractionResponses);
+        return JsonStream.serialize(tourGuideService.getNearByAttractions(userName));
     }
 
 
