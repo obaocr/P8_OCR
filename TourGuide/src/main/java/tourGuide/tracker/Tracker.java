@@ -47,6 +47,7 @@ public class Tracker extends Thread {
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
 			// Ajout Try probleme crash selon locale FR
+			// TODO rendre l'appel de "trackUserLocation" non bloquant ,rendre asynchrone
 			try {
 				users.forEach(u -> tourGuideService.trackUserLocation(u));
 			}

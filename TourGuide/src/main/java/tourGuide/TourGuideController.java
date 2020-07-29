@@ -49,8 +49,8 @@ public class TourGuideController {
     }
 
 
-
-    @RequestMapping("/getRewards") 
+    @RequestMapping("/getRewards")
+    // TODO A voir pour éventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {
     	return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
     }
@@ -59,7 +59,8 @@ public class TourGuideController {
     public String getAllCurrentLocations() {
     	// TODO: Get a list of every user's most recent location as JSON
         // TODO OBA - In progress / faire les tests
-    	//- Note: does not use gpsUtil to query for their current location, 
+    	// TODO 29/07 => afficher le UID & éventuellement serialiser un hasmap pur avoir le UUID sans libellé ..
+        //- Note: does not use gpsUtil to query for their current location,
     	//        but rather gathers the user's current location from their stored location history.
     	//
     	// Return object should be the just a JSON mapping of userId to Locations similar to:
@@ -76,7 +77,11 @@ public class TourGuideController {
     	List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
     	return JsonStream.serialize(providers);
     }
-    
+
+    // TODO nouveeau endpoint get et put pour mise à jour des preferences
+    // TODO avoir tous les champs sinon lever une exception ,annotation @valid et mettre @notnull dans le modele (passer en Integer)...
+    // TODO pour la réponse filter que les champs voulus des objets comme Money
+
     private User getUser(String userName) {
     	return tourGuideService.getUser(userName);
     }

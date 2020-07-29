@@ -72,6 +72,7 @@ public class TourGuideService {
 	 */
 	public List<UserCurrentLocation> getAllUsersCurrentLocation () {
 		List<UserCurrentLocation> userCurrentLocations = new ArrayList<>();
+		// TODO on peut également utiliser for each, on peut également utiliser la méthode "getAllUsers" existante en-desssous
 		for (User u : internalUserMap.values()) {
 			if (u.getVisitedLocations().size() > 0) {
 				userCurrentLocations.add(new UserCurrentLocation(u.getUserName(), u.getLastVisitedLocation().location));
@@ -110,7 +111,7 @@ public class TourGuideService {
 	}
 
 	// TODO a corriger les 5 attractions les plus proches
-	// TODO A voir si ça devient obsolete
+	// TODO A voir si ça devient obsolete code à enlever ...
 	/*public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 		for(Attraction attraction : gpsUtil.getAttractions()) {
@@ -122,6 +123,9 @@ public class TourGuideService {
 	}*/
 	// TODO Calculer les rewards
 	// TODO faire classe de test
+	// TODO ne sort pas dans l'ordre les champs
+	// TODO utiliser les stream pour trier une collection ... et récupérer les 5 premiers
+	// TODO voir pour setRewardsPoints, quel calcul de points ...
 	public List<AttractionResponse> getNearByAttractions(String userName) {
 		List<AttractionResponse> attractionResponses = new ArrayList<>();
 		VisitedLocation visitedLocation = getUserLocation(getUser(userName));
