@@ -25,7 +25,7 @@ public class TourGuideController {
 	
     @RequestMapping("/")
     public String index() {
-        return "Greetings from TourGuide!";
+        return "Greetings from TourGuide! OCR P8 by OBA";
     }
     
     @RequestMapping("/getLocation") 
@@ -57,7 +57,7 @@ public class TourGuideController {
     
     @RequestMapping("/getAllCurrentLocations")
     public String getAllCurrentLocations() {
-        // TODO OBA (Finished, to be validates)  - getAllUsersCurrentLocation
+        // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
         // TODO: Get a list of every user's most recent location as JSON
         // TODO OBA - faire les tests
         //- Note: does not use gpsUtil to query for their current location,

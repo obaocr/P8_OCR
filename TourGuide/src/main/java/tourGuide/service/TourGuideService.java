@@ -108,21 +108,9 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
-	// TODO a corriger les 5 attractions les plus proches
-	// TODO A voir si ça devient obsolete code à enlever ...
-	/*public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
-		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for(Attraction attraction : gpsUtil.getAttractions()) {
-			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
-				nearbyAttractions.add(attraction);
-			}
-		}
-		return nearbyAttractions;
-	}*/
 	// TODO Calculer les rewards
 	// TODO faire classe de test
 	// TODO ne sort pas dans l'ordre les champs
-	// TODO utiliser les stream pour trier une collection ... et récupérer les 5 premiers
 	// TODO voir pour setRewardsPoints, quel calcul de points ...
 	public List<AttractionResponse> getNearByAttractions(String userName) {
 		List<AttractionResponse> attractionResponses = new ArrayList<>();
@@ -139,8 +127,12 @@ public class TourGuideService {
 			attractionResponse.setRewardsPoints(0);
 			attractionResponses.add(attractionResponse);
 		}
-		// TODO ne retourner que les 5 attractions les plus proches
-		return attractionResponses;
+		// Sort the list by Distance and keep 5 first items
+		// cf. https://bezkoder.com/java-sort-arraylist-of-objects/
+		ArrayList<AttractionResponse> sortedAttractionResponses = (ArrayList<AttractionResponse>) attractionResponses
+				.stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(5)
+				.collect(Collectors.toList());
+		return sortedAttractionResponses;
 	}
 	
 	private void addShutDownHook() {
