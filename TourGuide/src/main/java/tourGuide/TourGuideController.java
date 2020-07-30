@@ -57,9 +57,9 @@ public class TourGuideController {
     
     @RequestMapping("/getAllCurrentLocations")
     public String getAllCurrentLocations() {
-    	// TODO: Get a list of every user's most recent location as JSON
-        // TODO OBA - In progress / faire les tests
-    	// TODO 29/07 => afficher le UID & éventuellement serialiser un hasmap pur avoir le UUID sans libellé ..
+        // TODO OBA (Finished, to be validates)  - getAllUsersCurrentLocation
+        // TODO: Get a list of every user's most recent location as JSON
+        // TODO OBA - faire les tests
         //- Note: does not use gpsUtil to query for their current location,
     	//        but rather gathers the user's current location from their stored location history.
     	//
@@ -68,7 +68,6 @@ public class TourGuideController {
     	//        "019b04a9-067a-4c76-8817-ee75088c3822": {"longitude":-48.188821,"latitude":74.84371} 
     	//        ...
     	//     }
-    	
     	return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());
     }
     

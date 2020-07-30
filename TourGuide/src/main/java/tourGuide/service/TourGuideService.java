@@ -64,21 +64,19 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
-	// TODO OBA (In progress)  - getAllUsersCurrentLocation
-
+	// TODO OBA (Finished, to be validates)  - getAllUsersCurrentLocation
 	/**
 	 * Method to get the last location for all users
 	 * @return al list of UserCurrentLocation
 	 */
-	public List<UserCurrentLocation> getAllUsersCurrentLocation () {
-		List<UserCurrentLocation> userCurrentLocations = new ArrayList<>();
-		// TODO on peut également utiliser for each, on peut également utiliser la méthode "getAllUsers" existante en-desssous
-		for (User u : internalUserMap.values()) {
+	public Map<String, Location> getAllUsersCurrentLocation () {
+		Map<String, Location> mapUserLocation = new HashMap<>();
+		for (User u : getAllUsers()) {
 			if (u.getVisitedLocations().size() > 0) {
-				userCurrentLocations.add(new UserCurrentLocation(u.getUserName(), u.getLastVisitedLocation().location));
+				mapUserLocation.put(u.getUserId().toString(), u.getLastVisitedLocation().location);
 			}
 		}
-		return  userCurrentLocations;
+		return  mapUserLocation;
 	}
 
 	public User getUser(String userName) {
