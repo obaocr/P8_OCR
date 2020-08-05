@@ -13,6 +13,7 @@ import com.jsoniter.output.JsonStream;
 
 import gpsUtil.location.VisitedLocation;
 import tourGuide.Model.AttractionResponse;
+import tourGuide.Model.UserPrefResponse;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tripPricer.Provider;
@@ -34,7 +35,8 @@ public class TourGuideController {
 		return JsonStream.serialize(visitedLocation.location);
     }
     
-    //  TODO: Change this method to no longer return a List of Attractions.
+    // TODO: Change this method to no longer return a List of Attractions.
+    // TODO : Rewards  à calculer...
  	//  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
  	//  Return a new JSON object that contains:
     	// Name of Tourist attraction, 
@@ -79,7 +81,17 @@ public class TourGuideController {
 
     // TODO nouveeau endpoint get et put pour mise à jour des preferences
     // TODO avoir tous les champs sinon lever une exception ,annotation @valid et mettre @notnull dans le modele (passer en Integer)...
-    // TODO pour la réponse filter que les champs voulus des objets comme Money
+    // TODO pour la réponse filter que les champs voulus des objets comme Money... à voir
+    // TODO à voir pour mettre dans une classe dédié UserController ?
+    // TODO Gérer les codes HTTP si KO ...
+
+    // TODO ca rend beaucoup d'informations ...
+    @RequestMapping("/getUserPreferences")
+    public UserPrefResponse getUserPreferences(@RequestParam String userName) {
+        return tourGuideService.getUserPreferences(userName);
+    }
+
+    // TODO faire le set des UserPref ...
 
     private User getUser(String userName) {
     	return tourGuideService.getUser(userName);

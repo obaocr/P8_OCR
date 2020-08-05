@@ -7,24 +7,26 @@ import org.javamoney.moneta.Money;
 
 
 public class UserPreferences {
-	
-	private int attractionProximity = Integer.MAX_VALUE;
+
+	// TODO OBA, passage en Integer
+
+	private Integer attractionProximity = Integer.MAX_VALUE;
 	private CurrencyUnit currency = Monetary.getCurrency("USD");
 	private Money lowerPricePoint = Money.of(0, currency);
 	private Money highPricePoint = Money.of(Integer.MAX_VALUE, currency);
-	private int tripDuration = 1;
-	private int ticketQuantity = 1;
-	private int numberOfAdults = 1;
-	private int numberOfChildren = 0;
+	private Integer tripDuration = 1;
+	private Integer ticketQuantity = 1;
+	private Integer numberOfAdults = 1;
+	private Integer numberOfChildren = 0;
 	
 	public UserPreferences() {
 	}
 	
-	public void setAttractionProximity(int attractionProximity) {
+	public void setAttractionProximity(Integer attractionProximity) {
 		this.attractionProximity = attractionProximity;
 	}
 	
-	public int getAttractionProximity() {
+	public Integer getAttractionProximity() {
 		return attractionProximity;
 	}
 	
@@ -44,35 +46,35 @@ public class UserPreferences {
 		this.highPricePoint = highPricePoint;
 	}
 	
-	public int getTripDuration() {
+	public Integer getTripDuration() {
 		return tripDuration;
 	}
 
-	public void setTripDuration(int tripDuration) {
+	public void setTripDuration(Integer tripDuration) {
 		this.tripDuration = tripDuration;
 	}
 
-	public int getTicketQuantity() {
+	public Integer getTicketQuantity() {
 		return ticketQuantity;
 	}
 
-	public void setTicketQuantity(int ticketQuantity) {
+	public void setTicketQuantity(Integer ticketQuantity) {
 		this.ticketQuantity = ticketQuantity;
 	}
 	
-	public int getNumberOfAdults() {
+	public Integer getNumberOfAdults() {
 		return numberOfAdults;
 	}
 
-	public void setNumberOfAdults(int numberOfAdults) {
+	public void setNumberOfAdults(Integer numberOfAdults) {
 		this.numberOfAdults = numberOfAdults;
 	}
 
-	public int getNumberOfChildren() {
+	public Integer getNumberOfChildren() {
 		return numberOfChildren;
 	}
 
-	public void setNumberOfChildren(int numberOfChildren) {
+	public void setNumberOfChildren(Integer numberOfChildren) {
 		this.numberOfChildren = numberOfChildren;
 	}
 
