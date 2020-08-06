@@ -4,11 +4,12 @@ import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tourGuide.Model.AttractionResponse;
-import tourGuide.Model.UserPrefResponse;
+import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
@@ -17,6 +18,7 @@ import tourGuide.user.UserReward;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
 
+import javax.money.Monetary;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -31,6 +33,7 @@ public class TourGuideService {
     private final TripPricer tripPricer = new TripPricer();
     public final Tracker tracker;
     boolean testMode = true;
+    private final Integer nbMaxAttractions = 5;
 
     /**
      * TourGuideService constructor
@@ -59,6 +62,7 @@ public class TourGuideService {
     }
 
     public VisitedLocation getUserLocation(User user) {
+        logger.info("getUserLocation");
         VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
                 user.getLastVisitedLocation() :
                 trackUserLocation(user);
@@ -73,6 +77,7 @@ public class TourGuideService {
      * @return al list of UserCurrentLocation
      */
     public Map<String, Location> getAllUsersCurrentLocation() {
+        logger.info("getAllUsersCurrentLocation");
         Map<String, Location> mapUserLocation = new HashMap<>();
         for (User u : getAllUsers()) {
             if (u.getVisitedLocations().size() > 0) {
@@ -91,17 +96,44 @@ public class TourGuideService {
     }
 
     public void addUser(User user) {
+        logger.info("addUser");
         if (!internalUserMap.containsKey(user.getUserName())) {
             internalUserMap.put(user.getUserName(), user);
         }
     }
 
+    // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
     public UserPreferences getUserPreferences(String userName) {
+        logger.info("getUserPreferences");
         User user = this.getUser(userName);
         if(user != null) {
             return user.getUserPreferences();
+        }
+        logger.debug("getUserPreferences : userName null");
+        return null;
+    }
+
+    // TODO Update Userpreferences
+    // TODO Gérer Username not found
+    // TODO vérifier que les pref du User sont bien mises à jour ("persisté")
+    public boolean settUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
+        logger.info("settUserPreferences : " + userName);
+        User user = this.getUser(userName);
+        if(user != null && userPreferencesDTO != null) {
+            UserPreferences userPreferences = user.getUserPreferences();
+            userPreferences.setAttractionProximity(userPreferencesDTO.getAttractionProximity());
+            userPreferences.setTripDuration(userPreferencesDTO.getTripDuration());
+            userPreferences.setTicketQuantity(userPreferencesDTO.getTicketQuantity());
+            userPreferences.setNumberOfAdults(userPreferencesDTO.getNumberOfChildren());
+            userPreferences.setNumberOfChildren(userPreferencesDTO.getNumberOfChildren());
+            userPreferences.setCurrency(Monetary.getCurrency(userPreferencesDTO.getCurrency()));
+            userPreferences.setLowerPricePoint(Money.of(userPreferencesDTO.getLowerPricePoint(),userPreferences.getCurrency()));
+            userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(),userPreferences.getCurrency()));
+            user.setUserPreferences(userPreferences);
+            return true;
         } else {
-            return null;
+            logger.debug("settUserPreferences : Input param null " );
+            return false;
         }
     }
 
@@ -110,6 +142,7 @@ public class TourGuideService {
     //      Sinon autre méthode avec class "StdSerializer", @JsonSerialize(using = CurrencyUnitSerializer.class), @NotNull, private CurrencyUnit currency;
 
     public List<Provider> getTripDeals(User user) {
+        logger.info("getTripDeals");
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
         List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
                 user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
@@ -119,6 +152,7 @@ public class TourGuideService {
 
     // TODO  à voir gpsUtil.getUserLocation, asynchrone
     public VisitedLocation trackUserLocation(User user) {
+        logger.info("trackUserLocation");
         VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
         rewardsService.calculateRewards(user);
@@ -133,6 +167,7 @@ public class TourGuideService {
         // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
         // TODO => faire les 5 appels à Rewards en //
     public List<AttractionResponse> getNearByAttractions(String userName) {
+        logger.info("getNearByAttractions");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         for (Attraction attraction : gpsUtil.getAttractions()) {
@@ -150,15 +185,15 @@ public class TourGuideService {
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
         ArrayList<AttractionResponse> sortedAttractionResponses = (ArrayList<AttractionResponse>) attractionResponses
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(5)
+                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
                 .collect(Collectors.toList());
 
         // Appels pour calculer les Rewards en //
-
         return sortedAttractionResponses;
     }
 
     private void addShutDownHook() {
+        logger.info("addShutDownHook");
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 tracker.stopTracking();

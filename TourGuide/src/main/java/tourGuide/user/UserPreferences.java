@@ -29,18 +29,16 @@ public class UserPreferences {
 	public Integer getAttractionProximity() {
 		return attractionProximity;
 	}
-	
-	public Money getLowerPricePoint() {
-		return lowerPricePoint;
-	}
 
-	public void setLowerPricePoint(Money lowerPricePoint) {
-		this.lowerPricePoint = lowerPricePoint;
-	}
+	public CurrencyUnit getCurrency() { return currency; }
 
-	public Money getHighPricePoint() {
-		return highPricePoint;
-	}
+	public void setCurrency(CurrencyUnit currency) { this.currency = currency; }
+
+	public Money getLowerPricePoint() { return lowerPricePoint;	}
+
+	public void setLowerPricePoint(Money lowerPricePoint) { this.lowerPricePoint = lowerPricePoint;	}
+
+	public Money getHighPricePoint() { return highPricePoint; }
 
 	public void setHighPricePoint(Money highPricePoint) {
 		this.highPricePoint = highPricePoint;

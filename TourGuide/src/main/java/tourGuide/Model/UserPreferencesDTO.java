@@ -2,6 +2,10 @@ package tourGuide.Model;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Data Transfer Object (DTO) for UserPreferences
+ */
+
 public class UserPreferencesDTO {
 
     @NotNull
