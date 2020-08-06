@@ -16,6 +16,7 @@ import tourGuide.Model.AttractionResponse;
 import tourGuide.Model.UserPrefResponse;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
 
 @RestController
@@ -87,11 +88,12 @@ public class TourGuideController {
 
     // TODO ca rend beaucoup d'informations ...
     @RequestMapping("/getUserPreferences")
-    public UserPrefResponse getUserPreferences(@RequestParam String userName) {
+    public UserPreferences getUserPreferences(@RequestParam String userName) {
         return tourGuideService.getUserPreferences(userName);
     }
 
     // TODO faire le set des UserPref ...
+    // TODO faire un put avec ID du user et les données en body, utiliser @Valid
 
     private User getUser(String userName) {
     	return tourGuideService.getUser(userName);

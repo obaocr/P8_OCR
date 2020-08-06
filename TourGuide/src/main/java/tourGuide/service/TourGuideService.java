@@ -96,19 +96,18 @@ public class TourGuideService {
         }
     }
 
-    // TODO OBA UserPref d'un utilisateur
-    // TODO ca rend beaucoup d'informations ...
-    public UserPrefResponse getUserPreferences(String userName) {
+    public UserPreferences getUserPreferences(String userName) {
         User user = this.getUser(userName);
         if(user != null) {
-            UserPrefResponse userPrefResponse = new UserPrefResponse();
-            userPrefResponse.setUserName(userName);
-            userPrefResponse.setUserPreferences(user.getUserPreferences());
-            return userPrefResponse;
+            return user.getUserPreferences();
         } else {
             return null;
         }
     }
+
+    // TODO Put pour preferences
+    //  Url avec /Id et en body un JSON d'un user pref .. ex UserPreferencesDTO ...
+    //      Sinon autre méthode avec class "StdSerializer", @JsonSerialize(using = CurrencyUnitSerializer.class), @NotNull, private CurrencyUnit currency;
 
     public List<Provider> getTripDeals(User user) {
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
@@ -118,6 +117,7 @@ public class TourGuideService {
         return providers;
     }
 
+    // TODO  à voir gpsUtil.getUserLocation, asynchrone
     public VisitedLocation trackUserLocation(User user) {
         VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
@@ -131,6 +131,7 @@ public class TourGuideService {
     // TODO voir pour setRewardsPoints, quel calcul de points ...
     //  TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
         // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
+        // TODO => faire les 5 appels à Rewards en //
     public List<AttractionResponse> getNearByAttractions(String userName) {
         List<AttractionResponse> attractionResponses = new ArrayList<>();
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
@@ -151,6 +152,9 @@ public class TourGuideService {
         ArrayList<AttractionResponse> sortedAttractionResponses = (ArrayList<AttractionResponse>) attractionResponses
                 .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(5)
                 .collect(Collectors.toList());
+
+        // Appels pour calculer les Rewards en //
+
         return sortedAttractionResponses;
     }
 
