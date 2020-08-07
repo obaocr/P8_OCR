@@ -19,6 +19,7 @@ import tripPricer.Provider;
 import tripPricer.TripPricer;
 
 import javax.money.Monetary;
+import javax.money.NumberValue;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -113,6 +114,27 @@ public class TourGuideService {
         return null;
     }
 
+    // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
+    public UserPreferencesDTO getUserPreferencesSummary(String userName) {
+        logger.info("getUserPreferencesSummary");
+        User user = this.getUser(userName);
+        UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO();
+        if(user != null) {
+            UserPreferences userPreferences = user.getUserPreferences();
+            userPreferencesDTO.setAttractionProximity(userPreferences.getAttractionProximity());
+            userPreferencesDTO.setTripDuration(userPreferences.getTripDuration());
+            userPreferencesDTO.setNumberOfAdults(userPreferences.getNumberOfAdults());
+            userPreferencesDTO.setNumberOfChildren(userPreferences.getNumberOfChildren());
+            userPreferencesDTO.setTicketQuantity(userPreferences.getTicketQuantity());
+            userPreferencesDTO.setCurrency(userPreferences.getCurrency().getCurrencyCode());
+            userPreferencesDTO.setHighPricePoint(userPreferences.getHighPricePoint().getNumber().intValue());
+            userPreferencesDTO.setLowerPricePoint(userPreferences.getLowerPricePoint().getNumber().intValue());
+            return userPreferencesDTO;
+        }
+        logger.debug("getUserPreferencesSummary : userName null");
+        return null;
+    }
+
     // TODO Update Userpreferences
     // TODO Gérer Username not found
     // TODO vérifier que les pref du User sont bien mises à jour ("persisté")
@@ -131,10 +153,9 @@ public class TourGuideService {
             userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(),userPreferences.getCurrency()));
             user.setUserPreferences(userPreferences);
             return true;
-        } else {
+        }
             logger.debug("settUserPreferences : Input param null " );
             return false;
-        }
     }
 
     // TODO Put pour preferences
