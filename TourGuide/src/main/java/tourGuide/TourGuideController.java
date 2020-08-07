@@ -5,9 +5,7 @@ import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -31,7 +29,7 @@ public class TourGuideController {
 
     @RequestMapping("/getLocation")
     public String getLocation(@RequestParam String userName) {
-        logger.info("getLocation");
+        logger.debug("getLocation");
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
         return JsonStream.serialize(visitedLocation.location);
     }
@@ -48,7 +46,7 @@ public class TourGuideController {
     //    Note: Attraction reward points can be gathered from RewardsCentral
     @RequestMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) {
-        logger.info("getNearbyAttractions");
+        logger.debug("getNearbyAttractions");
         return JsonStream.serialize(tourGuideService.getNearByAttractions(userName));
     }
 
@@ -56,7 +54,7 @@ public class TourGuideController {
     @RequestMapping("/getRewards")
     // TODO A voir pour éventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {
-        logger.info("getRewards");
+        logger.debug("getRewards");
         return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
     }
 
@@ -73,13 +71,13 @@ public class TourGuideController {
         //        "019b04a9-067a-4c76-8817-ee75088c3822": {"longitude":-48.188821,"latitude":74.84371}
         //        ...
         //     }
-        logger.info("getAllCurrentLocations");
+        logger.debug("getAllCurrentLocations");
         return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());
     }
 
     @RequestMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) {
-        logger.info("getTripDeals");
+        logger.debug("getTripDeals");
         List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
         return JsonStream.serialize(providers);
     }
@@ -93,22 +91,30 @@ public class TourGuideController {
     // TODO OBA
     @RequestMapping("/getUserPreferences")
     public UserPreferences getUserPreferences(@RequestParam String userName) {
-        logger.info("getUserPreferences");
+        logger.debug("getUserPreferences");
         return tourGuideService.getUserPreferences(userName);
     }
 
     // TODO OBA
     @RequestMapping("/getUserPreferencesSummary")
     public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
-        logger.info("getUserPreferences");
+        logger.debug("getUserPreferences");
         return tourGuideService.getUserPreferencesSummary(userName);
     }
 
     // TODO faire le set des UserPref ...
     // TODO faire un put avec ID du user et les données en body, utiliser @Valid
+    // TODO  à voir pour faire le checkInput ????
+    @PutMapping(value = "/setUserPreferences/{userName}")
+    public UserPreferences setUserPreferences(@PathVariable("userName") String userName, @RequestBody UserPreferencesDTO userPreferencesDTO) {
+        logger.debug("Update UserPreferences for a user");
+        //checkInput(userPreferencesDTO);
+        return tourGuideService.setUserPreferences(userName, userPreferencesDTO);
+    }
+
 
     private User getUser(String userName) {
-        logger.info("getUser");
+        logger.debug("getUser");
         return tourGuideService.getUser(userName);
     }
 

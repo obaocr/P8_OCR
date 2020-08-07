@@ -19,7 +19,6 @@ import tripPricer.Provider;
 import tripPricer.TripPricer;
 
 import javax.money.Monetary;
-import javax.money.NumberValue;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -104,10 +103,11 @@ public class TourGuideService {
     }
 
     // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
+    // TODO Gérer not found 201
     public UserPreferences getUserPreferences(String userName) {
         logger.info("getUserPreferences");
         User user = this.getUser(userName);
-        if(user != null) {
+        if (user != null) {
             return user.getUserPreferences();
         }
         logger.debug("getUserPreferences : userName null");
@@ -115,11 +115,12 @@ public class TourGuideService {
     }
 
     // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
+    // TODO Gérer not found 201
     public UserPreferencesDTO getUserPreferencesSummary(String userName) {
         logger.info("getUserPreferencesSummary");
         User user = this.getUser(userName);
         UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO();
-        if(user != null) {
+        if (user != null) {
             UserPreferences userPreferences = user.getUserPreferences();
             userPreferencesDTO.setAttractionProximity(userPreferences.getAttractionProximity());
             userPreferencesDTO.setTripDuration(userPreferences.getTripDuration());
@@ -138,10 +139,10 @@ public class TourGuideService {
     // TODO Update Userpreferences
     // TODO Gérer Username not found
     // TODO vérifier que les pref du User sont bien mises à jour ("persisté")
-    public boolean settUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
+    public UserPreferences setUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
         logger.info("settUserPreferences : " + userName);
         User user = this.getUser(userName);
-        if(user != null && userPreferencesDTO != null) {
+        if (user != null && userPreferencesDTO != null) {
             UserPreferences userPreferences = user.getUserPreferences();
             userPreferences.setAttractionProximity(userPreferencesDTO.getAttractionProximity());
             userPreferences.setTripDuration(userPreferencesDTO.getTripDuration());
@@ -149,13 +150,13 @@ public class TourGuideService {
             userPreferences.setNumberOfAdults(userPreferencesDTO.getNumberOfChildren());
             userPreferences.setNumberOfChildren(userPreferencesDTO.getNumberOfChildren());
             userPreferences.setCurrency(Monetary.getCurrency(userPreferencesDTO.getCurrency()));
-            userPreferences.setLowerPricePoint(Money.of(userPreferencesDTO.getLowerPricePoint(),userPreferences.getCurrency()));
-            userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(),userPreferences.getCurrency()));
+            userPreferences.setLowerPricePoint(Money.of(userPreferencesDTO.getLowerPricePoint(), userPreferences.getCurrency()));
+            userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(), userPreferences.getCurrency()));
             user.setUserPreferences(userPreferences);
-            return true;
+            return user.getUserPreferences();
         }
-            logger.debug("settUserPreferences : Input param null " );
-            return false;
+        logger.debug("settUserPreferences : Input param null ");
+        return null;
     }
 
     // TODO Put pour preferences
@@ -185,8 +186,8 @@ public class TourGuideService {
     // TODO ne sort pas dans l'ordre les champs
     // TODO voir pour setRewardsPoints, quel calcul de points ...
     //  TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
-        // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
-        // TODO => faire les 5 appels à Rewards en //
+    // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
+    // TODO => faire les 5 appels à Rewards en //
     public List<AttractionResponse> getNearByAttractions(String userName) {
         logger.info("getNearByAttractions");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
