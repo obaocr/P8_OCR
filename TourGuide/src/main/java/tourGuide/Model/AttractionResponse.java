@@ -3,6 +3,15 @@ package tourGuide.Model;
 import java.util.UUID;
 
 public class AttractionResponse {
+    public UUID getAttractionId() {
+        return attractionId;
+    }
+
+    public void setAttractionId(UUID attractionId) {
+        this.attractionId = attractionId;
+    }
+
+    private UUID attractionId;
     private String attractionName;
     private String city;
     private String state;
@@ -13,6 +22,20 @@ public class AttractionResponse {
 
 
     public AttractionResponse() {
+    }
+
+    @Override
+    public String toString() {
+        return "AttractionResponse{" +
+                "attractionId=" + attractionId +
+                ", attractionName='" + attractionName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", distanceWithCurrLoc=" + distanceWithCurrLoc +
+                ", rewardsPoints=" + rewardsPoints +
+                '}';
     }
 
     public String getAttractionName() {

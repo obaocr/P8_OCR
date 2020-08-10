@@ -7,7 +7,9 @@ import gpsUtil.location.VisitedLocation;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rewardCentral.RewardCentral;
 import tourGuide.Model.AttractionResponse;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.helper.InternalTestHelper;
@@ -27,6 +29,10 @@ import java.util.stream.IntStream;
 
 @Service
 public class TourGuideService {
+
+    @Autowired
+    RewardCentral rewardCentral;
+
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
     private final GpsUtil gpsUtil;
     private final RewardsService rewardsService;
@@ -185,7 +191,7 @@ public class TourGuideService {
     // TODO faire classe de test
     // TODO ne sort pas dans l'ordre les champs
     // TODO voir pour setRewardsPoints, quel calcul de points ...
-    //  TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
+    // TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
     // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
     // TODO => faire les 5 appels à Rewards en //
     public List<AttractionResponse> getNearByAttractions(String userName) {
@@ -206,11 +212,31 @@ public class TourGuideService {
         }
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
-        ArrayList<AttractionResponse> sortedAttractionResponses = (ArrayList<AttractionResponse>) attractionResponses
+        List<AttractionResponse> sortedAttractionResponses = (ArrayList<AttractionResponse>) attractionResponses
                 .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
                 .collect(Collectors.toList());
 
         // Appels pour calculer les Rewards en //
+        Thread newThread = new Thread(() -> {
+            try {
+                //Thread.sleep(5000);
+                System.out.println("==========> test asycnc Reward ... : " + userName);
+                logger.debug("avant appel asynchrone svc");
+                int reward = rewardCentral.getAttractionRewardPoints(sortedAttractionResponses.get(0).getAttractionId(), getUser(userName).getUserId());
+                System.out.println("==========> resultat appel reward... : " + reward);
+                AttractionResponse attractionResp = sortedAttractionResponses.get(0);
+                attractionResp.setRewardsPoints(reward);
+                sortedAttractionResponses.set(0,attractionResp);
+                System.out.println("********* sortedAttractionResponses.get(0) = " + sortedAttractionResponses.get(0).toString());
+
+            } catch (Exception e) {
+                System.out.println("==========> Exception = " + e.toString());;
+            }
+        });
+        // Appel en asycnhrone ...
+        newThread.start();
+
+        // retour de la liste
         return sortedAttractionResponses;
     }
 

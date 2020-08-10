@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import rewardCentral.RewardCentral;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -13,6 +14,8 @@ import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class TourGuideController {
@@ -93,6 +96,41 @@ public class TourGuideController {
     public UserPreferences getUserPreferences(@RequestParam String userName) {
         logger.debug("getUserPreferences");
         return tourGuideService.getUserPreferences(userName);
+    }
+
+    // TODO OBA ========> à enlever ...
+    @RequestMapping("/TestAsynchrone")
+    public boolean TestAsynchrone(@RequestParam String userName) {
+        logger.debug("getUserPreferences");
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+        RewardCentral rewardCentral = new RewardCentral();
+        System.out.println("==========> synchrone resultat appel reward... : " + rewardCentral.getAttractionRewardPoints(uuid1, uuid2));
+
+        // Tests 1 asycnhrone
+        int number = 20;
+        Thread newThread = new Thread(() -> {
+            try {
+                //Thread.sleep(5000);
+                System.out.println("==========> test asycnc Reward ... : " + userName);
+                logger.debug("avant appel asynchrone svc");
+                System.out.println("==========> resultat appel reward... : " + rewardCentral.getAttractionRewardPoints(uuid1, uuid2));
+            } catch (Exception e) {
+                System.out.println("==========> Exception = " + e.toString());;
+            }
+        });
+        // Appel en asycnhrone ...
+        newThread.start();
+        // C'est affiché avant la fin...
+        System.out.println("==========> Test 1 / Après newThread.start() mais doit s'afficher avant...");
+
+        // Test 2
+        /*CompletableFuture<Long> completableFuture = CompletableFuture.supplyAsync(() -> factorial(number));
+        while (!completableFuture.isDone()) {
+            System.out.println("CompletableFuture is not finished yet...");
+        }
+        long result = completableFuture.get();*/
+        return true;
     }
 
     // TODO OBA
