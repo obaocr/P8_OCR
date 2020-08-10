@@ -194,10 +194,16 @@ public class TourGuideService {
     // TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
     // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
     // TODO => faire les 5 appels à Rewards en //
+    // TODO => le champ attractionUID s'affiche malgré @JsonIgnore !!!!
+
+    // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
+    // https://www.baeldung.com/java-asynchronous-programming
+
     public List<AttractionResponse> getNearByAttractions(String userName) {
         logger.info("getNearByAttractions");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
+        // Première étape pour ne retenir que les 5 premier items ...
         for (Attraction attraction : gpsUtil.getAttractions()) {
             Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
             AttractionResponse attractionResponse = new AttractionResponse();
@@ -207,37 +213,33 @@ public class TourGuideService {
             attractionResponse.setLatitude(attraction.latitude);
             attractionResponse.setLongitude(attraction.longitude);
             attractionResponse.setDistanceWithCurrLoc(distance);
-            attractionResponse.setRewardsPoints(0); // TODO utiliser RewardCentral.getAttractionRewardPoints , appels en parallele asynchrone ?
+            attractionResponse.setRewardsPoints(0);
             attractionResponses.add(attractionResponse);
         }
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
-        List<AttractionResponse> sortedAttractionResponses = (ArrayList<AttractionResponse>) attractionResponses
+        attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
                 .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
                 .collect(Collectors.toList());
 
-        // Appels pour calculer les Rewards en //
-        Thread newThread = new Thread(() -> {
-            try {
-                //Thread.sleep(5000);
-                System.out.println("==========> test asycnc Reward ... : " + userName);
-                logger.debug("avant appel asynchrone svc");
-                int reward = rewardCentral.getAttractionRewardPoints(sortedAttractionResponses.get(0).getAttractionId(), getUser(userName).getUserId());
-                System.out.println("==========> resultat appel reward... : " + reward);
-                AttractionResponse attractionResp = sortedAttractionResponses.get(0);
-                attractionResp.setRewardsPoints(reward);
-                sortedAttractionResponses.set(0,attractionResp);
-                System.out.println("********* sortedAttractionResponses.get(0) = " + sortedAttractionResponses.get(0).toString());
+        // Appels en // pour calcul de Rewards car peut mettre du temps unitairement
+        List<AttractionResponse> attractionResponsesRewards = new ArrayList<>();
+        attractionResponses
+                .parallelStream()
+                .forEach(
+                        a -> {
+                            AttractionResponse attractionResp = a;
+                            int reward = rewardCentral.getAttractionRewardPoints(attractionResp.getAttractionId(), getUser(userName).getUserId());
+                            attractionResp.setRewardsPoints(reward);
+                            attractionResponsesRewards.add(attractionResp);
+                        }
+                );
 
-            } catch (Exception e) {
-                System.out.println("==========> Exception = " + e.toString());;
-            }
-        });
-        // Appel en asycnhrone ...
-        newThread.start();
+        List<AttractionResponse> attractionResponsesResult = (ArrayList<AttractionResponse>) attractionResponsesRewards
+                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).collect(Collectors.toList());
 
         // retour de la liste
-        return sortedAttractionResponses;
+        return attractionResponsesResult;
     }
 
     private void addShutDownHook() {

@@ -1,16 +1,12 @@
 package tourGuide.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.UUID;
 
 public class AttractionResponse {
-    public UUID getAttractionId() {
-        return attractionId;
-    }
 
-    public void setAttractionId(UUID attractionId) {
-        this.attractionId = attractionId;
-    }
-
+    @JsonIgnore
     private UUID attractionId;
     private String attractionName;
     private String city;
@@ -24,18 +20,12 @@ public class AttractionResponse {
     public AttractionResponse() {
     }
 
-    @Override
-    public String toString() {
-        return "AttractionResponse{" +
-                "attractionId=" + attractionId +
-                ", attractionName='" + attractionName + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", distanceWithCurrLoc=" + distanceWithCurrLoc +
-                ", rewardsPoints=" + rewardsPoints +
-                '}';
+    public UUID getAttractionId() {
+        return attractionId;
+    }
+
+    public void setAttractionId(UUID attractionId) {
+        this.attractionId = attractionId;
     }
 
     public String getAttractionName() {
@@ -92,5 +82,19 @@ public class AttractionResponse {
 
     public void setRewardsPoints(int rewardsPoints) {
         this.rewardsPoints = rewardsPoints;
+    }
+
+    @Override
+    public String toString() {
+        return "AttractionResponse{" +
+                "attractionId=" + attractionId +
+                ", attractionName='" + attractionName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", distanceWithCurrLoc=" + distanceWithCurrLoc +
+                ", rewardsPoints=" + rewardsPoints +
+                '}';
     }
 }
