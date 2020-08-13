@@ -67,6 +67,7 @@ public class TourGuideService {
         return user.getUserRewards();
     }
 
+    // TODO à rendre asycnhrone ... à voir
     public VisitedLocation getUserLocation(User user) {
         logger.info("getUserLocation");
         VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
@@ -194,10 +195,11 @@ public class TourGuideService {
     // TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
     // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
     // TODO => faire les 5 appels à Rewards en //
-    // TODO => le champ attractionUID s'affiche malgré @JsonIgnore !!!!
+    // TODO => pour 12/08/2020 le champ attractionUID s'affiche malgré @JsonIgnore !!!!
 
     // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
     // https://www.baeldung.com/java-asynchronous-programming
+    // https://www.baeldung.com/java-completablefuture
 
     public List<AttractionResponse> getNearByAttractions(String userName) {
         logger.info("getNearByAttractions");
@@ -223,6 +225,7 @@ public class TourGuideService {
                 .collect(Collectors.toList());
 
         // Appels en // pour calcul de Rewards car peut mettre du temps unitairement
+        Date d1 = new Date();
         List<AttractionResponse> attractionResponsesRewards = new ArrayList<>();
         attractionResponses
                 .parallelStream()
@@ -234,11 +237,13 @@ public class TourGuideService {
                             attractionResponsesRewards.add(attractionResp);
                         }
                 );
+        Date d2 = new Date();
+        logger.debug("temps d'appel rewards en ms : " + (d2.getTime() - d1.getTime()));
 
+        // Tri car le paraléllisme ne rend pas dans l'ordre
         List<AttractionResponse> attractionResponsesResult = (ArrayList<AttractionResponse>) attractionResponsesRewards
                 .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).collect(Collectors.toList());
 
-        // retour de la liste
         return attractionResponsesResult;
     }
 

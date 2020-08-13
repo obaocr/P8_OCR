@@ -13,6 +13,7 @@ import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -101,41 +102,6 @@ public class TourGuideController {
         return tourGuideService.getUserPreferences(userName);
     }
 
-    // TODO OBA ========> à enlever ...
-    @RequestMapping("/TestAsynchrone")
-    public boolean TestAsynchrone(@RequestParam String userName) {
-        logger.debug("getUserPreferences");
-        UUID uuid1 = UUID.randomUUID();
-        UUID uuid2 = UUID.randomUUID();
-        RewardCentral rewardCentral = new RewardCentral();
-        System.out.println("==========> synchrone resultat appel reward... : " + rewardCentral.getAttractionRewardPoints(uuid1, uuid2));
-
-        // Tests 1 asycnhrone
-        int number = 20;
-        Thread newThread = new Thread(() -> {
-            try {
-                //Thread.sleep(5000);
-                System.out.println("==========> test asycnc Reward ... : " + userName);
-                logger.debug("avant appel asynchrone svc");
-                System.out.println("==========> resultat appel reward... : " + rewardCentral.getAttractionRewardPoints(uuid1, uuid2));
-            } catch (Exception e) {
-                System.out.println("==========> Exception = " + e.toString());;
-            }
-        });
-        // Appel en asycnhrone ...
-        newThread.start();
-        // C'est affiché avant la fin...
-        System.out.println("==========> Test 1 / Après newThread.start() mais doit s'afficher avant...");
-
-        // Test 2
-        /*CompletableFuture<Long> completableFuture = CompletableFuture.supplyAsync(() -> factorial(number));
-        while (!completableFuture.isDone()) {
-            System.out.println("CompletableFuture is not finished yet...");
-        }
-        long result = completableFuture.get();*/
-        return true;
-    }
-
     // TODO OBA
     @RequestMapping("/getUserPreferencesSummary")
     public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
@@ -143,16 +109,14 @@ public class TourGuideController {
         return tourGuideService.getUserPreferencesSummary(userName);
     }
 
-    // TODO faire le set des UserPref ...
-    // TODO faire un put avec ID du user et les données en body, utiliser @Valid
     // TODO  à voir pour faire le checkInput ????
+    // TODO faire comme le P7 on peut ajouter un biding result en input et l'utiliser pour gérer .. sinon voir P5 Exceptions...
     @PutMapping(value = "/setUserPreferences/{userName}")
-    public UserPreferences setUserPreferences(@PathVariable("userName") String userName, @RequestBody UserPreferencesDTO userPreferencesDTO) {
+    public UserPreferences setUserPreferences(@PathVariable("userName") String userName, @RequestBody @Valid UserPreferencesDTO userPreferencesDTO) {
         logger.debug("Update UserPreferences for a user");
         //checkInput(userPreferencesDTO);
         return tourGuideService.setUserPreferences(userName, userPreferencesDTO);
     }
-
 
     private User getUser(String userName) {
         logger.debug("getUser");
