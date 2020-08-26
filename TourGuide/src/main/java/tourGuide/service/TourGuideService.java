@@ -247,6 +247,48 @@ public class TourGuideService {
         return attractionResponsesResult;
     }
 
+    // TODO getNearByAttractions avec gestion // en completable future
+    public List<AttractionResponse> getNearByAttractionsAsyncMgt(String userName) {
+        logger.info("getNearByAttractionsAsyncMgt");
+        List<AttractionResponse> attractionResponses = new ArrayList<>();
+        VisitedLocation visitedLocation = getUserLocation(getUser(userName));
+        // Première étape pour ne retenir que les 5 premier items ...
+        for (Attraction attraction : gpsUtil.getAttractions()) {
+            Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
+            AttractionResponse attractionResponse = new AttractionResponse();
+            attractionResponse.setAttractionName(attraction.attractionName);
+            attractionResponse.setCity(attraction.city);
+            attractionResponse.setState(attraction.state);
+            attractionResponse.setLatitude(attraction.latitude);
+            attractionResponse.setLongitude(attraction.longitude);
+            attractionResponse.setDistanceWithCurrLoc(distance);
+            attractionResponse.setRewardsPoints(0);
+            attractionResponses.add(attractionResponse);
+        }
+        logger.debug("attractionResponses size : " + attractionResponses.size());
+        // Sort the list by Distance and keep 5 first items
+        // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
+        attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
+                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
+                .collect(Collectors.toList());
+
+        logger.debug("attractionResponses size apres sort: " + attractionResponses.size());
+        // Appels en // pour calcul de Rewards car peut mettre du temps unitairement
+        Date d1 = new Date();
+
+        List<AttractionResponse> attractionResponsesRewards = new ArrayList<>();
+        attractionResponsesRewards = rewardsService.getAllAttractionResponseWithRewardPoint(attractionResponses, getUser(userName));
+
+        Date d2 = new Date();
+        logger.debug("temps d'appel rewards complatable future en ms : " + (d2.getTime() - d1.getTime()));
+
+        // Tri car le paraléllisme ne rend pas dans l'ordre
+        List<AttractionResponse> attractionResponsesResult = (ArrayList<AttractionResponse>) attractionResponsesRewards
+                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).collect(Collectors.toList());
+
+        return attractionResponsesResult;
+    }
+
     private void addShutDownHook() {
         logger.info("addShutDownHook");
         Runtime.getRuntime().addShutdownHook(new Thread() {
