@@ -103,7 +103,7 @@ public class RewardsService {
 	}
 
 	/**
-	 * Pour calcul en parallel et en future des Rewards points pour une liste attractions
+	 * Pour calcul en parallel et en future des Rewards points pour une list attractions
 	 * @param attractionResponses
 	 * @param user
 	 * @return List<AttractionResponse> with rewards points
