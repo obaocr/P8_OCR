@@ -192,19 +192,13 @@ public class TourGuideService {
         return visitedLocation;
     }
 
-    // TODO Calculer les rewards
+    /**
+     * getNearByAttractions : calcul en paralalle avec parallelStream
+     * @param userName
+     * @return
+     */
     // TODO faire classe de test
-    // TODO ne sort pas dans l'ordre les champs
-    // TODO voir pour setRewardsPoints, quel calcul de points ...
-    // TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
-    // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
-    // TODO => faire les 5 appels à Rewards en //
     // TODO => pour 12/08/2020 le champ attractionUID s'affiche malgré @JsonIgnore !!!!
-
-    // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
-    // https://www.baeldung.com/java-asynchronous-programming
-    // https://www.baeldung.com/java-completablefuture
-
     public List<AttractionResponse> getNearByAttractions(String userName) {
         logger.info("getNearByAttractions");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
@@ -251,7 +245,17 @@ public class TourGuideService {
         return attractionResponsesResult;
     }
 
-    // TODO getNearByAttractions avec gestion // en completable future
+    /**
+     * getNearByAttractionsAsyncMgt : calcul en paralalle avec Completable Future
+     * @param userName
+     * @return
+     */
+    // https://medium.com/@kalpads/fantastic-completablefuture-allof-and-how-to-handle-errors-27e8a97144a0
+    // https://nirajsonawane.github.io/2019/01/27/Write-Clean-asynchronous-code-with-CompletableFuture-Java-8/
+    // https://www.nurkiewicz.com/2013/05/java-8-completablefuture-in-action.html
+    // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
+    // https://www.baeldung.com/java-asynchronous-programming
+    // https://www.baeldung.com/java-completablefuture
     public List<AttractionResponse> getNearByAttractionsAsyncMgt(String userName) {
         logger.info("getNearByAttractionsAsyncMgt");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
