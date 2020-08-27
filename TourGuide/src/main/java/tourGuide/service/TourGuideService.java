@@ -179,11 +179,15 @@ public class TourGuideService {
         return providers;
     }
 
-    // TODO  à voir gpsUtil.getUserLocation, asynchrone
+    // TODO 27/08/2020 ...  à voir gpsUtil.getUserLocation, asynchrone
+    // C'est appelé actuellment en séquentiel pour chaque utilisateur
+    // A faire : l'appelant (tracker) doit faire apppel en asynchrone, et l'appelant doit être capable de savoir que les n appels sont faits pour se remettre
+    // en wait ..
     public VisitedLocation trackUserLocation(User user) {
         logger.info("trackUserLocation");
         VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
+        // On peut le laisser en sycnhrone pour le moment
         rewardsService.calculateRewards(user);
         return visitedLocation;
     }
