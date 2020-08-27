@@ -87,7 +87,12 @@ public class RewardsService {
         return statuteMiles;
 	}
 
-	// TODO  Calcul RewardsPoints pour Attraction
+	/**
+	 * Pour calcul du reward Point en future asynchrone, pour une attraction
+	 * @param attractionResponse
+	 * @param user
+	 * @return
+	 */
 	private CompletableFuture<AttractionResponse> getAttractionResponseWithRewardPoint (AttractionResponse attractionResponse, User user) {
 		return  CompletableFuture.supplyAsync(() -> {
 			AttractionResponse attractionRespWithRewardPoint = attractionResponse;
@@ -97,6 +102,12 @@ public class RewardsService {
 		});
 	}
 
+	/**
+	 * Pour calcul en parallel et en future des Rewards points pour une liste attractions
+	 * @param attractionResponses
+	 * @param user
+	 * @return List<AttractionResponse> with rewards points
+	 */
 	public List<AttractionResponse> getAllAttractionResponseWithRewardPoint (List<AttractionResponse> attractionResponses, User user) {
 		logger.debug("attractionResponses size" + attractionResponses.size());
 		List<AttractionResponse> attractionResponsesWithRewardPoint = new ArrayList<>();
@@ -114,13 +125,8 @@ public class RewardsService {
 							.map(a -> a.join()).collect(Collectors.toList());
 				}
 		);
-
-		// TODO ...
-		attractionResponsesWithRewardPoint = allCompletableFuture.thenApply(attractionResps -> {
-			return attractionResps.stream().map()
-		});
-
+		attractionResponsesWithRewardPoint = allCompletableFuture.join();
+		logger.debug("attractionResponsesWithRewardPoint size" + attractionResponsesWithRewardPoint.size());
 		return attractionResponsesWithRewardPoint;
 	}
-
 }
