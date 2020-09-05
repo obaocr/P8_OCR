@@ -68,7 +68,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 
-	// TODO  à voir pour passer en async ?
+	// TODO  à voir pour passer en async...
 	private int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 	}
@@ -88,26 +88,27 @@ public class RewardsService {
 	}
 
 	/**
-	 * Pour calcul du reward Point en future asynchrone, pour une attraction
+	 * OBA Pour calcul du reward Point en future asynchrone, pour une attraction
 	 * @param attractionResponse
 	 * @param user
 	 * @return
 	 */
 	private CompletableFuture<AttractionResponse> getAttractionResponseWithRewardPoint (AttractionResponse attractionResponse, User user) {
 		return  CompletableFuture.supplyAsync(() -> {
-			AttractionResponse attractionRespWithRewardPoint = attractionResponse;
-			int reward = rewardsCentral.getAttractionRewardPoints(attractionRespWithRewardPoint.getAttractionId(), user.getUserId());
-			attractionRespWithRewardPoint.setRewardsPoints(reward);
-			return attractionRespWithRewardPoint;
+			//AttractionResponse attractionRespWithRewardPoint = attractionResponse;
+			int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());
+			attractionResponse.setRewardsPoints(reward);
+			return attractionResponse;
 		});
 	}
 
 	/**
-	 * Pour calcul en parallel et en future des Rewards points pour une list attractions
+	 * OBA Pour calcul en parallel et en future des Rewards points pour une list attractions
 	 * @param attractionResponses
 	 * @param user
 	 * @return List<AttractionResponse> with rewards points
 	 */
+	// TODO gérer les exceptions, cf. docs
 	public List<AttractionResponse> getAllAttractionResponseWithRewardPoint (List<AttractionResponse> attractionResponses, User user) {
 		logger.debug("attractionResponses size" + attractionResponses.size());
 		List<AttractionResponse> attractionResponsesWithRewardPoint = new ArrayList<>();

@@ -15,7 +15,7 @@ import tourGuide.user.User;
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
 	// TODO OBA set to seconds for the development
-	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(300);
+	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(30);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;
@@ -47,7 +47,7 @@ public class Tracker extends Thread {
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
 			// Ajout Try probleme crash selon locale FR
-			// TODO rendre l'appel de "trackUserLocation" non bloquant ,rendre asynchrone
+			// TODO 27/08/2020 rendre l'appel de "trackUserLocation" non bloquant ,rendre asynchrone
 			try {
 				users.forEach(u -> tourGuideService.trackUserLocation(u));
 			}

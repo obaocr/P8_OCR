@@ -64,7 +64,6 @@ public class TourGuideController {
         return response;
     }
 
-
     @RequestMapping("/getRewards")
     // TODO A voir pour éventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {

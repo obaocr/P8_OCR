@@ -180,6 +180,8 @@ public class TourGuideService {
     }
 
     // TODO 27/08/2020 ...  à voir gpsUtil.getUserLocation, asynchrone
+    // TODO appel en HTTP de GPS, 1/ regarder par curiosité en Spring en restTemplate mais deprecated...,
+    //  2/ Regarder FeignClient, annotation pour dire que le projet est client http
     // C'est appelé actuellment en séquentiel pour chaque utilisateur
     // A faire : l'appelant (tracker) doit faire apppel en asynchrone, et l'appelant doit être capable de savoir que les n appels sont faits pour se remettre
     // en wait ..
@@ -193,7 +195,7 @@ public class TourGuideService {
     }
 
     /**
-     * getNearByAttractions : calcul en paralalle avec parallelStream
+     * getNearByAttractions : calcul en parallel avec parallelStream
      * @param userName
      * @return
      */
@@ -246,7 +248,7 @@ public class TourGuideService {
     }
 
     /**
-     * getNearByAttractionsAsyncMgt : calcul en paralalle avec Completable Future
+     * getNearByAttractionsAsyncMgt : calcul en parallel avec Completable Future
      * @param userName
      * @return
      */
@@ -261,6 +263,7 @@ public class TourGuideService {
         List<AttractionResponse> attractionResponses = new ArrayList<>();
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         // Première étape pour ne retenir que les 5 premier items ...
+        // TODO 27/08/2020 à voir gpsUtil.getAttractions a un sleep ???
         for (Attraction attraction : gpsUtil.getAttractions()) {
             Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
             AttractionResponse attractionResponse = new AttractionResponse();
