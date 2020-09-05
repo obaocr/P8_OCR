@@ -49,11 +49,11 @@ public class Tracker extends Thread {
 			// Ajout Try probleme crash selon locale FR
 			// TODO 27/08/2020 rendre l'appel de &quot;trackUserLocation&quot; non bloquant ,rendre asynchrone
 			try {
-<span class="nc" id="L52">				users.forEach(u -&gt; tourGuideService.trackUserLocation(u));</span>
+<span class="fc" id="L52">				users.forEach(u -&gt; tourGuideService.trackUserLocation(u));</span>
 			}
 <span class="fc" id="L54">			catch (Exception e) {</span>
 <span class="fc" id="L55">				logger.error(&quot;exception tourGuideService.trackUserLocation(u) : &quot; + e.toString());</span>
-<span class="nc" id="L56">			}</span>
+<span class="fc" id="L56">			}</span>
 
 <span class="fc" id="L58">			stopWatch.stop();</span>
 <span class="fc" id="L59">			logger.debug(&quot;Tracker Time Elapsed: &quot; + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + &quot; seconds.&quot;); </span>

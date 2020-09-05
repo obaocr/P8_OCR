@@ -1,120 +1,213 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tourGuide.TestPerformance" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-05T18:08:27" hostname="PO703394" time="7.76">
+<testsuite name="tourGuide.TestPerformance" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-05T18:40:54" hostname="PO703394" time="7.554">
   <properties/>
-  <testcase name="highVolumeTrackLocation" classname="tourGuide.TestPerformance" time="7.76"/>
-  <system-out><![CDATA[20:08:27.932 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-20:08:27.947 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-20:08:28.045 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 100 internal test users.
-20:08:28.045 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-20:08:28.049 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-20:08:28.053 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.053 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 100 users.
-20:08:28.055 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.132 [pool-1-thread-1] ERROR tourGuide.tracker.Tracker - exception tourGuideService.trackUserLocation(u) : java.util.ConcurrentModificationException
-20:08:28.133 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-20:08:28.133 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-20:08:28.142 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.203 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.287 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.372 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.434 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.479 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.582 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.693 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.802 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.868 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:28.965 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.045 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.126 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.227 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.305 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.415 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.478 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.563 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.618 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.677 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.756 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.850 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.919 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:29.988 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.052 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.142 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.189 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.257 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.340 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.399 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.443 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.502 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.544 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.616 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.683 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.752 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.837 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.937 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:30.999 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.072 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.124 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.185 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.278 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.321 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.372 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.430 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.494 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.550 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.594 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.641 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.706 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.798 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:31.903 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.013 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.089 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.174 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.278 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.374 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.429 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.501 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.545 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.610 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.679 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.776 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.818 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.875 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.921 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:32.966 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.036 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.085 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.151 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.256 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.352 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.411 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.518 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.615 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.718 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.798 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.876 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:33.954 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.017 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.115 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.175 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.278 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.380 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.462 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.516 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.589 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.658 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.757 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.830 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.907 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:34.992 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:35.064 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:35.126 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:35.232 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:35.315 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:35.417 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-20:08:35.513 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+  <testcase name="highVolumeTrackLocation" classname="tourGuide.TestPerformance" time="7.554"/>
+  <system-out><![CDATA[20:40:54.932 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+20:40:54.946 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+20:40:55.048 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 100 internal test users.
+20:40:55.048 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+20:40:55.052 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+20:40:55.057 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.057 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 100 users.
+20:40:55.058 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.162 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.162 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.216 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.224 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.296 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.326 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.376 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.422 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.422 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.469 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.508 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.553 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.604 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.662 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.664 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.716 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.750 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.779 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.825 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.855 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.887 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.935 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:55.992 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.033 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.046 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.082 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.127 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.129 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.197 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.230 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.264 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.273 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.326 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.363 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.379 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.439 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.461 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.497 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.539 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.555 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.600 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.614 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.651 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.715 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.732 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.769 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.832 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.842 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.908 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.945 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:56.992 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.014 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.054 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.095 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.108 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.160 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.172 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.213 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.232 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.284 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.321 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.369 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.419 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.469 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.497 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.546 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.578 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.591 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.652 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.683 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.724 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.733 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.792 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.794 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.837 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.897 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.902 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.961 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:57.986 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.067 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.095 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.117 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.189 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.196 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.252 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.265 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.306 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.332 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.353 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.397 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.436 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.480 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.488 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.570 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.591 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.622 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.675 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.714 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.772 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.797 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.874 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.884 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.949 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:58.976 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.054 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.077 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.139 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.143 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.224 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.253 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.297 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.309 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.400 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.404 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.458 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.460 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.528 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.542 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.589 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.615 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.645 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.664 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.720 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.755 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.784 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.816 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.853 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.922 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.925 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:40:59.991 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.026 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.085 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.106 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.154 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.197 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.243 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.278 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.304 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.350 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.383 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.433 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.474 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.513 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.567 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.577 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.621 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.661 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.705 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.722 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.748 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.792 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.846 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.848 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.909 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.933 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.976 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:00.984 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.032 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.038 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.096 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.100 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.154 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.156 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.209 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.217 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.267 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.269 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.327 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.373 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.410 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.435 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.474 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.543 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.569 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.597 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.653 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.682 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.701 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.735 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.794 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.802 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.871 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.877 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.929 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:01.971 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.014 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.017 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.106 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.113 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.175 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.181 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.233 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.241 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.290 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+20:41:02.332 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
 highVolumeTrackLocation: Time Elapsed: 7 seconds.
 ]]></system-out>
-  <system-err><![CDATA[Sep 05, 2020 8:08:28 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
+  <system-err><![CDATA[Sep 05, 2020 8:40:55 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
 INFO: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
 ]]></system-err>
 </testsuite>

@@ -1,8 +1,6 @@
 buildscript {
     repositories {
-        maven {
-            url "https://afa-nrepo.azure-paas.intraxa/repository/maven-group"
-        }
+        mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
@@ -24,9 +22,8 @@ bootJar {
 
 repositories {
     maven {
-        url "https://afa-nrepo.azure-paas.intraxa/repository/maven-group/"
+        url "https://*****"
     }
-    mavenCentral()
     flatDir {
         dirs 'libs'
     }
