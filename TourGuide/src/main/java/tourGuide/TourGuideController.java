@@ -52,14 +52,6 @@ public class TourGuideController {
     public String getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
         String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));
-        logger.debug("==========> apres appel tourGuideService.getNearByAttractions et avant return");
-        return response;
-    }
-
-    @RequestMapping("/getNearbyAttractionsAsyncMgt")
-    public String getNearbyAttractionsAsyncMgt(@RequestParam String userName) {
-        logger.debug("getNearbyAttractionsAsyncMgt");
-        String response = JsonStream.serialize(tourGuideService.getNearByAttractionsAsyncMgt(userName));
         logger.debug("==========> apres appel tourGuideService.getNearByAttractionsAsyncMgt et avant return");
         return response;
     }

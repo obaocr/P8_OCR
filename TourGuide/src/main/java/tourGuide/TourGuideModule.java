@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import gpsUtil.GpsUtil;
 import rewardCentral.RewardCentral;
+import tourGuide.service.GpsService;
 import tourGuide.service.RewardsService;
 
 // TODO éventuellement retravailler pour n'avoir que Rewardservice en injection, et que des SVC en injection ...
@@ -17,10 +18,15 @@ public class TourGuideModule {
 	public GpsUtil getGpsUtil() {
 		return new GpsUtil();
 	}
+
+	@Bean
+	public GpsService getGpsService() {
+		return new GpsService(getGpsUtil());
+	}
 	
 	@Bean
 	public RewardsService getRewardsService() {
-		return new RewardsService(getGpsUtil(), getRewardCentral());
+		return new RewardsService(getGpsService(), getRewardCentral());
 	}
 	
 	@Bean

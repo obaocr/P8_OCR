@@ -30,11 +30,8 @@ import java.util.stream.IntStream;
 @Service
 public class TourGuideService {
 
-    @Autowired
-    RewardCentral rewardCentral;
-
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-    private final GpsUtil gpsUtil;
+    private final GpsService gpsService;
     private final RewardsService rewardsService;
     private final TripPricer tripPricer = new TripPricer();
     public final Tracker tracker;
@@ -44,13 +41,14 @@ public class TourGuideService {
     /**
      * TourGuideService constructor
      *
-     * @param gpsUtil
+     * @param gpsService
      * @param rewardsService
      */
-    public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
+    // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
+    public TourGuideService( GpsService gpsService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
-        this.gpsUtil = gpsUtil;
+        this.gpsService = gpsService;
         this.rewardsService = rewardsService;
 
         if (testMode) {
@@ -77,7 +75,6 @@ public class TourGuideService {
     }
 
     // TODO OBA (Finished, to be validates)  - getAllUsersCurrentLocation
-
     /**
      * Method to get the last location for all users
      *
@@ -187,64 +184,11 @@ public class TourGuideService {
     // en wait ..
     public VisitedLocation trackUserLocation(User user) {
         logger.info("trackUserLocation");
-        VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+        VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
         // On peut le laisser en sycnhrone pour le moment
         rewardsService.calculateRewards(user);
         return visitedLocation;
-    }
-
-    /**
-     * getNearByAttractions : calcul en parallel avec parallelStream
-     * @param userName
-     * @return
-     */
-    // TODO faire classe de test
-    // TODO => pour 12/08/2020 le champ attractionUID s'affiche malgré @JsonIgnore !!!!
-    public List<AttractionResponse> getNearByAttractions(String userName) {
-        logger.info("getNearByAttractions");
-        List<AttractionResponse> attractionResponses = new ArrayList<>();
-        VisitedLocation visitedLocation = getUserLocation(getUser(userName));
-        // Première étape pour ne retenir que les 5 premier items ...
-        for (Attraction attraction : gpsUtil.getAttractions()) {
-            Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
-            AttractionResponse attractionResponse = new AttractionResponse();
-            attractionResponse.setAttractionName(attraction.attractionName);
-            attractionResponse.setCity(attraction.city);
-            attractionResponse.setState(attraction.state);
-            attractionResponse.setLatitude(attraction.latitude);
-            attractionResponse.setLongitude(attraction.longitude);
-            attractionResponse.setDistanceWithCurrLoc(distance);
-            attractionResponse.setRewardsPoints(0);
-            attractionResponses.add(attractionResponse);
-        }
-        // Sort the list by Distance and keep 5 first items
-        // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
-        attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
-                .collect(Collectors.toList());
-
-        // Appels en // pour calcul de Rewards car peut mettre du temps unitairement
-        Date d1 = new Date();
-        List<AttractionResponse> attractionResponsesRewards = new ArrayList<>();
-        attractionResponses
-                .parallelStream()
-                .forEach(
-                        a -> {
-                            AttractionResponse attractionResp = a;
-                            int reward = rewardCentral.getAttractionRewardPoints(attractionResp.getAttractionId(), getUser(userName).getUserId());
-                            attractionResp.setRewardsPoints(reward);
-                            attractionResponsesRewards.add(attractionResp);
-                        }
-                );
-        Date d2 = new Date();
-        logger.debug("temps d'appel rewards en ms : " + (d2.getTime() - d1.getTime()));
-
-        // Tri car le paraléllisme ne rend pas dans l'ordre
-        List<AttractionResponse> attractionResponsesResult = (ArrayList<AttractionResponse>) attractionResponsesRewards
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).collect(Collectors.toList());
-
-        return attractionResponsesResult;
     }
 
     /**
@@ -258,13 +202,13 @@ public class TourGuideService {
     // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
     // https://www.baeldung.com/java-asynchronous-programming
     // https://www.baeldung.com/java-completablefuture
-    public List<AttractionResponse> getNearByAttractionsAsyncMgt(String userName) {
+    public List<AttractionResponse> getNearByAttractions(String userName) {
         logger.info("getNearByAttractionsAsyncMgt");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         // Première étape pour ne retenir que les 5 premier items ...
         // TODO 27/08/2020 à voir gpsUtil.getAttractions a un sleep ???
-        for (Attraction attraction : gpsUtil.getAttractions()) {
+        for (Attraction attraction : gpsService.getAttractions()) {
             Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
             AttractionResponse attractionResponse = new AttractionResponse();
             attractionResponse.setAttractionName(attraction.attractionName);

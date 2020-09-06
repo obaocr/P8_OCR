@@ -29,11 +29,11 @@ public class RewardsService {
 <span class="fc" id="L29">    private int defaultProximityBuffer = 10;</span>
 <span class="fc" id="L30">	private int proximityBuffer = defaultProximityBuffer;</span>
 <span class="fc" id="L31">	private int attractionProximityRange = 200;</span>
-	private final GpsUtil gpsUtil;
+	private final GpsService gpsService;
 	private final RewardCentral rewardsCentral;
 	
-<span class="fc" id="L35">	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {</span>
-<span class="fc" id="L36">		this.gpsUtil = gpsUtil;</span>
+<span class="fc" id="L35">	public RewardsService(GpsService gpsService, RewardCentral rewardCentral) {</span>
+<span class="fc" id="L36">		this.gpsService = gpsService;</span>
 <span class="fc" id="L37">		this.rewardsCentral = rewardCentral;</span>
 <span class="fc" id="L38">	}</span>
 	
@@ -47,7 +47,7 @@ public class RewardsService {
 	
 	public void calculateRewards(User user) {
 <span class="fc" id="L49">		List&lt;VisitedLocation&gt; userLocations = user.getVisitedLocations();</span>
-<span class="fc" id="L50">		List&lt;Attraction&gt; attractions = gpsUtil.getAttractions();</span>
+<span class="fc" id="L50">		List&lt;Attraction&gt; attractions = gpsService.getAttractions();</span>
 		
 <span class="fc bfc" id="L52" title="All 2 branches covered.">		for(VisitedLocation visitedLocation : userLocations) {</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">			for(Attraction attraction : attractions) {</span>
@@ -68,7 +68,7 @@ public class RewardsService {
 <span class="fc bfc" id="L68" title="All 2 branches covered.">		return getDistance(attraction, visitedLocation.location) &gt; proximityBuffer ? false : true;</span>
 	}
 
-	// TODO  Ã  voir pour passer en async...
+	// TODO  Ã  voir pour passer en async...?
 	private int getRewardPoints(Attraction attraction, User user) {
 <span class="fc" id="L73">		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());</span>
 	}

@@ -29,11 +29,11 @@ public class RewardsService {
     private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
 	private int attractionProximityRange = 200;
-	private final GpsUtil gpsUtil;
+	private final GpsService gpsService;
 	private final RewardCentral rewardsCentral;
 	
-	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {
-		this.gpsUtil = gpsUtil;
+	public RewardsService(GpsService gpsService, RewardCentral rewardCentral) {
+		this.gpsService = gpsService;
 		this.rewardsCentral = rewardCentral;
 	}
 	
@@ -47,7 +47,7 @@ public class RewardsService {
 	
 	public void calculateRewards(User user) {
 		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		List<Attraction> attractions = gpsUtil.getAttractions();
+		List<Attraction> attractions = gpsService.getAttractions();
 		
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {
@@ -68,7 +68,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 
-	// TODO  à voir pour passer en async...
+	// TODO  à voir pour passer en async...?
 	private int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 	}
