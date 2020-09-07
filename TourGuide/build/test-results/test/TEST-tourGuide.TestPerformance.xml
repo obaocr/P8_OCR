@@ -1,20 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tourGuide.TestPerformance" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-06T14:06:22" hostname="PO703394" time="5.46">
+<testsuite name="tourGuide.TestPerformance" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-07T19:01:41" hostname="PO703394" time="5.999">
   <properties/>
-  <testcase name="highVolumeGetRewards" classname="tourGuide.TestPerformance" time="5.46"/>
-  <system-out><![CDATA[16:06:22.734 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-16:06:22.744 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-16:06:22.825 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 10 internal test users.
-16:06:22.825 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-16:06:22.835 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-16:06:22.835 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 10 users.
-16:06:22.835 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
-16:06:22.855 [pool-1-thread-1] ERROR tourGuide.tracker.Tracker - exception tourGuideService.trackUserLocation(u) : java.util.ConcurrentModificationException
-16:06:22.855 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-16:06:22.855 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+  <testcase name="highVolumeGetRewards" classname="tourGuide.TestPerformance" time="5.999"/>
+  <system-out><![CDATA[21:01:42.100 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:01:42.114 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:01:42.202 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 10 internal test users.
+21:01:42.202 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:01:42.207 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:01:42.207 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:42.211 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 10 users.
+21:01:42.212 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:42.212 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :f3ce2cbf-11f3-4dd6-bb11-c5094a4f9ac9
+21:01:42.221 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:42.275 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:42.503 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:42.923 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:42.923 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :6aeb31d8-c427-4222-ae7c-3a5a901a19ec
+21:01:42.972 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.183 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.183 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :0efbb18a-e518-47ec-95b1-66f2615c083b
+21:01:43.216 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.228 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.228 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :97ca22ad-2a6b-454c-a2be-b3fbeeb33ad5
+21:01:43.257 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.285 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.295 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.296 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :1a48d09f-912b-4a19-bb4d-08ed8a8dc04b
+21:01:43.364 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.374 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.374 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :41d97960-923a-446b-90f5-015b1a6c13dc
+21:01:43.452 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.468 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.468 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :c8b83399-b5c2-40ae-94a9-04ee06e5d700
+21:01:43.521 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.532 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.532 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :0884fd45-73d4-463c-b494-0d3c6bec02f4
+21:01:43.602 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.613 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.614 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :4283ae31-9a1d-48c6-a10a-12149fc07458
+21:01:43.661 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.672 [pool-1-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:01:43.672 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getUserLocation :7d99a796-1ad0-4fde-8b88-f489ae21f5a2
+21:01:43.732 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.738 [pool-1-thread-1] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:43.750 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 1 seconds.
+21:01:43.751 [pool-1-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:01:44.542 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:45.102 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:45.645 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:46.465 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:47.349 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
+21:01:47.438 [Test worker] DEBUG tourGuide.service.GpsService - getAttractions
 highVolumeGetRewards: Time Elapsed: 5 seconds.
 ]]></system-out>
-  <system-err><![CDATA[Sep 06, 2020 4:06:22 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
+  <system-err><![CDATA[Sep 07, 2020 9:01:42 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
 INFO: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
 ]]></system-err>
 </testsuite>

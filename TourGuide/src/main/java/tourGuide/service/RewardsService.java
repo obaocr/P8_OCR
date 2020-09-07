@@ -2,8 +2,10 @@ package tourGuide.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -44,13 +46,19 @@ public class RewardsService {
 	public void setDefaultProximityBuffer() {
 		proximityBuffer = defaultProximityBuffer;
 	}
-	
+
+	// TODO : OK / Utilisation de CopyOnWriteArrayList pour être theadSafe
 	public void calculateRewards(User user) {
-		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		List<Attraction> attractions = gpsService.getAttractions();
-		
-		for(VisitedLocation visitedLocation : userLocations) {
-			for(Attraction attraction : attractions) {
+		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList(user.getVisitedLocations());
+		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList(gpsService.getAttractions());
+
+		Iterator userItr = userLocations.iterator();
+		VisitedLocation visitedLocation;
+		while (userItr.hasNext()) {
+			visitedLocation = (VisitedLocation) userItr.next();
+			Iterator attractionItr = attractions.iterator();
+			while (attractionItr.hasNext()) {
+				Attraction attraction = (Attraction) attractionItr.next();
 				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if(nearAttraction(visitedLocation, attraction)) {
 						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));

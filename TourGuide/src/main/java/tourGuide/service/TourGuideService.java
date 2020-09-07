@@ -1,15 +1,12 @@
 package tourGuide.service;
 
-import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rewardCentral.RewardCentral;
 import tourGuide.Model.AttractionResponse;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.helper.InternalTestHelper;
@@ -18,7 +15,6 @@ import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
-import tripPricer.TripPricer;
 
 import javax.money.Monetary;
 import java.time.LocalDateTime;
@@ -33,7 +29,7 @@ public class TourGuideService {
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
     private final GpsService gpsService;
     private final RewardsService rewardsService;
-    private final TripPricer tripPricer = new TripPricer();
+    private final TripPricerService trTripPricerService = new TripPricerService();
     public final Tracker tracker;
     boolean testMode = true;
     private final Integer nbMaxAttractions = 5;
@@ -106,7 +102,6 @@ public class TourGuideService {
         }
     }
 
-    // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
     // TODO Gérer not found 201
     public UserPreferences getUserPreferences(String userName) {
         logger.info("getUserPreferences");
@@ -118,7 +113,6 @@ public class TourGuideService {
         return null;
     }
 
-    // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
     // TODO Gérer not found 201
     public UserPreferencesDTO getUserPreferencesSummary(String userName) {
         logger.info("getUserPreferencesSummary");
@@ -142,7 +136,6 @@ public class TourGuideService {
 
     // TODO Update Userpreferences
     // TODO Gérer Username not found
-    // TODO vérifier que les pref du User sont bien mises à jour ("persisté")
     public UserPreferences setUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
         logger.info("settUserPreferences : " + userName);
         User user = this.getUser(userName);
@@ -170,7 +163,7 @@ public class TourGuideService {
     public List<Provider> getTripDeals(User user) {
         logger.info("getTripDeals");
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-        List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
+        List<Provider> providers = trTripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
                 user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
         user.setTripDeals(providers);
         return providers;
@@ -207,7 +200,6 @@ public class TourGuideService {
         List<AttractionResponse> attractionResponses = new ArrayList<>();
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         // Première étape pour ne retenir que les 5 premier items ...
-        // TODO 27/08/2020 à voir gpsUtil.getAttractions a un sleep ???
         for (Attraction attraction : gpsService.getAttractions()) {
             Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
             AttractionResponse attractionResponse = new AttractionResponse();

@@ -21,10 +21,12 @@ public class GpsService {
     }
 
     public List<Attraction> getAttractions() {
+        logger.debug("getAttractions");
         return gpsUtil.getAttractions();
     }
 
     public VisitedLocation getUserLocation(UUID userID) {
+        logger.debug("getUserLocation :" + userID);
         return gpsUtil.getUserLocation(userID);
     }
 
