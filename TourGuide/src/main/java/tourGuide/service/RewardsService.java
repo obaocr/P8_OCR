@@ -47,20 +47,24 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 
-	// TODO : OK / Utilisation de CopyOnWriteArrayList pour être theadSafe
+	// TODO : OK / Utilisation de CopyOnWriteArrayList pour être thread-Safe
+	// TODO l'appel  à getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints)
+	// TODO => !!! a voir pour utiliser CopyOnWriteArrayList dans getter user.getVisitedLocations()
+	// TODO => inutile pour CopyOnWriteArrayList(gpsService.getAttractions()) / à enlever
 	public void calculateRewards(User user) {
 		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList(user.getVisitedLocations());
 		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList(gpsService.getAttractions());
 
-		Iterator userItr = userLocations.iterator();
+		Iterator userLocationsItr = userLocations.iterator();
 		VisitedLocation visitedLocation;
-		while (userItr.hasNext()) {
-			visitedLocation = (VisitedLocation) userItr.next();
+		while (userLocationsItr.hasNext()) {
+			visitedLocation = (VisitedLocation) userLocationsItr.next();
 			Iterator attractionItr = attractions.iterator();
 			while (attractionItr.hasNext()) {
 				Attraction attraction = (Attraction) attractionItr.next();
 				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if(nearAttraction(visitedLocation, attraction)) {
+						// TODO peut être ... ?  Appel de getRewardPoints en completable et au retour (thenAccept) faire addUserReward
 						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
 					}
 				}
@@ -76,7 +80,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 
-	// TODO  à voir pour passer en async...?
+	// TODO  à voir pour passer en async...? getAttractionRewardPoints est longue en temps de réponse : sleep...
 	private int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 	}

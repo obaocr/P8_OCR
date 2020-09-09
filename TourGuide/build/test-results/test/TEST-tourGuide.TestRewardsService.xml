@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestRewardsService" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-09-07T20:10:37" hostname="PO703394" time="0.0">
+  <properties/>
+  <testcase name="nearAllAttractions" classname="tourGuide.TestRewardsService" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -41,6 +41,7 @@ public class TourGuideService {
      * @param rewardsService
      */
     // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
+    // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
     public TourGuideService( GpsService gpsService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
@@ -61,7 +62,8 @@ public class TourGuideService {
         return user.getUserRewards();
     }
 
-    // TODO à rendre asycnhrone ... à voir
+    // TODO NB : trackUserLocation peut être, sera amélioré dans le chantier global du projet
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public VisitedLocation getUserLocation(User user) {
         logger.info("getUserLocation");
         VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
@@ -70,10 +72,10 @@ public class TourGuideService {
         return visitedLocation;
     }
 
-    // TODO OBA (Finished, to be validates)  - getAllUsersCurrentLocation
+    // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
+    // TODO : pas de pb de performance, on peut laisser en l'état
     /**
      * Method to get the last location for all users
-     *
      * @return al list of UserCurrentLocation
      */
     public Map<String, Location> getAllUsersCurrentLocation() {
@@ -87,14 +89,17 @@ public class TourGuideService {
         return mapUserLocation;
     }
 
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public User getUser(String userName) {
         return internalUserMap.get(userName);
     }
 
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public List<User> getAllUsers() {
         return internalUserMap.values().stream().collect(Collectors.toList());
     }
 
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public void addUser(User user) {
         logger.info("addUser");
         if (!internalUserMap.containsKey(user.getUserName())) {
@@ -102,7 +107,7 @@ public class TourGuideService {
         }
     }
 
-    // TODO Gérer not found 201
+    // TODO Gérer not found 201 ?
     public UserPreferences getUserPreferences(String userName) {
         logger.info("getUserPreferences");
         User user = this.getUser(userName);
@@ -113,7 +118,8 @@ public class TourGuideService {
         return null;
     }
 
-    // TODO Gérer not found 201
+    // TODO Gérer not found 201 ?
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public UserPreferencesDTO getUserPreferencesSummary(String userName) {
         logger.info("getUserPreferencesSummary");
         User user = this.getUser(userName);
@@ -134,8 +140,8 @@ public class TourGuideService {
         return null;
     }
 
-    // TODO Update Userpreferences
-    // TODO Gérer Username not found
+    // TODO Gérer Username not found 201 ?
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public UserPreferences setUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
         logger.info("settUserPreferences : " + userName);
         User user = this.getUser(userName);
@@ -159,7 +165,7 @@ public class TourGuideService {
     // TODO Put pour preferences
     //  Url avec /Id et en body un JSON d'un user pref .. ex UserPreferencesDTO ...
     //      Sinon autre méthode avec class "StdSerializer", @JsonSerialize(using = CurrencyUnitSerializer.class), @NotNull, private CurrencyUnit currency;
-
+    // TODO : pas de pb de performance, on peut laisser en l'état
     public List<Provider> getTripDeals(User user) {
         logger.info("getTripDeals");
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
@@ -169,6 +175,7 @@ public class TourGuideService {
         return providers;
     }
 
+    // TODO perfs  à voir ...
     // TODO 27/08/2020 ...  à voir gpsUtil.getUserLocation, asynchrone
     // TODO appel en HTTP de GPS, 1/ regarder par curiosité en Spring en restTemplate mais deprecated...,
     //  2/ Regarder FeignClient, annotation pour dire que le projet est client http
@@ -177,6 +184,7 @@ public class TourGuideService {
     // en wait ..
     public VisitedLocation trackUserLocation(User user) {
         logger.info("trackUserLocation");
+        // A voir si ça peut être long ?
         VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
         // On peut le laisser en sycnhrone pour le moment
@@ -189,12 +197,6 @@ public class TourGuideService {
      * @param userName
      * @return
      */
-    // https://medium.com/@kalpads/fantastic-completablefuture-allof-and-how-to-handle-errors-27e8a97144a0
-    // https://nirajsonawane.github.io/2019/01/27/Write-Clean-asynchronous-code-with-CompletableFuture-Java-8/
-    // https://www.nurkiewicz.com/2013/05/java-8-completablefuture-in-action.html
-    // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
-    // https://www.baeldung.com/java-asynchronous-programming
-    // https://www.baeldung.com/java-completablefuture
     public List<AttractionResponse> getNearByAttractions(String userName) {
         logger.info("getNearByAttractionsAsyncMgt");
         List<AttractionResponse> attractionResponses = new ArrayList<>();

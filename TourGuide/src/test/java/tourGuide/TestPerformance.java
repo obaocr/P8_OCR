@@ -45,7 +45,6 @@ public class TestPerformance {
 	 *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 	 */
 	
-	//@Ignore
 	@Test
 	public void highVolumeTrackLocation() {
 		GpsService gpsService = new GpsService(new GpsUtil());
@@ -69,8 +68,6 @@ public class TestPerformance {
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 	}
 	
-	//@Ignore
-	// TODO voir pourquoi ça plante ... parce que tourGuideService met à jour entre temps ?
 	@Test
 	public void highVolumeGetRewards() {
 		GpsService gpsService = new GpsService(new GpsUtil());
@@ -80,15 +77,13 @@ public class TestPerformance {
 		InternalTestHelper.setInternalUserNumber(10);
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
+		// TODO OBA : attention TourGuideService lance le Tracker.. on ne devrait pas, pas propre ...
+		// TODO =>
 		TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
 		Attraction attraction = gpsService.getAttractions().get(0);
 		List<User> allUsers = new ArrayList<>();
 		allUsers = tourGuideService.getAllUsers();
-
-		// TODO simplification du code
-		//allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
-	    //allUsers.forEach(u -> rewardsService.calculateRewards(u));
 
 		allUsers.forEach(u -> {
 			u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date()));
