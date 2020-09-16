@@ -70,15 +70,17 @@ public class User {
 	public void clearVisitedLocations() {
 		visitedLocations.clear();
 	}
-	
+
+	// TODO OK / bug fix ! enlevé ... (il y avait "r -> !r.attraction")
 	public void addUserReward(UserReward userReward) {
-		if(userRewards.stream().filter(r -> !r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
+		if(userRewards.stream().filter(r -> r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
 			userRewards.add(userReward);
 		}
 	}
-	
+
+	// TODO CopyOnWriteArrayList / pour concurrence Thread
 	public List<UserReward> getUserRewards() {
-		return userRewards;
+		return new CopyOnWriteArrayList(userRewards);
 	}
 	
 	public UserPreferences getUserPreferences() {

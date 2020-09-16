@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestTourGuideService" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-16T16:03:26" hostname="PO703394" time="1.323">
+  <properties/>
+  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="1.323"/>
+  <system-out><![CDATA[18:03:26.823 [Test worker] DEBUG tourGuide.service.GpsServiceImpl - constructor GpsServiceImpl
+18:03:26.835 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+18:03:26.835 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:03:26.835 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:03:26.982 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
+18:03:26.982 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:03:26.982 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+18:03:26.982 [Test worker] INFO tourGuide.service.TourGuideService - getNearByAttractions
+18:03:26.982 [Test worker] DEBUG tourGuide.service.TourGuideService - getAllUsers.size:1
+18:03:26.982 [Test worker] INFO tourGuide.service.TourGuideService - getUserLocation
+18:03:26.982 [pool-2-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 1 users.
+18:03:26.997 [pool-2-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocation
+18:03:26.997 [pool-2-thread-1] DEBUG tourGuide.service.GpsServiceImpl - getUserLocation for user :10cdb857-8cc0-4a94-80fe-84ce99dcbed8
+18:03:27.008 [Test worker] DEBUG tourGuide.service.GpsServiceImpl - getAttractions size : 26
+18:03:27.023 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size : 26
+18:03:27.024 [Test worker] DEBUG tourGuide.service.TourGuideService - nbMaxAttractions : 5
+18:03:27.028 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size apres sort: 5
+18:03:27.028 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponses size5
+18:03:27.047 [pool-2-thread-1] DEBUG tourGuide.service.GpsServiceImpl - getAttractions size : 26
+18:03:27.066 [pool-2-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:03:27.066 [pool-2-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:03:28.036 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponsesWithRewardPoint size5
+18:03:28.036 [Test worker] DEBUG tourGuide.service.TourGuideService - temps d'appel rewards complatable future en ms : 1008
+]]></system-out>
+  <system-err><![CDATA[Sep 16, 2020 6:03:26 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
+INFO: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
+]]></system-err>
+</testsuite>

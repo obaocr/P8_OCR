@@ -21,6 +21,7 @@ import javax.money.Monetary;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -34,8 +35,7 @@ public class TourGuideService {
     public final Tracker tracker;
     boolean testMode = true;
 
-    @Value("${MaxForGetNearByAttractions}")
-    private String nbMaxAttractions;
+    private final Integer nbMaxAttractions=5;
 
     /**
      * TourGuideService constructor
@@ -201,8 +201,9 @@ public class TourGuideService {
      * @return
      */
     public List<AttractionResponse> getNearByAttractions(String userName) {
-        logger.info("getNearByAttractionsAsyncMgt");
+        logger.info("getNearByAttractions");
         List<AttractionResponse> attractionResponses = new ArrayList<>();
+        logger.debug("getAllUsers.size:" + getAllUsers().size());
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         // Première étape pour ne retenir que les 5 premier items ...
         for (Attraction attraction : gpsService.getAttractions()) {
@@ -218,10 +219,11 @@ public class TourGuideService {
             attractionResponses.add(attractionResponse);
         }
         logger.debug("attractionResponses size : " + attractionResponses.size());
+        logger.debug("nbMaxAttractions : " + nbMaxAttractions);
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
         attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(Integer.parseInt(nbMaxAttractions))
+                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
                 .collect(Collectors.toList());
 
         logger.debug("attractionResponses size apres sort: " + attractionResponses.size());

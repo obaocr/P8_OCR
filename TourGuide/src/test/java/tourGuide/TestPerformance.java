@@ -47,7 +47,7 @@ public class TestPerformance {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        InternalTestHelper.setInternalUserNumber(10);
+        InternalTestHelper.setInternalUserNumber(100);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
         List<User> allUsers = new ArrayList<>();

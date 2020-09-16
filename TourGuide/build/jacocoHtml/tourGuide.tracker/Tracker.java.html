@@ -15,7 +15,7 @@ import tourGuide.user.User;
 public class Tracker extends Thread {
 <span class="fc" id="L16">	private Logger logger = LoggerFactory.getLogger(Tracker.class);</span>
 	// TODO OBA set to seconds for the development
-<span class="fc" id="L18">	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(30);</span>
+<span class="fc" id="L18">	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(300);</span>
 <span class="fc" id="L19">	private final ExecutorService executorService = Executors.newSingleThreadExecutor();</span>
 	private final TourGuideService tourGuideService;
 <span class="fc" id="L21">	private boolean stop = false;</span>
@@ -50,8 +50,8 @@ public class Tracker extends Thread {
 			try {
 <span class="fc" id="L51">				users.forEach(u -&gt; tourGuideService.trackUserLocation(u));</span>
 			}
-<span class="fc" id="L53">			catch (Exception e) {</span>
-<span class="fc" id="L54">				logger.error(&quot;exception tourGuideService.trackUserLocation(u) : &quot; + e.toString());</span>
+<span class="nc" id="L53">			catch (Exception e) {</span>
+<span class="nc" id="L54">				logger.error(&quot;exception tourGuideService.trackUserLocation(u) : &quot; + e.toString());</span>
 <span class="fc" id="L55">			}</span>
 			// TODO attendre que les N users soient terminÃ©s pour passer la suite ...
 <span class="fc" id="L57">			stopWatch.stop();</span>

@@ -22,48 +22,48 @@ import static org.junit.Assert.assertTrue;
 
 public class TestRewardsService {
 
-	@Test
-	public void userGetRewards() {
-		GpsService gpsService = new GpsServiceImpl(new GpsUtil());
-		RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
+    @Test
+    public void userGetRewards() {
+        GpsService gpsService = new GpsServiceImpl(new GpsUtil());
+        RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
 
-		InternalTestHelper.setInternalUserNumber(0);
-		TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
-		
-		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
-		Attraction attraction = gpsService.getAttractions().get(0);
-		user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
-		tourGuideService.trackUserLocation(user);
-		List<UserReward> userRewards = user.getUserRewards();
-		tourGuideService.tracker.stopTracking();
-		assertTrue(userRewards.size() == 1);
-	}
-	
-	@Test
-	public void isWithinAttractionProximity() {
-		GpsService gpsService = new GpsServiceImpl(new GpsUtil());
-		RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
-		Attraction attraction = gpsService.getAttractions().get(0);
-		assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
-	}
-	
-	//TODO ?? /  Needs fixed - can throw ConcurrentModificationException
-	// TODO => test KO !!!! rend 1 au lieu de 26 ?
-	@Test
-	public void nearAllAttractions() {
-		GpsService gpsService = new GpsServiceImpl(new GpsUtil());
-		RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
-		rewardsService.setProximityBuffer(Integer.MAX_VALUE);
+        InternalTestHelper.setInternalUserNumber(0);
+        TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
-		InternalTestHelper.setInternalUserNumber(1);
-		TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
-		
-		rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
-		List<UserReward> userRewards = tourGuideService.getUserRewards(tourGuideService.getAllUsers().get(0));
-		tourGuideService.tracker.stopTracking();
-		System.out.println("userRewards.size() : " + userRewards.size());
-		System.out.println("gpsService.getAttractions().size() : " + gpsService.getAttractions().size());
-		assertEquals(gpsService.getAttractions().size(), userRewards.size());
-	}
-	
+        User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+        Attraction attraction = gpsService.getAttractions().get(0);
+        user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
+        tourGuideService.trackUserLocation(user);
+        List<UserReward> userRewards = user.getUserRewards();
+        tourGuideService.tracker.stopTracking();
+        assertTrue(userRewards.size() == 1);
+    }
+
+    @Test
+    public void isWithinAttractionProximity() {
+        GpsService gpsService = new GpsServiceImpl(new GpsUtil());
+        RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
+        Attraction attraction = gpsService.getAttractions().get(0);
+        assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
+    }
+
+    // TODO / Needs fixed - can throw ConcurrentModificationException
+    // TODO / stopTracking mis après new TourGuideService pour éviter l'ajout de rewards par le tracker ...
+    @Test
+    public void nearAllAttractions() {
+        GpsService gpsService = new GpsServiceImpl(new GpsUtil());
+        RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
+        rewardsService.setProximityBuffer(Integer.MAX_VALUE);
+
+        InternalTestHelper.setInternalUserNumber(1);
+        TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
+        tourGuideService.tracker.stopTracking();
+
+        User user = tourGuideService.getAllUsers().get(0);
+        rewardsService.calculateRewards(user);
+        List<UserReward> userRewards = tourGuideService.getUserRewards(user);
+
+        assertEquals(gpsService.getAttractions().size(), userRewards.size());
+    }
+
 }

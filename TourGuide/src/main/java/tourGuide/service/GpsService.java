@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface GpsService {
 
-    List<Attraction> getAttractions();
+    List<Attraction>    getAttractions();
 
     public VisitedLocation getUserLocation(UUID userID);
 }
