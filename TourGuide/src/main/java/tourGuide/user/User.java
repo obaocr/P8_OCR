@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import gpsUtil.location.VisitedLocation;
 import tripPricer.Provider;
@@ -60,9 +61,10 @@ public class User {
 	public void addToVisitedLocations(VisitedLocation visitedLocation) {
 		visitedLocations.add(visitedLocation);
 	}
-	
+
+	// TODO CopyOnWriteArrayList / pour concurrence Thread
 	public List<VisitedLocation> getVisitedLocations() {
-		return visitedLocations;
+		return new CopyOnWriteArrayList(visitedLocations);
 	}
 	
 	public void clearVisitedLocations() {

@@ -1,28 +1,23 @@
 package tourGuide.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rewardCentral.RewardCentral;
 import tourGuide.Model.AttractionResponse;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
-@Service
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+
+// TODO  à passer en SVC mais enlever du bean ???
 public class RewardsService {
 	private Logger logger = LoggerFactory.getLogger(RewardsService.class);
 	private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
@@ -51,20 +46,33 @@ public class RewardsService {
 	// TODO l'appel  à getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints)
 	// TODO => !!! a voir pour utiliser CopyOnWriteArrayList dans getter user.getVisitedLocations()
 	// TODO => inutile pour CopyOnWriteArrayList(gpsService.getAttractions()) / à enlever
-	public void calculateRewards(User user) {
-		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList(user.getVisitedLocations());
-		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList(gpsService.getAttractions());
-
+	/*public void calculateRewards(User user) {
+		// TODO 15/09/2020 Enlever Iterator et gérer en While
+		List<VisitedLocation> userLocations = user.getVisitedLocations();
+		List<Attraction> attractions = gpsService.getAttractions();
 		Iterator userLocationsItr = userLocations.iterator();
 		VisitedLocation visitedLocation;
+
 		while (userLocationsItr.hasNext()) {
 			visitedLocation = (VisitedLocation) userLocationsItr.next();
-			Iterator attractionItr = attractions.iterator();
-			while (attractionItr.hasNext()) {
-				Attraction attraction = (Attraction) attractionItr.next();
+			for (Attraction attraction : attractions) {
 				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if(nearAttraction(visitedLocation, attraction)) {
 						// TODO peut être ... ?  Appel de getRewardPoints en completable et au retour (thenAccept) faire addUserReward
+						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+					}
+				}
+			}
+		}
+	}*/
+	public void calculateRewards(User user) {
+		List<VisitedLocation> userLocations = user.getVisitedLocations();
+		List<Attraction> attractions = gpsService.getAttractions();
+
+		for(VisitedLocation visitedLocation : userLocations) {
+			for(Attraction attraction : attractions) {
+				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
+					if(nearAttraction(visitedLocation, attraction)) {
 						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
 					}
 				}
@@ -80,7 +88,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 
-	// TODO  à voir pour passer en async...? getAttractionRewardPoints est longue en temps de réponse : sleep...
+	// TODO  getAttractionRewardPoints est longue en temps de réponse : sleep...
 	private int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 	}
@@ -105,13 +113,18 @@ public class RewardsService {
 	 * @param user
 	 * @return
 	 */
+
+	// TODO 15/09/2020 voir pour gérer avec executor en plus de supplyAsync ???
+	// TODO Executor ..
+	private ExecutorService executor = Executors.newFixedThreadPool(1000);
+
 	private CompletableFuture<AttractionResponse> getAttractionResponseWithRewardPoint (AttractionResponse attractionResponse, User user) {
 		return  CompletableFuture.supplyAsync(() -> {
 			//AttractionResponse attractionRespWithRewardPoint = attractionResponse;
 			int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());
 			attractionResponse.setRewardsPoints(reward);
 			return attractionResponse;
-		});
+		},executor);
 	}
 
 	/**

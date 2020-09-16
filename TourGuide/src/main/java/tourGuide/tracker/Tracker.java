@@ -53,7 +53,7 @@ public class Tracker extends Thread {
 			catch (Exception e) {
 				logger.error("exception tourGuideService.trackUserLocation(u) : " + e.toString());
 			}
-
+			// TODO attendre que les N users soient terminés pour passer la suite ...
 			stopWatch.stop();
 			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
 			stopWatch.reset();

@@ -6,6 +6,7 @@ import gpsUtil.location.VisitedLocation;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import tourGuide.Model.AttractionResponse;
 import tourGuide.Model.UserPreferencesDTO;
@@ -29,10 +30,12 @@ public class TourGuideService {
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
     private final GpsService gpsService;
     private final RewardsService rewardsService;
-    private final TripPricerService trTripPricerService = new TripPricerService();
+    private final TripPricerService trTripPricerService = new TripPricerServiceImpl();
     public final Tracker tracker;
     boolean testMode = true;
-    private final Integer nbMaxAttractions = 5;
+
+    @Value("${MaxForGetNearByAttractions}")
+    private String nbMaxAttractions;
 
     /**
      * TourGuideService constructor
@@ -42,7 +45,7 @@ public class TourGuideService {
      */
     // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
     // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
-    public TourGuideService( GpsService gpsService, RewardsService rewardsService) {
+    public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
         this.gpsService = gpsService;
@@ -218,7 +221,7 @@ public class TourGuideService {
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
         attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
+                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(Integer.parseInt(nbMaxAttractions))
                 .collect(Collectors.toList());
 
         logger.debug("attractionResponses size apres sort: " + attractionResponses.size());
