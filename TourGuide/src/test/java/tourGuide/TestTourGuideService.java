@@ -1,13 +1,13 @@
 package tourGuide;
 
 import gpsUtil.GpsUtil;
+import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import rewardCentral.RewardCentral;
-import tourGuide.Model.AttractionResponse;
+import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.GpsService;
 import tourGuide.service.GpsServiceImpl;
@@ -108,19 +108,15 @@ public class TestTourGuideService {
         assertEquals(5, providers.size());
     }
 
-    //@Ignore // Not yet implemented
     @Test
-    // TODO KO, plante, à voir...
     public void getNearbyAttractions() {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
         InternalTestHelper.setInternalUserNumber(1);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
         User user  = tourGuideService.getAllUsers().get(0);
-        List<AttractionResponse> attractions = tourGuideService.getNearByAttractions(user.getUserName());
+        List<AttractionResponseDTO> attractions = tourGuideService.getNearByAttractions(user.getUserName());
         tourGuideService.tracker.stopTracking();
         assertEquals(5, attractions.size());
-        // TODO Tester que les données soient renseignées
     }
-
 }

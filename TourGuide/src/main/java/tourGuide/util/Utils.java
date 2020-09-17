@@ -8,8 +8,8 @@ public class Utils {
 
     /**
      *
-     * @param loc1
-     * @param loc2
+     * @param loc1 : location 1
+     * @param loc2 : location 2 2
      * @return distance between two locations
      */
     public static double calculateDistance(Location loc1, Location loc2) {

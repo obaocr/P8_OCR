@@ -6,9 +6,8 @@ import gpsUtil.location.VisitedLocation;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import tourGuide.Model.AttractionResponse;
+import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
@@ -23,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -252,15 +250,15 @@ public class TourGuideService {
      * @param userName
      * @return
      */
-    public List<AttractionResponse> getNearByAttractions(String userName) {
+    public List<AttractionResponseDTO> getNearByAttractions(String userName) {
         logger.info("getNearByAttractions");
-        List<AttractionResponse> attractionResponses = new ArrayList<>();
+        List<AttractionResponseDTO> attractionResponses = new ArrayList<>();
         logger.debug("getAllUsers.size:" + getAllUsers().size());
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         // Première étape pour ne retenir que les 5 premier items ...
         for (Attraction attraction : gpsService.getAttractions()) {
             Double distance = Utils.calculateDistance(attraction, visitedLocation.location);
-            AttractionResponse attractionResponse = new AttractionResponse();
+            AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
             attractionResponse.setAttractionName(attraction.attractionName);
             attractionResponse.setCity(attraction.city);
             attractionResponse.setState(attraction.state);
@@ -274,23 +272,23 @@ public class TourGuideService {
         logger.debug("nbMaxAttractions : " + nbMaxAttractions);
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
-        attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
+        attractionResponses = (ArrayList<AttractionResponseDTO>) attractionResponses
+                .stream().sorted(Comparator.comparing(AttractionResponseDTO::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
                 .collect(Collectors.toList());
 
         logger.debug("attractionResponses size apres sort: " + attractionResponses.size());
         // Appels en // pour calcul de Rewards car peut mettre du temps unitairement
         Date d1 = new Date();
 
-        List<AttractionResponse> attractionResponsesRewards = new ArrayList<>();
+        List<AttractionResponseDTO> attractionResponsesRewards = new ArrayList<>();
         attractionResponsesRewards = rewardsService.getAllAttractionResponseWithRewardPoint(attractionResponses, getUser(userName));
 
         Date d2 = new Date();
         logger.debug("temps d'appel rewards complatable future en ms : " + (d2.getTime() - d1.getTime()));
 
         // Tri car le paraléllisme ne rend pas dans l'ordre
-        List<AttractionResponse> attractionResponsesResult = (ArrayList<AttractionResponse>) attractionResponsesRewards
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).collect(Collectors.toList());
+        List<AttractionResponseDTO> attractionResponsesResult = (ArrayList<AttractionResponseDTO>) attractionResponsesRewards
+                .stream().sorted(Comparator.comparing(AttractionResponseDTO::getDistanceWithCurrLoc)).collect(Collectors.toList());
 
         return attractionResponsesResult;
     }

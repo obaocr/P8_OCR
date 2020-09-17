@@ -6,7 +6,7 @@ import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rewardCentral.RewardCentral;
-import tourGuide.Model.AttractionResponse;
+import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 import tourGuide.util.Utils;
@@ -14,7 +14,6 @@ import tourGuide.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -89,7 +88,7 @@ public class RewardsService {
     // TODO Executor ..
     private ExecutorService executor = Executors.newFixedThreadPool(100);
 
-    private CompletableFuture<AttractionResponse> getAttractionResponseWithRewardPoint(AttractionResponse attractionResponse, User user) {
+    private CompletableFuture<AttractionResponseDTO> getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
         return CompletableFuture.supplyAsync(() -> {
             int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
@@ -105,18 +104,18 @@ public class RewardsService {
      * @return List<AttractionResponse> with rewards points
      */
     // TODO gérer les exceptions, cf. docs
-    public List<AttractionResponse> getAllAttractionResponseWithRewardPoint(List<AttractionResponse> attractionResponses, User user) {
+    public List<AttractionResponseDTO> getAllAttractionResponseWithRewardPoint(List<AttractionResponseDTO> attractionResponses, User user) {
         logger.debug("attractionResponses size" + attractionResponses.size());
-        List<AttractionResponse> attractionResponsesWithRewardPoint = new ArrayList<>();
+        List<AttractionResponseDTO> attractionResponsesWithRewardPoint = new ArrayList<>();
 
-        List<CompletableFuture<AttractionResponse>> attractionsRespWithRewardPointFuture = attractionResponses.stream()
+        List<CompletableFuture<AttractionResponseDTO>> attractionsRespWithRewardPointFuture = attractionResponses.stream()
                 .map(a -> getAttractionResponseWithRewardPoint(a, user))
                 .collect(Collectors.toList());
 
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(attractionsRespWithRewardPointFuture
                 .toArray(new CompletableFuture[attractionsRespWithRewardPointFuture.size()]));
 
-        CompletableFuture<List<AttractionResponse>> allCompletableFuture = allFutures.thenApply(
+        CompletableFuture<List<AttractionResponseDTO>> allCompletableFuture = allFutures.thenApply(
                 future -> {
                     return attractionsRespWithRewardPointFuture.stream()
                             .map(a -> a.join()).collect(Collectors.toList());

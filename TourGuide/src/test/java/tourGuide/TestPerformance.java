@@ -47,25 +47,21 @@ public class TestPerformance {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        InternalTestHelper.setInternalUserNumber(1000);
+        InternalTestHelper.setInternalUserNumber(10);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
-        tourGuideService.tracker.stopTracking();
 
         List<User> allUsers = new ArrayList<>();
         allUsers = tourGuideService.getAllUsers();
 
         Date d1 = new Date();
-        /*for (User user : allUsers) {
-        stopWatch.start();
-            tourGuideService.trackUserLocation(user);
-        }*/
+        // Nouvelle méthode pour lancer trackUserLocation pour tous les users
         tourGuideService.trackUserLocationForAllUsers(allUsers);
 
         Date d2 = new Date();
         long timeMs = d2.getTime() - d1.getTime();
-        //tourGuideService.tracker.stopTracking();
+        tourGuideService.tracker.stopTracking();
         System.out.println("temps highVolumeTrackLocation en ms : " + (d2.getTime() - d1.getTime()));
-        // 15 minutes => 900 secondes max, pour 100.000 users
+        // 15 minutes => 900 secondes max selon la demande, pour 100.000 users
         assertTrue(TimeUnit.MINUTES.toSeconds(900) >= TimeUnit.MILLISECONDS.toSeconds(timeMs));
     }
 
@@ -75,7 +71,7 @@ public class TestPerformance {
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
-        InternalTestHelper.setInternalUserNumber(100);
+        InternalTestHelper.setInternalUserNumber(10);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         // TODO OBA : attention TourGuideService lance le Tracker.. on ne devrait pas, pas propre ...
