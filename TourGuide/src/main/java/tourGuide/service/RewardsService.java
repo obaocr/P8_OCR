@@ -9,6 +9,7 @@ import rewardCentral.RewardCentral;
 import tourGuide.Model.AttractionResponse;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
+import tourGuide.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +44,16 @@ public class RewardsService {
         proximityBuffer = defaultProximityBuffer;
     }
 
-    // TODO l'appel  à getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints)
+    // TODO l'appel  à getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints), à voir si on laisse
     public void calculateRewards(User user) {
+        logger.debug("calculateRewards pour user : " + user.getUserName());
         List<VisitedLocation> userLocations = user.getVisitedLocations();
         List<Attraction> attractions = gpsService.getAttractions();
         for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
+                        logger.debug("calculateRewards => ******************* passage nearAttraction : " + user.getUserName());
                         user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
                     }
                 }
@@ -59,31 +62,19 @@ public class RewardsService {
     }
 
     public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
-        return getDistance(attraction, location) > attractionProximityRange ? false : true;
+        return Utils.calculateDistance(attraction, location) > attractionProximityRange ? false : true;
     }
 
+    // TODO proximityBuffer à 10 et distance toujours > 3000 donc pas de rewards ...
     private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
-        double distance = getDistance(attraction, visitedLocation.location);
+        double distance = Utils.calculateDistance(attraction, visitedLocation.location);
+        logger.debug("nearAttraction, distance, proximityBuffer :" +  distance + " / " + proximityBuffer);
         return distance > proximityBuffer ? false : true;
     }
 
     // TODO  getAttractionRewardPoints est longue en temps de réponse : sleep...
     private int getRewardPoints(Attraction attraction, User user) {
         return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
-    }
-
-    public double getDistance(Location loc1, Location loc2) {
-        double lat1 = Math.toRadians(loc1.latitude);
-        double lon1 = Math.toRadians(loc1.longitude);
-        double lat2 = Math.toRadians(loc2.latitude);
-        double lon2 = Math.toRadians(loc2.longitude);
-
-        double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)
-                + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
-
-        double nauticalMiles = 60 * Math.toDegrees(angle);
-        double statuteMiles = STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;
-        return statuteMiles;
     }
 
     /**
@@ -96,11 +87,10 @@ public class RewardsService {
 
     // TODO 15/09/2020 voir pour gérer avec executor en plus de supplyAsync ???
     // TODO Executor ..
-    private ExecutorService executor = Executors.newFixedThreadPool(1000);
+    private ExecutorService executor = Executors.newFixedThreadPool(100);
 
     private CompletableFuture<AttractionResponse> getAttractionResponseWithRewardPoint(AttractionResponse attractionResponse, User user) {
         return CompletableFuture.supplyAsync(() -> {
-            //AttractionResponse attractionRespWithRewardPoint = attractionResponse;
             int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;

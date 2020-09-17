@@ -8,26 +8,26 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.UUID;
-
+// TODO enlever les lignes en commentaires en fin
 public class GpsServiceImpl implements GpsService {
 
 <span class="fc" id="L14">    private Logger logger = LoggerFactory.getLogger(GpsServiceImpl.class);</span>
     private final GpsUtil gpsUtil;
 
 <span class="fc" id="L17">    public GpsServiceImpl(GpsUtil gpsUtil) {</span>
-<span class="fc" id="L18">        logger.debug(&quot;constructor GpsServiceImpl&quot;);</span>
+        //logger.debug(&quot;constructor GpsServiceImpl&quot;);
 <span class="fc" id="L19">        this.gpsUtil = gpsUtil;</span>
 <span class="fc" id="L20">    }</span>
 
     @Override
     public List&lt;Attraction&gt; getAttractions() {
-<span class="fc" id="L24">        logger.debug(&quot;getAttractions size : &quot; + gpsUtil.getAttractions().size());</span>
+        //logger.debug(&quot;getAttractions size : &quot; + gpsUtil.getAttractions().size());
 <span class="fc" id="L25">        return gpsUtil.getAttractions();</span>
     }
 
     @Override
     public VisitedLocation getUserLocation(UUID userID) {
-<span class="fc" id="L30">        logger.debug(&quot;getUserLocation for user :&quot; + userID);</span>
+        //logger.debug(&quot;getUserLocation for user :&quot; + userID);
 <span class="fc" id="L31">        return gpsUtil.getUserLocation(userID);</span>
     }
 }

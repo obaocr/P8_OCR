@@ -47,22 +47,26 @@ public class TestPerformance {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        InternalTestHelper.setInternalUserNumber(100);
+        InternalTestHelper.setInternalUserNumber(1000);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
+        tourGuideService.tracker.stopTracking();
 
         List<User> allUsers = new ArrayList<>();
         allUsers = tourGuideService.getAllUsers();
 
-        StopWatch stopWatch = new StopWatch();
+        Date d1 = new Date();
+        /*for (User user : allUsers) {
         stopWatch.start();
-        for (User user : allUsers) {
             tourGuideService.trackUserLocation(user);
-        }
-        stopWatch.stop();
-        tourGuideService.tracker.stopTracking();
+        }*/
+        tourGuideService.trackUserLocationForAllUsers(allUsers);
 
-        System.out.println("highVolumeTrackLocation: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
-        assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+        Date d2 = new Date();
+        long timeMs = d2.getTime() - d1.getTime();
+        //tourGuideService.tracker.stopTracking();
+        System.out.println("temps highVolumeTrackLocation en ms : " + (d2.getTime() - d1.getTime()));
+        // 15 minutes => 900 secondes max, pour 100.000 users
+        assertTrue(TimeUnit.MINUTES.toSeconds(900) >= TimeUnit.MILLISECONDS.toSeconds(timeMs));
     }
 
     @Test
@@ -71,7 +75,7 @@ public class TestPerformance {
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
-        InternalTestHelper.setInternalUserNumber(10);
+        InternalTestHelper.setInternalUserNumber(100);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         // TODO OBA : attention TourGuideService lance le Tracker.. on ne devrait pas, pas propre ...

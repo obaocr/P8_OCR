@@ -14,7 +14,6 @@ import tourGuide.user.User;
 
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
-	// TODO OBA set to seconds for the development
 	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(300);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
@@ -46,14 +45,26 @@ public class Tracker extends Thread {
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
 			// Ajout Try probleme crash selon locale FR
-			// TODO 27/08/2020 rendre l'appel de "trackUserLocation" asynchrone
+
+			// TODO ci-dessous le code d'origine mis en commentaire
 			try {
-				users.forEach(u -> tourGuideService.trackUserLocation(u));
+				logger.info("Code boucle mis en commentaire");
+				//users.forEach(u -> tourGuideService.trackUserLocation(u));
 			}
 			catch (Exception e) {
 				logger.error("exception tourGuideService.trackUserLocation(u) : " + e.toString());
 			}
-			// TODO attendre que les N users soient terminés pour passer la suite ...
+
+			// TODO : traitement pour tous les users
+			// TODO 15 secondes pour 100000 !
+			try {
+				tourGuideService.trackUserLocationForAllUsers(users);
+			}
+
+			catch (Exception e) {
+				logger.error("exception tourGuideService.trackUserLocation asynchrone  : " + e.toString());
+			}
+
 			stopWatch.stop();
 			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
 			stopWatch.reset();

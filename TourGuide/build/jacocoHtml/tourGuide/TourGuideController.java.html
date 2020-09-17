@@ -39,7 +39,6 @@ import java.util.concurrent.CompletableFuture;
     }
 
     // TODO: Change this method to no longer return a List of Attractions.
-    // TODO : Rewards  Ã  calculer...
     //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
     //  Return a new JSON object that contains:
     // Name of Tourist attraction,
@@ -50,17 +49,16 @@ import java.util.concurrent.CompletableFuture;
     //    Note: Attraction reward points can be gathered from RewardsCentral
     @RequestMapping(&quot;/getNearbyAttractions&quot;)
     public String getNearbyAttractions(@RequestParam String userName) {
-<span class="nc" id="L53">        logger.debug(&quot;getNearbyAttractions&quot;);</span>
-<span class="nc" id="L54">        String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));</span>
-<span class="nc" id="L55">        logger.debug(&quot;==========&gt; apres appel tourGuideService.getNearByAttractionsAsyncMgt et avant return&quot;);</span>
-<span class="nc" id="L56">        return response;</span>
+<span class="nc" id="L52">        logger.debug(&quot;getNearbyAttractions&quot;);</span>
+<span class="nc" id="L53">        String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));</span>
+<span class="nc" id="L54">        return response;</span>
     }
 
     @RequestMapping(&quot;/getRewards&quot;)
     // TODO A voir pour Ã©ventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {
-<span class="nc" id="L62">        logger.debug(&quot;getRewards&quot;);</span>
-<span class="nc" id="L63">        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
+<span class="nc" id="L60">        logger.debug(&quot;getRewards&quot;);</span>
+<span class="nc" id="L61">        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
     }
 
     @RequestMapping(&quot;/getAllCurrentLocations&quot;)
@@ -76,15 +74,15 @@ import java.util.concurrent.CompletableFuture;
         //        &quot;019b04a9-067a-4c76-8817-ee75088c3822&quot;: {&quot;longitude&quot;:-48.188821,&quot;latitude&quot;:74.84371}
         //        ...
         //     }
-<span class="nc" id="L79">        logger.debug(&quot;getAllCurrentLocations&quot;);</span>
-<span class="nc" id="L80">        return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());</span>
+<span class="nc" id="L77">        logger.debug(&quot;getAllCurrentLocations&quot;);</span>
+<span class="nc" id="L78">        return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());</span>
     }
 
     @RequestMapping(&quot;/getTripDeals&quot;)
     public String getTripDeals(@RequestParam String userName) {
-<span class="nc" id="L85">        logger.debug(&quot;getTripDeals&quot;);</span>
-<span class="nc" id="L86">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
-<span class="nc" id="L87">        return JsonStream.serialize(providers);</span>
+<span class="nc" id="L83">        logger.debug(&quot;getTripDeals&quot;);</span>
+<span class="nc" id="L84">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
+<span class="nc" id="L85">        return JsonStream.serialize(providers);</span>
     }
 
     // TODO nouveeau endpoint get et put pour mise Ã  jour des preferences
@@ -92,33 +90,31 @@ import java.util.concurrent.CompletableFuture;
     // TODO pour la rÃ©ponse filter que les champs voulus des objets comme Money... Ã  voir
     // TODO Ã  voir pour mettre dans une classe dÃ©diÃ© UserController ?
     // TODO GÃ©rer les codes HTTP si KO ...
-
-    // TODO OBA
     @RequestMapping(&quot;/getUserPreferences&quot;)
     public UserPreferences getUserPreferences(@RequestParam String userName) {
-<span class="nc" id="L99">        logger.debug(&quot;getUserPreferences&quot;);</span>
-<span class="nc" id="L100">        return tourGuideService.getUserPreferences(userName);</span>
+<span class="nc" id="L95">        logger.debug(&quot;getUserPreferences&quot;);</span>
+<span class="nc" id="L96">        return tourGuideService.getUserPreferences(userName);</span>
     }
 
     // TODO OBA
     @RequestMapping(&quot;/getUserPreferencesSummary&quot;)
     public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
-<span class="nc" id="L106">        logger.debug(&quot;getUserPreferences&quot;);</span>
-<span class="nc" id="L107">        return tourGuideService.getUserPreferencesSummary(userName);</span>
+<span class="nc" id="L102">        logger.debug(&quot;getUserPreferences&quot;);</span>
+<span class="nc" id="L103">        return tourGuideService.getUserPreferencesSummary(userName);</span>
     }
 
     // TODO  Ã  voir pour faire le checkInput ????
     // TODO faire comme le P7 on peut ajouter un biding result en input et l'utiliser pour gÃ©rer .. sinon voir P5 Exceptions...
     @PutMapping(value = &quot;/setUserPreferences/{userName}&quot;)
     public UserPreferences setUserPreferences(@PathVariable(&quot;userName&quot;) String userName, @RequestBody @Valid UserPreferencesDTO userPreferencesDTO) {
-<span class="nc" id="L114">        logger.debug(&quot;Update UserPreferences for a user&quot;);</span>
+<span class="nc" id="L110">        logger.debug(&quot;Update UserPreferences for a user&quot;);</span>
         //checkInput(userPreferencesDTO);
-<span class="nc" id="L116">        return tourGuideService.setUserPreferences(userName, userPreferencesDTO);</span>
+<span class="nc" id="L112">        return tourGuideService.setUserPreferences(userName, userPreferencesDTO);</span>
     }
 
     private User getUser(String userName) {
-<span class="nc" id="L120">        logger.debug(&quot;getUser&quot;);</span>
-<span class="nc" id="L121">        return tourGuideService.getUser(userName);</span>
+<span class="nc" id="L116">        logger.debug(&quot;getUser&quot;);</span>
+<span class="nc" id="L117">        return tourGuideService.getUser(userName);</span>
     }
 
 

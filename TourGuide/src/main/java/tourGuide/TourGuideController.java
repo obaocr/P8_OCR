@@ -39,7 +39,6 @@ public class TourGuideController {
     }
 
     // TODO: Change this method to no longer return a List of Attractions.
-    // TODO : Rewards  à calculer...
     //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
     //  Return a new JSON object that contains:
     // Name of Tourist attraction,
@@ -52,7 +51,6 @@ public class TourGuideController {
     public String getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
         String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));
-        logger.debug("==========> apres appel tourGuideService.getNearByAttractionsAsyncMgt et avant return");
         return response;
     }
 
@@ -92,8 +90,6 @@ public class TourGuideController {
     // TODO pour la réponse filter que les champs voulus des objets comme Money... à voir
     // TODO à voir pour mettre dans une classe dédié UserController ?
     // TODO Gérer les codes HTTP si KO ...
-
-    // TODO OBA
     @RequestMapping("/getUserPreferences")
     public UserPreferences getUserPreferences(@RequestParam String userName) {
         logger.debug("getUserPreferences");

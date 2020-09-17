@@ -15,13 +15,17 @@ import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
 import tourGuide.user.UserReward;
+import tourGuide.util.Utils;
 import tripPricer.Provider;
 
 import javax.money.Monetary;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -62,13 +66,14 @@ public class TourGuideService {
     }
 
     public List<UserReward> getUserRewards(User user) {
+        logger.debug("getUserLocation");
         return user.getUserRewards();
     }
 
     // TODO NB : trackUserLocation peut être, sera amélioré dans le chantier global du projet
     // TODO : pas de pb de performance, on peut laisser en l'état
     public VisitedLocation getUserLocation(User user) {
-        logger.info("getUserLocation");
+        logger.debug("getUserLocation");
         VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
                 user.getLastVisitedLocation() :
                 trackUserLocation(user);
@@ -195,6 +200,53 @@ public class TourGuideService {
         return visitedLocation;
     }
 
+    // *********************************************************
+    // *********** Async ***************************************
+    // *********************************************************
+
+    // TODO Gérer les exceptions
+    // TODO 100 Thread max sinon ne sert plus  à rien...
+
+    private ExecutorService executor = Executors.newFixedThreadPool(100);
+
+    // TODO ... trackUserLocation pour un User en asycnhrone
+    private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
+        logger.info("trackUserLocationAsync for user : " + user.getUserName());
+        return CompletableFuture.supplyAsync(() -> {
+            VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
+            user.addToVisitedLocations(visitedLocation);
+            rewardsService.calculateRewards(user);
+            return visitedLocation;
+        }, executor);
+    }
+
+    // TODO ... trackUserLocationForAllUsers pour tous les Users, lance chaque user en asychrone
+    public boolean trackUserLocationForAllUsers(List<User> users){
+        logger.info("trackUserLocationForAllUsers");
+        List<VisitedLocation> visitedLocations = new ArrayList<>();
+        List<CompletableFuture<VisitedLocation>> trackUserLocationFuture = users.stream()
+                .map(u -> getTrackUserLocationAsync(u))
+                .collect(Collectors.toList());
+
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(trackUserLocationFuture
+                .toArray(new CompletableFuture[trackUserLocationFuture.size()]));
+
+        CompletableFuture<List<VisitedLocation>> allCompletableFuture = allFutures.thenApply(
+                future -> {
+                    return trackUserLocationFuture.stream()
+                            .map(a -> a.join()).collect(Collectors.toList());
+                }
+        );
+        visitedLocations = allCompletableFuture.join();
+        logger.debug("attractionResponsesWithRewardPoint size :" + visitedLocations.size());
+        // TODO Finalement l'appelant n'a pas besoin des VisitedLocation
+        return true;
+    }
+
+    // *********************************************************
+    // *********** Fin Async ***********************************
+    // *********************************************************
+
     /**
      * getNearByAttractionsAsyncMgt : calcul en parallel avec Completable Future
      * @param userName
@@ -207,7 +259,7 @@ public class TourGuideService {
         VisitedLocation visitedLocation = getUserLocation(getUser(userName));
         // Première étape pour ne retenir que les 5 premier items ...
         for (Attraction attraction : gpsService.getAttractions()) {
-            Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
+            Double distance = Utils.calculateDistance(attraction, visitedLocation.location);
             AttractionResponse attractionResponse = new AttractionResponse();
             attractionResponse.setAttractionName(attraction.attractionName);
             attractionResponse.setCity(attraction.city);
@@ -268,7 +320,6 @@ public class TourGuideService {
             String email = userName + "@tourGuide.com";
             User user = new User(UUID.randomUUID(), userName, phone, email);
             generateUserLocationHistory(user);
-
             internalUserMap.put(userName, user);
         });
         logger.debug("Created " + InternalTestHelper.getInternalUserNumber() + " internal test users.");

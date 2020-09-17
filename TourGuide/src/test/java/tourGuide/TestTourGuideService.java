@@ -120,6 +120,7 @@ public class TestTourGuideService {
         List<AttractionResponse> attractions = tourGuideService.getNearByAttractions(user.getUserName());
         tourGuideService.tracker.stopTracking();
         assertEquals(5, attractions.size());
+        // TODO Tester que les données soient renseignées
     }
 
 }
