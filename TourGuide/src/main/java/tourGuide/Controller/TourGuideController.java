@@ -1,4 +1,4 @@
-package tourGuide;
+package tourGuide.Controller;
 
 import com.jsoniter.output.JsonStream;
 import gpsUtil.location.VisitedLocation;
@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rewardCentral.RewardCentral;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -15,8 +14,6 @@ import tripPricer.Provider;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class TourGuideController {
@@ -26,12 +23,12 @@ public class TourGuideController {
     @Autowired
     TourGuideService tourGuideService;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "Greetings from TourGuide! OCR P8 by OBA";
     }
 
-    @RequestMapping("/getLocation")
+    @GetMapping("/getLocation")
     public String getLocation(@RequestParam String userName) {
         logger.debug("getLocation");
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
@@ -47,21 +44,21 @@ public class TourGuideController {
     // The distance in miles between the user's location and each of the attractions.
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
-    @RequestMapping("/getNearbyAttractions")
+    @GetMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
         String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));
         return response;
     }
 
-    @RequestMapping("/getRewards")
+    @GetMapping("/getRewards")
     // TODO A voir pour éventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {
         logger.debug("getRewards");
         return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
     }
 
-    @RequestMapping("/getAllCurrentLocations")
+    @GetMapping("/getAllCurrentLocations")
     public String getAllCurrentLocations() {
         // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
         // TODO: Get a list of every user's most recent location as JSON
@@ -78,7 +75,7 @@ public class TourGuideController {
         return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());
     }
 
-    @RequestMapping("/getTripDeals")
+    @GetMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) {
         logger.debug("getTripDeals");
         List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
@@ -90,14 +87,14 @@ public class TourGuideController {
     // TODO pour la réponse filter que les champs voulus des objets comme Money... à voir
     // TODO à voir pour mettre dans une classe dédié UserController ?
     // TODO Gérer les codes HTTP si KO ...
-    @RequestMapping("/getUserPreferences")
+    @GetMapping("/getUserPreferences")
     public UserPreferences getUserPreferences(@RequestParam String userName) {
         logger.debug("getUserPreferences");
         return tourGuideService.getUserPreferences(userName);
     }
 
     // TODO OBA
-    @RequestMapping("/getUserPreferencesSummary")
+    @GetMapping("/getUserPreferencesSummary")
     public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
         logger.debug("getUserPreferences");
         return tourGuideService.getUserPreferencesSummary(userName);

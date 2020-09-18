@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.UUID;
 // TODO enlever les lignes en commentaires en fin
+// TODO Mettre GpsUTIL en servicing
 public class GpsServiceImpl implements GpsService {
 
     private Logger logger = LoggerFactory.getLogger(GpsServiceImpl.class);

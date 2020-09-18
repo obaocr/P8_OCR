@@ -67,7 +67,7 @@ public class RewardsService {
     // TODO proximityBuffer à 10 et distance toujours > 3000 donc pas de rewards ...
     private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
         double distance = Utils.calculateDistance(attraction, visitedLocation.location);
-        logger.debug("nearAttraction, distance, proximityBuffer :" +  distance + " / " + proximityBuffer);
+        //logger.debug("nearAttraction, distance, proximityBuffer :" +  distance + " / " + proximityBuffer);
         return distance > proximityBuffer ? false : true;
     }
 

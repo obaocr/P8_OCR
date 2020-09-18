@@ -66,7 +66,12 @@ public class User {
 	public List<VisitedLocation> getVisitedLocations() {
 		return new CopyOnWriteArrayList(visitedLocations);
 	}
-	
+
+	// TODO CopyOnWriteArrayList / pour concurrence Thread
+	public List<UserReward> getUserRewards() {
+		return new CopyOnWriteArrayList(userRewards);
+	}
+
 	public void clearVisitedLocations() {
 		visitedLocations.clear();
 	}
@@ -78,11 +83,6 @@ public class User {
 		}
 	}
 
-	// TODO CopyOnWriteArrayList / pour concurrence Thread
-	public List<UserReward> getUserRewards() {
-		return new CopyOnWriteArrayList(userRewards);
-	}
-	
 	public UserPreferences getUserPreferences() {
 		return userPreferences;
 	}

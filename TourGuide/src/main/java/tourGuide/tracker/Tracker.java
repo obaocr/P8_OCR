@@ -44,25 +44,13 @@ public class Tracker extends Thread {
 			List<User> users = tourGuideService.getAllUsers();
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
-			// Ajout Try probleme crash selon locale FR
-
-			// TODO ci-dessous le code d'origine mis en commentaire
-			try {
-				logger.info("Code boucle mis en commentaire");
-				//users.forEach(u -> tourGuideService.trackUserLocation(u));
-			}
-			catch (Exception e) {
-				logger.error("exception tourGuideService.trackUserLocation(u) : " + e.toString());
-			}
 
 			// TODO : traitement pour tous les users
-			// TODO 15 secondes pour 100000 !
 			try {
 				tourGuideService.trackUserLocationForAllUsers(users);
 			}
-
 			catch (Exception e) {
-				logger.error("exception tourGuideService.trackUserLocation asynchrone  : " + e.toString());
+				logger.error("exception tourGuideService.trackUserLocationForAllUsers   : " + e.toString());
 			}
 
 			stopWatch.stop();

@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven {
-            url "****"
+            url "https://afa-nrepo.azure-paas.intraxa/repository/maven-group"
         }
     }
     dependencies {
@@ -24,7 +24,7 @@ bootJar {
 
 repositories {
     maven {
-        url "****"
+        url "https://afa-nrepo.azure-paas.intraxa/repository/maven-group"
     }
     flatDir {
         dirs 'libs'

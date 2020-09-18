@@ -318,6 +318,7 @@ public class TourGuideService {
             String email = userName + "@tourGuide.com";
             User user = new User(UUID.randomUUID(), userName, phone, email);
             generateUserLocationHistory(user);
+            logger.debug("User : " + user.getUserId() + ' ' + user.getUserName());
             internalUserMap.put(userName, user);
         });
         logger.debug("Created " + InternalTestHelper.getInternalUserNumber() + " internal test users.");
