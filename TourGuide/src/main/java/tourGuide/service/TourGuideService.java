@@ -36,7 +36,6 @@ public class TourGuideService {
     private final TripPricerService trTripPricerService = new TripPricerServiceImpl();
     public final Tracker tracker;
     boolean testMode = true;
-
     private final Integer nbMaxAttractions=5;
 
     /**
@@ -78,8 +77,6 @@ public class TourGuideService {
         return visitedLocation;
     }
 
-    // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
-    // TODO : pas de pb de performance, on peut laisser en l'état
     /**
      * Method to get the last location for all users
      * @return al list of UserCurrentLocation
@@ -95,77 +92,19 @@ public class TourGuideService {
         return mapUserLocation;
     }
 
-    // TODO : pas de pb de performance, on peut laisser en l'état
     public User getUser(String userName) {
         return internalUserMap.get(userName);
     }
 
-    // TODO : pas de pb de performance, on peut laisser en l'état
     public List<User> getAllUsers() {
         return internalUserMap.values().stream().collect(Collectors.toList());
     }
 
-    // TODO : pas de pb de performance, on peut laisser en l'état
     public void addUser(User user) {
         logger.info("addUser");
         if (!internalUserMap.containsKey(user.getUserName())) {
             internalUserMap.put(user.getUserName(), user);
         }
-    }
-
-    // TODO Gérer not found 201 ?
-    public UserPreferences getUserPreferences(String userName) {
-        logger.info("getUserPreferences");
-        User user = this.getUser(userName);
-        if (user != null) {
-            return user.getUserPreferences();
-        }
-        logger.debug("getUserPreferences : userName null");
-        return null;
-    }
-
-    // TODO Gérer not found 201 ?
-    // TODO : pas de pb de performance, on peut laisser en l'état
-    public UserPreferencesDTO getUserPreferencesSummary(String userName) {
-        logger.info("getUserPreferencesSummary");
-        User user = this.getUser(userName);
-        UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO();
-        if (user != null) {
-            UserPreferences userPreferences = user.getUserPreferences();
-            userPreferencesDTO.setAttractionProximity(userPreferences.getAttractionProximity());
-            userPreferencesDTO.setTripDuration(userPreferences.getTripDuration());
-            userPreferencesDTO.setNumberOfAdults(userPreferences.getNumberOfAdults());
-            userPreferencesDTO.setNumberOfChildren(userPreferences.getNumberOfChildren());
-            userPreferencesDTO.setTicketQuantity(userPreferences.getTicketQuantity());
-            userPreferencesDTO.setCurrency(userPreferences.getCurrency().getCurrencyCode());
-            userPreferencesDTO.setHighPricePoint(userPreferences.getHighPricePoint().getNumber().intValue());
-            userPreferencesDTO.setLowerPricePoint(userPreferences.getLowerPricePoint().getNumber().intValue());
-            return userPreferencesDTO;
-        }
-        logger.debug("getUserPreferencesSummary : userName null");
-        return null;
-    }
-
-    // TODO Gérer Username not found 201 ?
-    // TODO : pas de pb de performance, on peut laisser en l'état
-    public UserPreferences setUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
-        logger.info("settUserPreferences : " + userName);
-        User user = this.getUser(userName);
-        if (user != null && userPreferencesDTO != null) {
-            UserPreferences userPreferences = user.getUserPreferences();
-            userPreferences.setAttractionProximity(userPreferencesDTO.getAttractionProximity());
-            userPreferences.setTripDuration(userPreferencesDTO.getTripDuration());
-            userPreferences.setTicketQuantity(userPreferencesDTO.getTicketQuantity());
-            userPreferences.setNumberOfAdults(userPreferencesDTO.getNumberOfChildren());
-            userPreferences.setNumberOfChildren(userPreferencesDTO.getNumberOfChildren());
-            userPreferences.setCurrency(Monetary.getCurrency(userPreferencesDTO.getCurrency()));
-            userPreferences.setLowerPricePoint(Money.of(userPreferencesDTO.getLowerPricePoint(), userPreferences.getCurrency()));
-            userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(), userPreferences.getCurrency()));
-            user.setUserPreferences(userPreferences);
-            return user.getUserPreferences();
-        }
-        logger.debug("settUserPreferences : Input param null ");
-        return null;
     }
 
     // TODO Put pour preferences
@@ -198,14 +137,14 @@ public class TourGuideService {
         return visitedLocation;
     }
 
-    // *********************************************************
-    // *********** Async ***************************************
-    // *********************************************************
+    /**************************************************************************************
+    // *********** trackUserLocationForAllUsers Async *************************************
+    // ************************************************************************************/
 
     // TODO Gérer les exceptions
     // TODO 100 Thread max sinon ne sert plus  à rien...
 
-    private ExecutorService executor = Executors.newFixedThreadPool(100);
+    private ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(100);
 
     // TODO ... trackUserLocation pour un User en asycnhrone
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
@@ -215,7 +154,7 @@ public class TourGuideService {
             user.addToVisitedLocations(visitedLocation);
             rewardsService.calculateRewards(user);
             return visitedLocation;
-        }, executor);
+        }, executorTrackUserLocation);
     }
 
     // TODO ... trackUserLocationForAllUsers pour tous les Users, lance chaque user en asychrone
@@ -241,8 +180,6 @@ public class TourGuideService {
         return true;
     }
 
-    // *********************************************************
-    // *********** Fin Async ***********************************
     // *********************************************************
 
     /**

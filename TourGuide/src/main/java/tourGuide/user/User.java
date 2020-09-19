@@ -34,30 +34,6 @@ public class User {
 		return userName;
 	}
 	
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-	
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-	
-	public void setLatestLocationTimestamp(Date latestLocationTimestamp) {
-		this.latestLocationTimestamp = latestLocationTimestamp;
-	}
-	
-	public Date getLatestLocationTimestamp() {
-		return latestLocationTimestamp;
-	}
-	
 	public void addToVisitedLocations(VisitedLocation visitedLocation) {
 		visitedLocations.add(visitedLocation);
 	}
@@ -70,10 +46,6 @@ public class User {
 	// TODO CopyOnWriteArrayList / pour concurrence Thread
 	public List<UserReward> getUserRewards() {
 		return new CopyOnWriteArrayList(userRewards);
-	}
-
-	public void clearVisitedLocations() {
-		visitedLocations.clear();
 	}
 
 	// TODO OK / bug fix ! enlevé ... (il y avait "r -> !r.attraction")
@@ -101,6 +73,34 @@ public class User {
 	
 	public List<Provider> getTripDeals() {
 		return tripDeals;
+	}
+
+	public void clearVisitedLocations() {
+		visitedLocations.clear();
+	}
+
+	public Date getLatestLocationTimestamp() {
+		return latestLocationTimestamp;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setLatestLocationTimestamp(Date latestLocationTimestamp) {
+		this.latestLocationTimestamp = latestLocationTimestamp;
 	}
 
 }

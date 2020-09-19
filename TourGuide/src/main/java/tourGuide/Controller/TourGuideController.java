@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.service.TourGuideService;
+import tourGuide.service.UserService;
 import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
@@ -22,6 +23,9 @@ public class TourGuideController {
 
     @Autowired
     TourGuideService tourGuideService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
     public String index() {
@@ -90,14 +94,14 @@ public class TourGuideController {
     @GetMapping("/getUserPreferences")
     public UserPreferences getUserPreferences(@RequestParam String userName) {
         logger.debug("getUserPreferences");
-        return tourGuideService.getUserPreferences(userName);
+        return userService.getUserPreferences(tourGuideService.getUser(userName));
     }
 
     // TODO OBA
     @GetMapping("/getUserPreferencesSummary")
     public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
         logger.debug("getUserPreferences");
-        return tourGuideService.getUserPreferencesSummary(userName);
+        return userService.getUserPreferencesSummary(tourGuideService.getUser(userName));
     }
 
     // TODO  à voir pour faire le checkInput ????
@@ -106,7 +110,7 @@ public class TourGuideController {
     public UserPreferences setUserPreferences(@PathVariable("userName") String userName, @RequestBody @Valid UserPreferencesDTO userPreferencesDTO) {
         logger.debug("Update UserPreferences for a user");
         //checkInput(userPreferencesDTO);
-        return tourGuideService.setUserPreferences(userName, userPreferencesDTO);
+        return userService.setUserPreferences(tourGuideService.getUser(userName), userPreferencesDTO);
     }
 
     private User getUser(String userName) {

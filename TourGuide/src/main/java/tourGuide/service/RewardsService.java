@@ -83,10 +83,7 @@ public class RewardsService {
      * @param user
      * @return
      */
-
-    // TODO 15/09/2020 voir pour gérer avec executor en plus de supplyAsync ???
-    // TODO Executor ..
-    private ExecutorService executor = Executors.newFixedThreadPool(100);
+    private ExecutorService executor = Executors.newFixedThreadPool(5);
 
     private CompletableFuture<AttractionResponseDTO> getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
         return CompletableFuture.supplyAsync(() -> {
