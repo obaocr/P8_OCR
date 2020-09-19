@@ -36,8 +36,8 @@ public class RewardsService {
 <span class="fc" id="L36">    }</span>
 
     public void setProximityBuffer(int proximityBuffer) {
-<span class="nc" id="L39">        this.proximityBuffer = proximityBuffer;</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L39">        this.proximityBuffer = proximityBuffer;</span>
+<span class="fc" id="L40">    }</span>
 
     public void setDefaultProximityBuffer() {
 <span class="nc" id="L43">        proximityBuffer = defaultProximityBuffer;</span>
@@ -50,10 +50,10 @@ public class RewardsService {
 <span class="fc" id="L50">        List&lt;Attraction&gt; attractions = gpsService.getAttractions();</span>
 <span class="fc bfc" id="L51" title="All 2 branches covered.">        for (VisitedLocation visitedLocation : userLocations) {</span>
 <span class="fc bfc" id="L52" title="All 2 branches covered.">            for (Attraction attraction : attractions) {</span>
-<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                if (user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">                    if (nearAttraction(visitedLocation, attraction)) {</span>
-<span class="nc" id="L55">                        logger.debug(&quot;calculateRewards =&gt; ******************* passage nearAttraction : &quot; + user.getUserName());</span>
-<span class="nc" id="L56">                        user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                if (user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                    if (nearAttraction(visitedLocation, attraction)) {</span>
+<span class="fc" id="L55">                        logger.debug(&quot;calculateRewards =&gt; ******************* passage nearAttraction : &quot; + user.getUserName());</span>
+<span class="fc" id="L56">                        user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
                     }
                 }
 <span class="fc" id="L59">            }</span>
@@ -61,19 +61,19 @@ public class RewardsService {
 <span class="fc" id="L61">    }</span>
 
     public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">        return Utils.calculateDistance(attraction, location) &gt; attractionProximityRange ? false : true;</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        return Utils.calculateDistance(attraction, location) &gt; attractionProximityRange ? false : true;</span>
     }
 
     // TODO proximityBuffer Ã  10 et distance toujours &gt; 3000 donc pas de rewards ...
     private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
 <span class="fc" id="L69">        double distance = Utils.calculateDistance(attraction, visitedLocation.location);</span>
-<span class="fc" id="L70">        logger.debug(&quot;nearAttraction, distance, proximityBuffer :&quot; +  distance + &quot; / &quot; + proximityBuffer);</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        return distance &gt; proximityBuffer ? false : true;</span>
+        //logger.debug(&quot;nearAttraction, distance, proximityBuffer :&quot; +  distance + &quot; / &quot; + proximityBuffer);
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        return distance &gt; proximityBuffer ? false : true;</span>
     }
 
     // TODO  getAttractionRewardPoints est longue en temps de rÃ©ponse : sleep...
     private int getRewardPoints(Attraction attraction, User user) {
-<span class="nc" id="L76">        return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());</span>
+<span class="fc" id="L76">        return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());</span>
     }
 
     /**
@@ -83,16 +83,13 @@ public class RewardsService {
      * @param user
      * @return
      */
-
-    // TODO 15/09/2020 voir pour gÃ©rer avec executor en plus de supplyAsync ???
-    // TODO Executor ..
-<span class="fc" id="L89">    private ExecutorService executor = Executors.newFixedThreadPool(100);</span>
+<span class="fc" id="L86">    private ExecutorService executor = Executors.newFixedThreadPool(5);</span>
 
     private CompletableFuture&lt;AttractionResponseDTO&gt; getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
-<span class="fc" id="L92">        return CompletableFuture.supplyAsync(() -&gt; {</span>
-<span class="fc" id="L93">            int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());</span>
-<span class="fc" id="L94">            attractionResponse.setRewardsPoints(reward);</span>
-<span class="fc" id="L95">            return attractionResponse;</span>
+<span class="fc" id="L89">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="fc" id="L90">            int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());</span>
+<span class="fc" id="L91">            attractionResponse.setRewardsPoints(reward);</span>
+<span class="fc" id="L92">            return attractionResponse;</span>
         }, executor);
     }
 
@@ -105,25 +102,25 @@ public class RewardsService {
      */
     // TODO gÃ©rer les exceptions, cf. docs
     public List&lt;AttractionResponseDTO&gt; getAllAttractionResponseWithRewardPoint(List&lt;AttractionResponseDTO&gt; attractionResponses, User user) {
-<span class="fc" id="L108">        logger.debug(&quot;attractionResponses size&quot; + attractionResponses.size());</span>
-<span class="fc" id="L109">        List&lt;AttractionResponseDTO&gt; attractionResponsesWithRewardPoint = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L105">        logger.debug(&quot;attractionResponses size&quot; + attractionResponses.size());</span>
+<span class="fc" id="L106">        List&lt;AttractionResponseDTO&gt; attractionResponsesWithRewardPoint = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L111">        List&lt;CompletableFuture&lt;AttractionResponseDTO&gt;&gt; attractionsRespWithRewardPointFuture = attractionResponses.stream()</span>
-<span class="fc" id="L112">                .map(a -&gt; getAttractionResponseWithRewardPoint(a, user))</span>
-<span class="fc" id="L113">                .collect(Collectors.toList());</span>
+<span class="fc" id="L108">        List&lt;CompletableFuture&lt;AttractionResponseDTO&gt;&gt; attractionsRespWithRewardPointFuture = attractionResponses.stream()</span>
+<span class="fc" id="L109">                .map(a -&gt; getAttractionResponseWithRewardPoint(a, user))</span>
+<span class="fc" id="L110">                .collect(Collectors.toList());</span>
 
-<span class="fc" id="L115">        CompletableFuture&lt;Void&gt; allFutures = CompletableFuture.allOf(attractionsRespWithRewardPointFuture</span>
-<span class="fc" id="L116">                .toArray(new CompletableFuture[attractionsRespWithRewardPointFuture.size()]));</span>
+<span class="fc" id="L112">        CompletableFuture&lt;Void&gt; allFutures = CompletableFuture.allOf(attractionsRespWithRewardPointFuture</span>
+<span class="fc" id="L113">                .toArray(new CompletableFuture[attractionsRespWithRewardPointFuture.size()]));</span>
 
-<span class="fc" id="L118">        CompletableFuture&lt;List&lt;AttractionResponseDTO&gt;&gt; allCompletableFuture = allFutures.thenApply(</span>
+<span class="fc" id="L115">        CompletableFuture&lt;List&lt;AttractionResponseDTO&gt;&gt; allCompletableFuture = allFutures.thenApply(</span>
                 future -&gt; {
-<span class="fc" id="L120">                    return attractionsRespWithRewardPointFuture.stream()</span>
-<span class="fc" id="L121">                            .map(a -&gt; a.join()).collect(Collectors.toList());</span>
+<span class="fc" id="L117">                    return attractionsRespWithRewardPointFuture.stream()</span>
+<span class="fc" id="L118">                            .map(a -&gt; a.join()).collect(Collectors.toList());</span>
                 }
         );
-<span class="fc" id="L124">        attractionResponsesWithRewardPoint = allCompletableFuture.join();</span>
-<span class="fc" id="L125">        logger.debug(&quot;attractionResponsesWithRewardPoint size&quot; + attractionResponsesWithRewardPoint.size());</span>
-<span class="fc" id="L126">        return attractionResponsesWithRewardPoint;</span>
+<span class="fc" id="L121">        attractionResponsesWithRewardPoint = allCompletableFuture.join();</span>
+<span class="fc" id="L122">        logger.debug(&quot;attractionResponsesWithRewardPoint size&quot; + attractionResponsesWithRewardPoint.size());</span>
+<span class="fc" id="L123">        return attractionResponsesWithRewardPoint;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

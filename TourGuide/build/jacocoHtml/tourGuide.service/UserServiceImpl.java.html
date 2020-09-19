@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package tourGuide.service;
+
+import org.javamoney.moneta.Money;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import tourGuide.Model.UserPreferencesDTO;
+import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
+
+import javax.money.Monetary;
+
+@Service
+<span class="nc" id="L14">public class UserServiceImpl implements UserService{</span>
+
+<span class="nc" id="L16">    private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);</span>
+
+    // TODO GÃ©rer not found 201 ?
+    @Override
+    public UserPreferences getUserPreferences(User user) {
+<span class="nc" id="L21">        logger.info(&quot;getUserPreferences&quot;);</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        if (user != null) {</span>
+<span class="nc" id="L23">            return user.getUserPreferences();</span>
+        }
+<span class="nc" id="L25">        logger.debug(&quot;getUserPreferences : userName null&quot;);</span>
+<span class="nc" id="L26">        return null;</span>
+    }
+
+    // TODO GÃ©rer not found 201 ?
+    // TODO : pas de pb de performance, on peut laisser en l'Ã©tat
+    @Override
+    public UserPreferencesDTO getUserPreferencesSummary(User user) {
+<span class="nc" id="L33">        logger.info(&quot;getUserPreferencesSummary&quot;);</span>
+<span class="nc" id="L34">        UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO();</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (user != null) {</span>
+<span class="nc" id="L36">            UserPreferences userPreferences = user.getUserPreferences();</span>
+<span class="nc" id="L37">            userPreferencesDTO.setAttractionProximity(userPreferences.getAttractionProximity());</span>
+<span class="nc" id="L38">            userPreferencesDTO.setTripDuration(userPreferences.getTripDuration());</span>
+<span class="nc" id="L39">            userPreferencesDTO.setNumberOfAdults(userPreferences.getNumberOfAdults());</span>
+<span class="nc" id="L40">            userPreferencesDTO.setNumberOfChildren(userPreferences.getNumberOfChildren());</span>
+<span class="nc" id="L41">            userPreferencesDTO.setTicketQuantity(userPreferences.getTicketQuantity());</span>
+<span class="nc" id="L42">            userPreferencesDTO.setCurrency(userPreferences.getCurrency().getCurrencyCode());</span>
+<span class="nc" id="L43">            userPreferencesDTO.setHighPricePoint(userPreferences.getHighPricePoint().getNumber().intValue());</span>
+<span class="nc" id="L44">            userPreferencesDTO.setLowerPricePoint(userPreferences.getLowerPricePoint().getNumber().intValue());</span>
+<span class="nc" id="L45">            return userPreferencesDTO;</span>
+        }
+<span class="nc" id="L47">        logger.debug(&quot;getUserPreferencesSummary : userName null&quot;);</span>
+<span class="nc" id="L48">        return null;</span>
+    }
+
+    // TODO GÃ©rer Username not found 201 ?
+    // TODO : pas de pb de performance, on peut laisser en l'Ã©tat
+    @Override
+    public UserPreferences setUserPreferences(User user, UserPreferencesDTO userPreferencesDTO) {
+<span class="nc" id="L55">        logger.info(&quot;settUserPreferences : &quot; + user.getUserName());</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">        if (user != null &amp;&amp; userPreferencesDTO != null) {</span>
+<span class="nc" id="L57">            UserPreferences userPreferences = user.getUserPreferences();</span>
+<span class="nc" id="L58">            userPreferences.setAttractionProximity(userPreferencesDTO.getAttractionProximity());</span>
+<span class="nc" id="L59">            userPreferences.setTripDuration(userPreferencesDTO.getTripDuration());</span>
+<span class="nc" id="L60">            userPreferences.setTicketQuantity(userPreferencesDTO.getTicketQuantity());</span>
+<span class="nc" id="L61">            userPreferences.setNumberOfAdults(userPreferencesDTO.getNumberOfChildren());</span>
+<span class="nc" id="L62">            userPreferences.setNumberOfChildren(userPreferencesDTO.getNumberOfChildren());</span>
+<span class="nc" id="L63">            userPreferences.setCurrency(Monetary.getCurrency(userPreferencesDTO.getCurrency()));</span>
+<span class="nc" id="L64">            userPreferences.setLowerPricePoint(Money.of(userPreferencesDTO.getLowerPricePoint(), userPreferences.getCurrency()));</span>
+<span class="nc" id="L65">            userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(), userPreferences.getCurrency()));</span>
+<span class="nc" id="L66">            user.setUserPreferences(userPreferences);</span>
+<span class="nc" id="L67">            return user.getUserPreferences();</span>
+        }
+<span class="nc" id="L69">        logger.debug(&quot;settUserPreferences : Input param null &quot;);</span>
+<span class="nc" id="L70">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

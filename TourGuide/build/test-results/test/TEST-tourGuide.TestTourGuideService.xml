@@ -1,136 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tourGuide.TestTourGuideService" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-17T14:12:43" hostname="PO703394" time="1.121">
+<testsuite name="tourGuide.TestTourGuideService" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-09-19T19:40:28" hostname="PO703394" time="1.013">
   <properties/>
-  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="1.121"/>
-  <system-out><![CDATA[16:12:43.687 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-16:12:43.703 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-16:12:43.703 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-16:12:43.804 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
-16:12:43.804 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-16:12:43.806 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-16:12:43.808 [Test worker] INFO tourGuide.service.TourGuideService - getNearByAttractions
-16:12:43.808 [Test worker] DEBUG tourGuide.service.TourGuideService - getAllUsers.size:1
-16:12:43.808 [Test worker] DEBUG tourGuide.service.TourGuideService - getUserLocation
-16:12:43.808 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 1 users.
-16:12:43.808 [pool-3-thread-1] INFO tourGuide.tracker.Tracker - Code boucle mis en commentaire
-16:12:43.808 [pool-3-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-16:12:43.808 [pool-3-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : internalUser0
-16:12:43.824 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size : 26
-16:12:43.824 [Test worker] DEBUG tourGuide.service.TourGuideService - nbMaxAttractions : 5
-16:12:43.826 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size apres sort: 5
-16:12:43.826 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponses size5
-16:12:43.912 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : internalUser0
-16:12:43.936 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5409.201181341672 / 10
-16:12:43.937 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :4965.088559440462 / 10
-16:12:43.938 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5387.33348048556 / 10
-16:12:43.939 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5456.154297323013 / 10
-16:12:43.940 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5780.394294255379 / 10
-16:12:43.941 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5873.76043791245 / 10
-16:12:43.941 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5717.809109350613 / 10
-16:12:43.942 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5636.347906070191 / 10
-16:12:43.943 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5810.929417931752 / 10
-16:12:43.943 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :3048.66950919189 / 10
-16:12:43.944 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5640.159590214537 / 10
-16:12:43.944 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5663.072756849513 / 10
-16:12:43.945 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5749.559605629661 / 10
-16:12:43.945 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6546.605389894397 / 10
-16:12:43.946 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6077.662538067012 / 10
-16:12:43.947 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6036.964345822826 / 10
-16:12:43.947 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6175.689062810777 / 10
-16:12:43.948 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5892.302720637919 / 10
-16:12:43.949 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6080.487322759897 / 10
-16:12:43.950 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5495.959346721686 / 10
-16:12:43.950 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6447.097170044139 / 10
-16:12:43.951 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5544.685176308748 / 10
-16:12:43.952 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5809.2150535776145 / 10
-16:12:43.952 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5553.323397678835 / 10
-16:12:43.953 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5633.040860930682 / 10
-16:12:43.954 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6428.402392642044 / 10
-16:12:43.955 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8688.568313402373 / 10
-16:12:43.955 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8479.81317661197 / 10
-16:12:43.957 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8580.928596385143 / 10
-16:12:43.958 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8578.327440437177 / 10
-16:12:43.959 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7405.017585319771 / 10
-16:12:43.960 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7375.817702076262 / 10
-16:12:43.962 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8228.456458162136 / 10
-16:12:43.963 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7032.204796550053 / 10
-16:12:43.963 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7014.292322438495 / 10
-16:12:43.964 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :9831.474416163612 / 10
-16:12:43.964 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6687.522969093041 / 10
-16:12:43.965 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6897.403949901547 / 10
-16:12:43.965 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6749.1841306411525 / 10
-16:12:43.966 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6450.082327431025 / 10
-16:12:43.966 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7497.816049986445 / 10
-16:12:43.967 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7054.343372873483 / 10
-16:12:43.968 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7151.774275376637 / 10
-16:12:43.969 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6966.833649043952 / 10
-16:12:43.970 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7432.407046714669 / 10
-16:12:43.971 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8625.004811365166 / 10
-16:12:43.972 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6613.363819574618 / 10
-16:12:43.972 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6628.074051362553 / 10
-16:12:43.973 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8012.150237193854 / 10
-16:12:43.974 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :7580.057123529074 / 10
-16:12:43.974 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6686.909592060327 / 10
-16:12:43.975 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6582.13282829753 / 10
-16:12:43.975 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1819.6923468954162 / 10
-16:12:43.975 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1072.5437550420108 / 10
-16:12:43.976 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1662.1268058178355 / 10
-16:12:43.977 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1744.0953762069155 / 10
-16:12:43.977 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1086.2807425107321 / 10
-16:12:43.977 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1188.2570433414958 / 10
-16:12:43.978 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1681.9008829273191 / 10
-16:12:43.978 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :908.3038263184371 / 10
-16:12:43.979 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1059.3152966838888 / 10
-16:12:43.979 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :2254.7412066834295 / 10
-16:12:43.979 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1104.5035755446672 / 10
-16:12:43.980 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :981.5990155268349 / 10
-16:12:43.980 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1109.8246923138415 / 10
-16:12:43.980 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1802.6666322502842 / 10
-16:12:43.981 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1515.9887240672317 / 10
-16:12:43.981 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1286.3742775557403 / 10
-16:12:43.981 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1467.7375042737185 / 10
-16:12:43.982 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1139.6864379438819 / 10
-16:12:43.982 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1479.198750341759 / 10
-16:12:43.982 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1850.7532754820252 / 10
-16:12:43.983 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1692.2793149200572 / 10
-16:12:43.983 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1133.8677218423547 / 10
-16:12:43.983 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1580.210189802299 / 10
-16:12:43.983 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :890.4536849789288 / 10
-16:12:43.983 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1102.7527508186618 / 10
-16:12:43.984 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :1677.6605956787182 / 10
-16:12:43.984 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6421.380070039398 / 10
-16:12:43.984 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6831.736582651574 / 10
-16:12:43.984 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6433.152388961526 / 10
-16:12:43.984 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6367.878232510048 / 10
-16:12:43.984 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5999.464900234677 / 10
-16:12:43.985 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5906.504194698192 / 10
-16:12:43.985 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6093.509728304062 / 10
-16:12:43.985 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6145.930968746325 / 10
-16:12:43.985 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5969.629639181891 / 10
-16:12:43.986 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :8777.627884108033 / 10
-16:12:43.986 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6153.665920400562 / 10
-16:12:43.986 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6122.251367100788 / 10
-16:12:43.986 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6038.876677970766 / 10
-16:12:43.987 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5235.569359759505 / 10
-16:12:43.987 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5708.7058242118555 / 10
-16:12:43.987 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5742.008960485689 / 10
-16:12:43.987 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5604.270565334022 / 10
-16:12:43.987 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5888.183721511848 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5703.9049627840495 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6334.3556055165245 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5333.278086462847 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6255.12171586221 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5992.310585183325 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6226.878682637143 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :6161.019204425449 / 10
-16:12:43.988 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - nearAttraction, distance, proximityBuffer :5352.678749297985 / 10
-16:12:43.989 [pool-3-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
-16:12:43.989 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-16:12:43.989 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-16:12:44.699 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponsesWithRewardPoint size5
-16:12:44.699 [Test worker] DEBUG tourGuide.service.TourGuideService - temps d'appel rewards complatable future en ms : 873
+  <testcase name="getUserLocation" classname="tourGuide.TestTourGuideService" time="0.099"/>
+  <testcase name="addUser" classname="tourGuide.TestTourGuideService" time="0.0"/>
+  <testcase name="getTripDeals" classname="tourGuide.TestTourGuideService" time="0.03"/>
+  <testcase name="getAllUsers" classname="tourGuide.TestTourGuideService" time="0.001"/>
+  <testcase name="getAllUsersCurrentLocationShouldReturnUsersLocations" classname="tourGuide.TestTourGuideService" time="0.008"/>
+  <testcase name="trackUser" classname="tourGuide.TestTourGuideService" time="0.102"/>
+  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="0.77"/>
+  <system-out><![CDATA[21:40:28.530 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.530 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.530 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.530 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:40:28.530 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.530 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.530 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:40:28.530 [pool-16-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.531 [pool-16-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+21:40:28.531 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:40:28.531 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.531 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:28.618 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+21:40:28.629 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.629 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.629 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.629 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:40:28.629 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+21:40:28.630 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 2 users.
+21:40:28.630 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.630 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon
+21:40:28.630 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.630 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.630 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:40:28.630 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.630 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon2
+21:40:28.631 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.631 [Test worker] INFO tourGuide.service.TourGuideService - getTripDeals
+21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:40:28.631 [pool-22-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:28.635 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - getPrice
+21:40:28.661 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.661 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.661 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:40:28.661 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+21:40:28.661 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 2 users.
+21:40:28.662 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.662 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.662 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f1b1add9-715b-4764-b081-90e4e3384fd7 internalUser0
+21:40:28.662 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon2
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 934ee4ba-e122-40e1-b98f-3e55c7bac758 internalUser1
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9a55de6e-13f7-4f28-97bd-47ef9bfb00dd internalUser2
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9224c054-4a23-4481-a976-47d0b01445a7 internalUser3
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9e6b9a9b-8cc5-462d-9651-c505abc5ebd4 internalUser4
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7eb60255-4236-4d6e-ae05-a8f4c318ffce internalUser5
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 641f51eb-8a86-4036-a5dd-598fef0b37da internalUser6
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b0b7df38-1193-4db1-abec-f84143fd5cd6 internalUser7
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 326adf3c-dd32-4692-bf4a-5c1b17b33a50 internalUser8
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : abf92ff0-3dd8-4fed-8a6f-7834a8016647 internalUser9
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 16ec840a-90f6-493a-8141-384b95cc969b internalUser10
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 50a52711-a868-4dae-90a4-07b7eb9ec580 internalUser11
+21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 033f6f14-ff32-486b-a53f-586704b6250b internalUser12
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a2ee6cfb-f3d9-4218-81b9-7205f7781445 internalUser13
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ee84813d-5098-4af0-908d-70e06cf92094 internalUser14
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 30a8a34d-9771-47a2-be11-410dd531c06b internalUser15
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 8b57b858-2656-4b0d-9f23-10f1e53d6498 internalUser16
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f86cf3b9-e0d3-4a6e-ae41-f332dcc9ceaa internalUser17
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a0908cc1-6828-4b6c-9183-b5b825336f67 internalUser18
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : aacdd1c0-102b-44c0-a7ca-b392838ce62a internalUser19
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 1ca56997-a166-4ab0-9c27-68f1e2837304 internalUser20
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 326c3365-4872-448f-89f4-941c421cb441 internalUser21
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 29c16421-a9e7-4866-80da-3737e57574be internalUser22
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 43f20b63-49b5-4030-8250-9a7269c397a0 internalUser23
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 386de0b1-b38d-410f-83f4-8674aa68cbcd internalUser24
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 41cc62c0-0a72-4f8e-a7bd-4bd6725bf861 internalUser25
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 67035681-a576-48cb-b5f3-65302259e9d7 internalUser26
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 60e3356c-adee-46e7-9a5c-55e80925eb60 internalUser27
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 0a4cb9d1-4133-45fe-a513-abd04586eef4 internalUser28
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a8a22cd6-7806-42fe-a77f-720e01140c10 internalUser29
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 95436d20-6ccb-46f8-8934-170c58d64f89 internalUser30
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 4c861077-b994-49c8-9baf-5ae7efe46710 internalUser31
+21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : e579a018-581c-428b-bf4f-a02d4cb1734b internalUser32
+21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ba0cd09f-b40d-40a9-a651-83aec4961036 internalUser33
+21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 2a325939-1e09-4fc5-af59-12d731b3f24b internalUser34
+21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 02340aef-ce8a-409d-b0c1-3e4d9b36161c internalUser35
+21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 20165c6b-3e44-47f8-9b83-348fd2de6056 internalUser36
+21:40:28.665 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a0bc466e-2de2-4e3b-a5c9-9d2cbe3bacbb internalUser37
+21:40:28.667 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b936b25f-6011-4d89-8046-d720bd2ae47f internalUser38
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7aeec80a-8e0b-453d-aac3-a2bd817d9f83 internalUser39
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3f6f4c8c-5bbb-4c22-9eab-3accc18ed345 internalUser40
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 65381cb3-418e-44db-bb44-9e5ebf863b20 internalUser41
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f5098b48-7ac7-4c76-8eac-12b9d5fc2e12 internalUser42
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 5b053ceb-e215-4b63-8b31-75269cfb9f5c internalUser43
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f2c4f592-59de-45fa-978a-6dbda0cdbf42 internalUser44
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 09e8fe6f-6598-4cc2-a576-9ff105236f00 internalUser45
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 0c203953-3abb-41c3-9e2f-cded445f1f94 internalUser46
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 4859541e-448b-4bc4-b1ed-6fe7ba5a181a internalUser47
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6d4fb719-4d1d-4bce-8b69-8dd8edd7165b internalUser48
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : c3284b28-a076-484d-8b86-300c10b438a7 internalUser49
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3f8b4e51-05cc-429f-9e25-3733eaffcae2 internalUser50
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 392ae6ec-b0f7-4f44-afe3-da79b38d6d52 internalUser51
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b025639c-9249-4708-90ce-8f61b463b16f internalUser52
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a3509c51-7124-4bf5-ae8c-267a35a98f01 internalUser53
+21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ea3578f2-5741-48f7-a9c9-b7adb7478cb8 internalUser54
+21:40:28.669 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 55 internal test users.
+21:40:28.669 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.669 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.669 [Test worker] INFO tourGuide.service.TourGuideService - getAllUsersCurrentLocation
+21:40:28.670 [pool-28-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+21:40:28.671 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.671 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.671 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.671 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:40:28.671 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.671 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.672 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:40:28.673 [pool-18-thread-2] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon2
+21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:40:28.673 [pool-31-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:28.706 [pool-18-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+21:40:28.716 [pool-19-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :2
+21:40:28.716 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.716 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:28.718 [pool-24-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+21:40:28.722 [pool-24-thread-2] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon2
+21:40:28.733 [pool-25-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :2
+21:40:28.733 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.733 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:28.761 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+21:40:28.772 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.772 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.772 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 09a37501-17d1-44e3-8efe-21b1e85f9038 internalUser0
+21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
+21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.773 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.773 [Test worker] INFO tourGuide.service.TourGuideService - getNearByAttractions
+21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - getAllUsers.size:1
+21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - getUserLocation
+21:40:28.773 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 1 users.
+21:40:28.774 [pool-34-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.774 [pool-34-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : internalUser0
+21:40:28.783 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size : 26
+21:40:28.783 [Test worker] DEBUG tourGuide.service.TourGuideService - nbMaxAttractions : 5
+21:40:28.786 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size apres sort: 5
+21:40:28.786 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponses size5
+21:40:28.847 [pool-33-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : internalUser0
+21:40:28.858 [pool-34-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
+21:40:28.858 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.858 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:29.541 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponsesWithRewardPoint size5
+21:40:29.541 [Test worker] DEBUG tourGuide.service.TourGuideService - temps d'appel rewards complatable future en ms : 755
 ]]></system-out>
-  <system-err><![CDATA[Sep 17, 2020 4:12:43 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
-INFO: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
-]]></system-err>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -47,7 +47,7 @@ public class TestPerformance {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        InternalTestHelper.setInternalUserNumber(10);
+        InternalTestHelper.setInternalUserNumber(1000);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
         List<User> allUsers = new ArrayList<>();
@@ -55,7 +55,7 @@ public class TestPerformance {
 
         Date d1 = new Date();
         // Nouvelle méthode pour lancer trackUserLocation pour tous les users
-        tourGuideService.trackUserLocationForAllUsers(allUsers);
+        tourGuideService.trackUserLocationBulk(allUsers);
 
         Date d2 = new Date();
         long timeMs = d2.getTime() - d1.getTime();

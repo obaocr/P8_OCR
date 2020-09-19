@@ -127,12 +127,12 @@ public class TourGuideService {
     // C'est appelé actuellment en séquentiel pour chaque utilisateur
     // A faire : l'appelant (tracker) doit faire apppel en asynchrone, et l'appelant doit être capable de savoir que les n appels sont faits pour se remettre
     // en wait ..
+
+    // TODO voir pour une méthode externe  du code intérieur pour ne pas avoir de code dupliqué ...
     public VisitedLocation trackUserLocation(User user) {
         logger.info("trackUserLocation");
-        // A voir si ça peut être long ?
         VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
-        // On peut le laisser en sycnhrone pour le moment
         rewardsService.calculateRewards(user);
         return visitedLocation;
     }
@@ -158,7 +158,7 @@ public class TourGuideService {
     }
 
     // TODO ... trackUserLocationForAllUsers pour tous les Users, lance chaque user en asychrone
-    public boolean trackUserLocationForAllUsers(List<User> users){
+    public List<VisitedLocation> trackUserLocationBulk(List<User> users){
         logger.info("trackUserLocationForAllUsers");
         List<VisitedLocation> visitedLocations = new ArrayList<>();
         List<CompletableFuture<VisitedLocation>> trackUserLocationFuture = users.stream()
@@ -177,7 +177,7 @@ public class TourGuideService {
         visitedLocations = allCompletableFuture.join();
         logger.debug("attractionResponsesWithRewardPoint size :" + visitedLocations.size());
         // TODO Finalement l'appelant n'a pas besoin des VisitedLocation
-        return true;
+        return visitedLocations;
     }
 
     // *********************************************************

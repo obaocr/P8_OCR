@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestRewardsService" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-09-19T19:40:17" hostname="PO703394" time="10.754">
+  <properties/>
+  <testcase name="nearAllAttractions" classname="tourGuide.TestRewardsService" time="10.511"/>
+  <testcase name="userGetRewards" classname="tourGuide.TestRewardsService" time="0.231"/>
+  <testcase name="isWithinAttractionProximity" classname="tourGuide.TestRewardsService" time="0.011"/>
+  <system-out><![CDATA[21:40:17.740 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:17.740 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:17.740 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:17.740 [Test worker] DEBUG tourGuide.service.TourGuideService - User : d0c586d9-9484-4b04-b1c7-f0eddf3ddddd internalUser0
+21:40:17.740 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
+21:40:17.740 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:17.741 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:17.741 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : internalUser0
+21:40:17.741 [pool-9-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+21:40:17.751 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:18.741 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:19.306 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:19.570 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:20.082 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:20.399 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:20.586 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:20.849 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:21.468 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:21.990 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:22.282 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:22.422 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:22.624 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:23.246 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:24.011 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:24.291 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:24.412 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:24.988 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:25.150 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:25.377 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:25.426 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:25.679 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:26.400 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:26.436 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:26.638 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:27.455 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : internalUser0
+21:40:28.240 [Test worker] DEBUG tourGuide.service.TourGuideService - getUserLocation
+21:40:28.250 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+21:40:28.250 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:40:28.250 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:40:28.250 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:40:28.250 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:40:28.250 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+21:40:28.251 [pool-12-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:40:28.251 [pool-12-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+21:40:28.251 [pool-12-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+21:40:28.251 [pool-12-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:40:28.251 [pool-12-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:40:28.261 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
+21:40:28.325 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+21:40:28.336 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : jon
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

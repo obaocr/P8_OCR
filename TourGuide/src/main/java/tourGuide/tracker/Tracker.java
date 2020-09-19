@@ -47,7 +47,7 @@ public class Tracker extends Thread {
 
 			// TODO : traitement pour tous les users
 			try {
-				tourGuideService.trackUserLocationForAllUsers(users);
+				tourGuideService.trackUserLocationBulk(users);
 			}
 			catch (Exception e) {
 				logger.error("exception tourGuideService.trackUserLocationForAllUsers   : " + e.toString());

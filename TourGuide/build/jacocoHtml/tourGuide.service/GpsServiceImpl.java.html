@@ -9,26 +9,27 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.UUID;
 // TODO enlever les lignes en commentaires en fin
+// TODO Mettre GpsUTIL en servicing
 public class GpsServiceImpl implements GpsService {
 
-<span class="fc" id="L14">    private Logger logger = LoggerFactory.getLogger(GpsServiceImpl.class);</span>
+<span class="fc" id="L15">    private Logger logger = LoggerFactory.getLogger(GpsServiceImpl.class);</span>
     private final GpsUtil gpsUtil;
 
-<span class="fc" id="L17">    public GpsServiceImpl(GpsUtil gpsUtil) {</span>
+<span class="fc" id="L18">    public GpsServiceImpl(GpsUtil gpsUtil) {</span>
         //logger.debug(&quot;constructor GpsServiceImpl&quot;);
-<span class="fc" id="L19">        this.gpsUtil = gpsUtil;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L20">        this.gpsUtil = gpsUtil;</span>
+<span class="fc" id="L21">    }</span>
 
     @Override
     public List&lt;Attraction&gt; getAttractions() {
         //logger.debug(&quot;getAttractions size : &quot; + gpsUtil.getAttractions().size());
-<span class="fc" id="L25">        return gpsUtil.getAttractions();</span>
+<span class="fc" id="L26">        return gpsUtil.getAttractions();</span>
     }
 
     @Override
     public VisitedLocation getUserLocation(UUID userID) {
         //logger.debug(&quot;getUserLocation for user :&quot; + userID);
-<span class="fc" id="L31">        return gpsUtil.getUserLocation(userID);</span>
+<span class="fc" id="L32">        return gpsUtil.getUserLocation(userID);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
