@@ -16,6 +16,7 @@ import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tripPricer.Provider;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +35,9 @@ public class TestTourGuideService {
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
-        VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        VisitedLocation visitedLocation = tourGuideService.trackUserLocationBulk(users).get(0);
         tourGuideService.tracker.stopTracking();
         assertTrue(visitedLocation.userId.equals(user.getUserId()));
     }
@@ -91,7 +94,9 @@ public class TestTourGuideService {
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
-        VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        VisitedLocation visitedLocation = tourGuideService.trackUserLocationBulk(users).get(0);
         tourGuideService.tracker.stopTracking();
         assertEquals(user.getUserId(), visitedLocation.userId);
     }

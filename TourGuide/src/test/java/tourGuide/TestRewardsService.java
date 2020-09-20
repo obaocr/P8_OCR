@@ -13,6 +13,7 @@ import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +34,9 @@ public class TestRewardsService {
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         Attraction attraction = gpsService.getAttractions().get(0);
         user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
-        tourGuideService.trackUserLocation(user);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        tourGuideService.trackUserLocationBulk(users);
         List<UserReward> userRewards = user.getUserRewards();
         tourGuideService.tracker.stopTracking();
         assertTrue(userRewards.size() == 1);

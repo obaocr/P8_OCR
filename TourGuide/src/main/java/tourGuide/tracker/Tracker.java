@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,8 @@ public class Tracker extends Thread {
 
 			// TODO : traitement pour tous les users
 			try {
-				tourGuideService.trackUserLocationBulk(users);
+				List <VisitedLocation> visitedLocations = tourGuideService.trackUserLocationBulk(users);
+				logger.debug("visitedLocations.size : " + visitedLocations.size());
 			}
 			catch (Exception e) {
 				logger.error("exception tourGuideService.trackUserLocationForAllUsers   : " + e.toString());

@@ -69,11 +69,14 @@ public class TourGuideService {
 
     // TODO NB : trackUserLocation peut être, sera amélioré dans le chantier global du projet
     // TODO : pas de pb de performance, on peut laisser en l'état
+    // TODO ==> je remplace trackUserLocation par trackUserLocationBulk
     public VisitedLocation getUserLocation(User user) {
         logger.debug("getUserLocation");
+        List<User> users = new ArrayList<>();
+        users.add(user);
         VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
                 user.getLastVisitedLocation() :
-                trackUserLocation(user);
+        trackUserLocationBulk(users).get(0);
         return visitedLocation;
     }
 
@@ -129,13 +132,14 @@ public class TourGuideService {
     // en wait ..
 
     // TODO voir pour une méthode externe  du code intérieur pour ne pas avoir de code dupliqué ...
-    public VisitedLocation trackUserLocation(User user) {
+    // TODO Remplaé par trackUserLocationBulk
+    /*public VisitedLocation trackUserLocation(User user) {
         logger.info("trackUserLocation");
         VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
         user.addToVisitedLocations(visitedLocation);
         rewardsService.calculateRewards(user);
         return visitedLocation;
-    }
+    }*/
 
     /**************************************************************************************
     // *********** trackUserLocationForAllUsers Async *************************************

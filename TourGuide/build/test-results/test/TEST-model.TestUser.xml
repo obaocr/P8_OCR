@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="model.TestUser" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-20T14:20:54" hostname="PO703394" time="0.173">
+  <properties/>
+  <testcase name="testUserPreference" classname="model.TestUser" time="0.17"/>
+  <testcase name="testUser" classname="model.TestUser" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[sept. 20, 2020 4:20:55 PM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
+INFOS: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
+]]></system-err>
+</testsuite>

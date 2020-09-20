@@ -1,172 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tourGuide.TestTourGuideService" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-09-19T19:40:28" hostname="PO703394" time="1.013">
+<testsuite name="tourGuide.TestTourGuideService" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-09-20T14:21:20" hostname="PO703394" time="0.781">
   <properties/>
   <testcase name="getUserLocation" classname="tourGuide.TestTourGuideService" time="0.099"/>
-  <testcase name="addUser" classname="tourGuide.TestTourGuideService" time="0.0"/>
-  <testcase name="getTripDeals" classname="tourGuide.TestTourGuideService" time="0.03"/>
+  <testcase name="addUser" classname="tourGuide.TestTourGuideService" time="0.001"/>
+  <testcase name="getTripDeals" classname="tourGuide.TestTourGuideService" time="0.041"/>
   <testcase name="getAllUsers" classname="tourGuide.TestTourGuideService" time="0.001"/>
-  <testcase name="getAllUsersCurrentLocationShouldReturnUsersLocations" classname="tourGuide.TestTourGuideService" time="0.008"/>
-  <testcase name="trackUser" classname="tourGuide.TestTourGuideService" time="0.102"/>
-  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="0.77"/>
-  <system-out><![CDATA[21:40:28.530 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.530 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.530 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.530 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
-21:40:28.530 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.530 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.530 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
-21:40:28.530 [pool-16-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-21:40:28.531 [pool-16-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
-21:40:28.531 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-21:40:28.531 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-21:40:28.531 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-21:40:28.618 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
-21:40:28.629 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.629 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.629 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.629 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
-21:40:28.629 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - addUser
-21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - addUser
-21:40:28.630 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 2 users.
-21:40:28.630 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-21:40:28.630 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon
-21:40:28.630 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.630 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.630 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.630 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
-21:40:28.630 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.630 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon2
-21:40:28.631 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.631 [Test worker] INFO tourGuide.service.TourGuideService - getTripDeals
-21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
-21:40:28.631 [pool-22-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
-21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-21:40:28.631 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-21:40:28.635 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - getPrice
-21:40:28.661 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.661 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.661 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
-21:40:28.661 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - addUser
-21:40:28.661 [Test worker] INFO tourGuide.service.TourGuideService - addUser
-21:40:28.661 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 2 users.
-21:40:28.662 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-21:40:28.662 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.662 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f1b1add9-715b-4764-b081-90e4e3384fd7 internalUser0
-21:40:28.662 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon2
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 934ee4ba-e122-40e1-b98f-3e55c7bac758 internalUser1
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9a55de6e-13f7-4f28-97bd-47ef9bfb00dd internalUser2
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9224c054-4a23-4481-a976-47d0b01445a7 internalUser3
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9e6b9a9b-8cc5-462d-9651-c505abc5ebd4 internalUser4
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7eb60255-4236-4d6e-ae05-a8f4c318ffce internalUser5
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 641f51eb-8a86-4036-a5dd-598fef0b37da internalUser6
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b0b7df38-1193-4db1-abec-f84143fd5cd6 internalUser7
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 326adf3c-dd32-4692-bf4a-5c1b17b33a50 internalUser8
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : abf92ff0-3dd8-4fed-8a6f-7834a8016647 internalUser9
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 16ec840a-90f6-493a-8141-384b95cc969b internalUser10
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 50a52711-a868-4dae-90a4-07b7eb9ec580 internalUser11
-21:40:28.662 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 033f6f14-ff32-486b-a53f-586704b6250b internalUser12
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a2ee6cfb-f3d9-4218-81b9-7205f7781445 internalUser13
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ee84813d-5098-4af0-908d-70e06cf92094 internalUser14
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 30a8a34d-9771-47a2-be11-410dd531c06b internalUser15
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 8b57b858-2656-4b0d-9f23-10f1e53d6498 internalUser16
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f86cf3b9-e0d3-4a6e-ae41-f332dcc9ceaa internalUser17
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a0908cc1-6828-4b6c-9183-b5b825336f67 internalUser18
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : aacdd1c0-102b-44c0-a7ca-b392838ce62a internalUser19
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 1ca56997-a166-4ab0-9c27-68f1e2837304 internalUser20
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 326c3365-4872-448f-89f4-941c421cb441 internalUser21
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 29c16421-a9e7-4866-80da-3737e57574be internalUser22
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 43f20b63-49b5-4030-8250-9a7269c397a0 internalUser23
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 386de0b1-b38d-410f-83f4-8674aa68cbcd internalUser24
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 41cc62c0-0a72-4f8e-a7bd-4bd6725bf861 internalUser25
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 67035681-a576-48cb-b5f3-65302259e9d7 internalUser26
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 60e3356c-adee-46e7-9a5c-55e80925eb60 internalUser27
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 0a4cb9d1-4133-45fe-a513-abd04586eef4 internalUser28
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a8a22cd6-7806-42fe-a77f-720e01140c10 internalUser29
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 95436d20-6ccb-46f8-8934-170c58d64f89 internalUser30
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 4c861077-b994-49c8-9baf-5ae7efe46710 internalUser31
-21:40:28.663 [Test worker] DEBUG tourGuide.service.TourGuideService - User : e579a018-581c-428b-bf4f-a02d4cb1734b internalUser32
-21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ba0cd09f-b40d-40a9-a651-83aec4961036 internalUser33
-21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 2a325939-1e09-4fc5-af59-12d731b3f24b internalUser34
-21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 02340aef-ce8a-409d-b0c1-3e4d9b36161c internalUser35
-21:40:28.664 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 20165c6b-3e44-47f8-9b83-348fd2de6056 internalUser36
-21:40:28.665 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a0bc466e-2de2-4e3b-a5c9-9d2cbe3bacbb internalUser37
-21:40:28.667 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b936b25f-6011-4d89-8046-d720bd2ae47f internalUser38
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7aeec80a-8e0b-453d-aac3-a2bd817d9f83 internalUser39
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3f6f4c8c-5bbb-4c22-9eab-3accc18ed345 internalUser40
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 65381cb3-418e-44db-bb44-9e5ebf863b20 internalUser41
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f5098b48-7ac7-4c76-8eac-12b9d5fc2e12 internalUser42
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 5b053ceb-e215-4b63-8b31-75269cfb9f5c internalUser43
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f2c4f592-59de-45fa-978a-6dbda0cdbf42 internalUser44
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 09e8fe6f-6598-4cc2-a576-9ff105236f00 internalUser45
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 0c203953-3abb-41c3-9e2f-cded445f1f94 internalUser46
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 4859541e-448b-4bc4-b1ed-6fe7ba5a181a internalUser47
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6d4fb719-4d1d-4bce-8b69-8dd8edd7165b internalUser48
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : c3284b28-a076-484d-8b86-300c10b438a7 internalUser49
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3f8b4e51-05cc-429f-9e25-3733eaffcae2 internalUser50
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 392ae6ec-b0f7-4f44-afe3-da79b38d6d52 internalUser51
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b025639c-9249-4708-90ce-8f61b463b16f internalUser52
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a3509c51-7124-4bf5-ae8c-267a35a98f01 internalUser53
-21:40:28.668 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ea3578f2-5741-48f7-a9c9-b7adb7478cb8 internalUser54
-21:40:28.669 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 55 internal test users.
-21:40:28.669 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.669 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.669 [Test worker] INFO tourGuide.service.TourGuideService - getAllUsersCurrentLocation
-21:40:28.670 [pool-28-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
-21:40:28.671 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.671 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.671 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.671 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
-21:40:28.671 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.671 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.672 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocation
-21:40:28.673 [pool-18-thread-2] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon2
-21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
-21:40:28.673 [pool-31-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
-21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-21:40:28.673 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-21:40:28.706 [pool-18-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
-21:40:28.716 [pool-19-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :2
-21:40:28.716 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-21:40:28.716 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-21:40:28.718 [pool-24-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
-21:40:28.722 [pool-24-thread-2] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon2
-21:40:28.733 [pool-25-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :2
-21:40:28.733 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-21:40:28.733 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-21:40:28.761 [Test worker] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
-21:40:28.772 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
-21:40:28.772 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
-21:40:28.772 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
-21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 09a37501-17d1-44e3-8efe-21b1e85f9038 internalUser0
-21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
-21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
-21:40:28.773 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
-21:40:28.773 [Test worker] INFO tourGuide.service.TourGuideService - getNearByAttractions
-21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - getAllUsers.size:1
-21:40:28.773 [Test worker] DEBUG tourGuide.service.TourGuideService - getUserLocation
-21:40:28.773 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 1 users.
-21:40:28.774 [pool-34-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
-21:40:28.774 [pool-34-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : internalUser0
-21:40:28.783 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size : 26
-21:40:28.783 [Test worker] DEBUG tourGuide.service.TourGuideService - nbMaxAttractions : 5
-21:40:28.786 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size apres sort: 5
-21:40:28.786 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponses size5
-21:40:28.847 [pool-33-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : internalUser0
-21:40:28.858 [pool-34-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
-21:40:28.858 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
-21:40:28.858 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
-21:40:29.541 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponsesWithRewardPoint size5
-21:40:29.541 [Test worker] DEBUG tourGuide.service.TourGuideService - temps d'appel rewards complatable future en ms : 755
+  <testcase name="getAllUsersCurrentLocationShouldReturnUsersLocations" classname="tourGuide.TestTourGuideService" time="0.006"/>
+  <testcase name="trackUser" classname="tourGuide.TestTourGuideService" time="0.076"/>
+  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="0.553"/>
+  <system-out><![CDATA[16:21:20.513 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.513 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.513 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.513 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+16:21:20.513 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.513 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.513 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+16:21:20.513 [pool-16-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.513 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.513 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon
+16:21:20.513 [pool-16-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+16:21:20.513 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 0
+16:21:20.513 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+16:21:20.513 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+16:21:20.598 [pool-15-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.613 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+16:21:20.613 [pool-19-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+16:21:20.613 [pool-19-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+16:21:20.613 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 0
+16:21:20.613 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+16:21:20.613 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.613 [Test worker] INFO tourGuide.service.TourGuideService - getTripDeals
+16:21:20.613 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+16:21:20.613 [pool-22-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.613 [pool-22-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+16:21:20.613 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 0
+16:21:20.613 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+16:21:20.613 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+16:21:20.613 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - getPrice
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.656 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+16:21:20.656 [pool-25-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+16:21:20.656 [pool-25-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - addUser
+16:21:20.656 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 0
+16:21:20.656 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+16:21:20.656 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : fbe8af42-997c-431b-be9e-a72a3de42656 internalUser0
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6126accd-e462-4023-a8ce-c0a0a901bed1 internalUser1
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 8ac45a2f-1f1c-4b56-9c1e-bab0abc1fe2c internalUser2
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : a7dc1439-6e56-42f9-8c0c-d4d0d8d481cd internalUser3
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 5396310e-0d89-4f80-ad71-bb5554e45454 internalUser4
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7d98480d-fa43-41b1-bf65-668006bd4c11 internalUser5
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3c4f60d8-d16b-4475-a338-49c5920f4160 internalUser6
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 168754da-b528-417a-b490-92f955210197 internalUser7
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7c377ef5-3fd3-41f8-8f12-9f0f346eab1a internalUser8
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9c7c43d3-b94e-4af6-b967-7549c81b6cc5 internalUser9
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3c413b02-1016-46fe-a3d6-2e6a108ee47f internalUser10
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b053921b-754c-4249-adf0-4da5912256f3 internalUser11
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9a3af805-3d64-4dff-8627-14ebfd200dc7 internalUser12
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 351575d2-a5ab-4b5b-9c0f-46f87d513df5 internalUser13
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : efb1d58d-08db-4eca-9d32-2638d87da1ed internalUser14
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 51d9cc50-7a13-4305-adb3-665acb566d79 internalUser15
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 726f5136-82d0-4530-a455-1cadc86e1802 internalUser16
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 811534bb-bbfe-4107-88c7-f87468c3e3a9 internalUser17
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 789560a7-8a74-4895-a987-26692d1a0b88 internalUser18
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 9c3c3b84-49c4-4f9a-9177-dcd8da4f684c internalUser19
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 770d9870-d643-4b09-a03a-ac7077fda360 internalUser20
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : cb5ebb23-e460-459c-b19e-1383676c1de8 internalUser21
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 546936a7-5e09-4e17-a118-9e2d31a31bac internalUser22
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f462b1b7-ad95-4680-9455-4765406e5178 internalUser23
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ee6310be-2725-4b1d-96fe-35b1150a2dd9 internalUser24
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : ab3638fb-8a21-4be3-bf43-8bbaff4b30a8 internalUser25
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 89f2fa9a-981b-4ab0-9d8b-4526c044ae2f internalUser26
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6e4bc605-2443-46d6-a2cd-39a176eae486 internalUser27
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7c3ca949-05ad-45fc-a10b-c88ddaba2826 internalUser28
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b3076e6f-664f-4fed-aa60-993729293afb internalUser29
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 8a7eb9d9-39a7-42c0-8761-c2181cf2fb6b internalUser30
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6d03db09-e267-48f3-889f-fbfc635d9e2d internalUser31
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 5435944e-023f-42b8-9747-9218376885fc internalUser32
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 2bb63532-877c-4c1e-93b6-c6f8123030c6 internalUser33
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : adeae320-4c0f-4002-95f8-fcef685166ec internalUser34
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : d9574c9b-3adb-4b6e-aedf-148795bd59cd internalUser35
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 2479e954-0518-4e63-816e-fabbef6395e1 internalUser36
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : d2a704ec-45f6-4a4c-934f-8a506977d4e7 internalUser37
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 2aed8bcd-178b-4791-8188-5820c7d70ffe internalUser38
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : c29ba232-bda0-40b6-a8f9-4f1adb5a6d46 internalUser39
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b455d870-7079-4439-9af8-ad620416b817 internalUser40
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7b8de2b9-8761-42b5-bf60-8e153e2cd1d6 internalUser41
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6da6b42d-006c-40a4-ae7b-68a67019d925 internalUser42
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 942044ea-7e8b-48a5-bac1-674997296743 internalUser43
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f307eb1a-0623-4c38-ad2c-d4628ae1886f internalUser44
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 7d15256e-63b6-4b2d-b2b9-be88baaa64fe internalUser45
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : c22a6a46-089b-4e6f-b817-4ac0c5cd9578 internalUser46
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b353239d-7e2d-4e30-bf30-bbf248504c2d internalUser47
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 58739a0c-c6cd-489c-afc7-78038d22f5c5 internalUser48
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 05f2bb2b-65a9-43ef-bc72-5ec428c0217c internalUser49
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 3d59ffa3-daf4-4586-a781-eb04a4a7369d internalUser50
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 6cf112ea-6292-4f06-bf7a-abb14f6ab358 internalUser51
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : 5ed03675-e0c2-4041-ba38-cf64f3854bb0 internalUser52
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : dd0be5a5-e9fa-42ed-a4ac-df540cd84cc4 internalUser53
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - User : f48adf42-d496-4894-8691-a1caddd1e875 internalUser54
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 55 internal test users.
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - getAllUsersCurrentLocation
+16:21:20.656 [pool-28-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+16:21:20.656 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.656 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : jon
+16:21:20.667 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+16:21:20.667 [pool-31-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.667 [pool-31-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+16:21:20.667 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 0
+16:21:20.667 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+16:21:20.667 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+16:21:20.725 [pool-30-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : jon
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+16:21:20.741 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - User : b22e85db-8299-43c0-94a6-ef94dd3a42b5 internalUser0
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+16:21:20.741 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+16:21:20.741 [Test worker] INFO tourGuide.service.TourGuideService - getNearByAttractions
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - getAllUsers.size:1
+16:21:20.741 [Test worker] DEBUG tourGuide.service.TourGuideService - getUserLocation
+16:21:20.741 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 1 users.
+16:21:20.741 [pool-34-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+16:21:20.741 [pool-34-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationAsync for user : internalUser0
+16:21:20.752 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size : 26
+16:21:20.752 [Test worker] DEBUG tourGuide.service.TourGuideService - nbMaxAttractions : 5
+16:21:20.755 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponses size apres sort: 5
+16:21:20.755 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponses size5
+16:21:20.809 [pool-33-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards pour user : internalUser0
+16:21:20.820 [pool-34-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
+16:21:20.820 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 1
+16:21:20.820 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+16:21:20.820 [pool-34-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+16:21:21.291 [Test worker] DEBUG tourGuide.service.RewardsService - attractionResponsesWithRewardPoint size5
+16:21:21.291 [Test worker] DEBUG tourGuide.service.TourGuideService - temps d'appel rewards complatable future en ms : 536
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

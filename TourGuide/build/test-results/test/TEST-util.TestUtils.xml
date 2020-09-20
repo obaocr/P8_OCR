@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="util.TestUtils" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-19T19:40:29" hostname="PO703394" time="0.0">
+<testsuite name="util.TestUtils" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-20T14:21:21" hostname="PO703394" time="0.001">
   <properties/>
-  <testcase name="testCalculDistanceShouldReturnTrue" classname="util.TestUtils" time="0.0"/>
+  <testcase name="testCalculDistanceShouldReturnTrue" classname="util.TestUtils" time="0.001"/>
   <system-out><![CDATA[Utils.calculateDistance(loc1, loc2) : 1246
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
