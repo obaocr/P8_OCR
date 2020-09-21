@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven {
-            url "****"
+            url "***
         }
     }
     dependencies {
@@ -24,7 +24,7 @@ bootJar {
 
 repositories {
     maven {
-        url "****"
+        url "***"
     }
     flatDir {
         dirs 'libs'
