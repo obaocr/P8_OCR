@@ -28,8 +28,8 @@ public class TripPricerServiceImpl implements TripPricerService {
 
     @Override
     public List&lt;Provider&gt; getPrice(String apiKey, UUID attractionId, int adults, int children, int nightsStay, int rewardsPoints) {
-<span class="fc" id="L31">        logger.debug(&quot;getPrice&quot;);</span>
-<span class="fc" id="L32">        return tripPricer.getPrice(apiKey, attractionId, adults, children, nightsStay, rewardsPoints);</span>
+<span class="nc" id="L31">        logger.debug(&quot;getPrice&quot;);</span>
+<span class="nc" id="L32">        return tripPricer.getPrice(apiKey, attractionId, adults, children, nightsStay, rewardsPoints);</span>
     }
 
 }

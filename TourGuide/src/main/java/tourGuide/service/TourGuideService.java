@@ -161,7 +161,13 @@ public class TourGuideService {
         }, executorTrackUserLocation);
     }
 
-    // TODO ... trackUserLocationForAllUsers pour tous les Users, lance chaque user en asychrone
+
+    public List<VisitedLocation> trackUserLocation(User user) {
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        return this.trackUserLocationBulk(users);
+    }
+
     public List<VisitedLocation> trackUserLocationBulk(List<User> users){
         logger.info("trackUserLocationForAllUsers");
         List<VisitedLocation> visitedLocations = new ArrayList<>();

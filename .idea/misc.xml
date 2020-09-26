@@ -8,6 +8,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/GpsApi/pom.xml" />
+        <option value="$PROJECT_DIR$/RewardCentralApi/pom.xml" />
       </list>
     </option>
   </component>
