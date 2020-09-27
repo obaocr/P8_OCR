@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/GpsApi/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RewardCentralApi/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TripPricerApi/src/main/java" charset="UTF-8" />
   </component>
 </project>

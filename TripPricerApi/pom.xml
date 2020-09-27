@@ -11,11 +11,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.P8.rewardCentral</groupId>
-    <artifactId>RewardCentralApi</artifactId>
+    <groupId>com.obaocr.tripricer</groupId>
+    <artifactId>TripPricerApi</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>P8.rewardCentral</name>
-    <description>P8.rewardCentral</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -50,13 +48,12 @@
         </dependency>
 
         <dependency>
-            <groupId>com.p8.rewardCentral</groupId>
-            <artifactId>RewardCentralApi</artifactId>
+            <groupId>com.obaocr.tripricer</groupId>
+            <artifactId>TripPricerApi</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/RewardCentral.jar</systemPath>
+            <systemPath>${basedir}/libs/TripPricer.jar</systemPath>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -79,6 +76,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

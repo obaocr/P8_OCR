@@ -24,7 +24,7 @@ public class RewardCentralController {
         return  "P8 RewardCentral Home";
     }
 
-    @GetMapping("/getAttractionRewardPoints")
+    @GetMapping("/attractionRewardPoints")
     public String getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
         logger.debug("getAttractionRewardPoints");
         Integer points = rewardCentralService.getAttractionRewardPoints(attractionId, userId);

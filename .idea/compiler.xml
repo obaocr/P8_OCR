@@ -7,8 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="RewardCentral" />
-        <module name="GpsApi" />
         <module name="RewardCentralApi" />
+        <module name="GpsApi" />
+        <module name="TripPricerApi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="GpsApi" options="-parameters" />
       <module name="RewardCentralApi" options="-parameters" />
+      <module name="TripPricerApi" options="-parameters" />
     </option>
   </component>
 </project>

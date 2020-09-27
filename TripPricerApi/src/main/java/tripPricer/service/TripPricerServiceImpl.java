@@ -1,4 +1,4 @@
-package tourGuide.service;
+package tripPricer.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TripPricerServiceImpl implements TripPricerService {
+public class TripPricerServiceImpl implements  TripPricerService{
 
     private Logger logger = LoggerFactory.getLogger(TripPricerServiceImpl.class);
     private final TripPricer tripPricer;
@@ -18,11 +18,6 @@ public class TripPricerServiceImpl implements TripPricerService {
     public TripPricerServiceImpl() {
         logger.debug("constructor TripPricerService");
         this.tripPricer = new TripPricer();
-    }
-
-    public TripPricer getTripPricer() {
-        logger.debug("getTripPricer");
-        return tripPricer;
     }
 
     @Override
