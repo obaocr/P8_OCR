@@ -45,7 +45,7 @@ public class RewardsService {
 
     // TODO l'appel  à getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints), à voir si on laisse
     public void calculateRewards(User user) {
-        logger.debug("calculateRewards pour user : " + user.getUserName());
+        //logger.debug("calculateRewards pour user : " + user.getUserName());
         List<VisitedLocation> userLocations = user.getVisitedLocations();
         List<Attraction> attractions = gpsService.getAttractions();
         for (VisitedLocation visitedLocation : userLocations) {

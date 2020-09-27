@@ -148,11 +148,11 @@ public class TourGuideService {
     // TODO Gérer les exceptions
     // TODO 100 Thread max sinon ne sert plus  à rien...
 
-    private ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(100);
+    private ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(200);
 
     // TODO ... trackUserLocation pour un User en asycnhrone
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
-        logger.info("trackUserLocationAsync for user : " + user.getUserName());
+        //logger.info("trackUserLocationAsync for user : " + user.getUserName());
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
