@@ -44,7 +44,7 @@ public class GpsControllerTest {
     void gpsGetUserLocation() throws Exception {
         Location location = new Location(10.0,10.0);
         VisitedLocation visitedLocation = new VisitedLocation(UUID.randomUUID(), location, new Date());
-        Mockito.when(gpsService.getUserLocation(UUID.randomUUID())).thenReturn(visitedLocation);
+        Mockito.when(gpsService.getUserLocation(UUID.fromString("79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75"))).thenReturn(visitedLocation);
         this.mockMvc.perform(get("/gpsUserLocation").param("userId", "79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75").characterEncoding("utf-8"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
     }
