@@ -172,7 +172,9 @@ public class TourGuideService {
         return visitedLocations;
     }
 
-    /**************************************************************************************/
+    /*************************************************************************************
+    // *********** getNearByAttractions parallel mode ************************************
+    // ***********************************************************************************/
 
      /**
      * getNearByAttractionsAsyncMgt : calcul en parallel avec Completable Future

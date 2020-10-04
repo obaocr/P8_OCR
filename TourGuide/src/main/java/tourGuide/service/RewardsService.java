@@ -43,7 +43,6 @@ public class RewardsService {
         proximityBuffer = defaultProximityBuffer;
     }
 
-    // TODO Il faut que cette méthode soit appelée en // en bulk
     public void calculateRewards(User user) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
         List<Attraction> attractions = gpsService.getAttractions();
@@ -73,9 +72,48 @@ public class RewardsService {
         return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
     }
 
+    /*************************************************************************************
+    // *********** Calculate Rewards for N users parallel mode   *************************
+    // ***********************************************************************************/
+
+    private ExecutorService executorCalcReward = Executors.newFixedThreadPool(200);
+
+    private CompletableFuture<Boolean> calculateRewardsAsync (User user) {
+        return CompletableFuture.supplyAsync(() -> {
+            calculateRewards(user);
+            return true;
+        }, executorCalcReward);
+    }
+
+    public Integer calculateRewardsForUsers(List<User> users) {
+        logger.debug("calculateRewardsForUsers size" + users.size());
+        List<Boolean> results = new ArrayList<>();
+
+        List<CompletableFuture<Boolean>> calculateRewardsFuture = users.stream()
+                .map(u -> calculateRewardsAsync(u))
+                .collect(Collectors.toList());
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(calculateRewardsFuture
+                .toArray(new CompletableFuture[calculateRewardsFuture.size()]));
+        CompletableFuture<List<Boolean>> allCompletableFuture = allFutures.thenApply(
+                future -> {
+                    return calculateRewardsFuture.stream()
+                            .map(a -> a.join()).collect(Collectors.toList());
+                }
+        );
+        results = allCompletableFuture.join();
+        Integer nbResultOK = 0;
+        for (Boolean b : results) {
+            if(b == true) {
+                nbResultOK++;
+            }
+        }
+        logger.debug("calculateRewardsForUsers nbResultOK:" + nbResultOK);
+        return nbResultOK;
+    }
+
     /**************************************************************************************
-     // *********** Pour calcul du reward Point en future  Async **************************
-     // ***********************************************************************************/
+    // *********** Pour calcul du reward Point en future  Async **************************
+    // ***********************************************************************************/
 
     /**
      * OBA Pour calcul du reward Point en future asynchrone, pour une attraction
