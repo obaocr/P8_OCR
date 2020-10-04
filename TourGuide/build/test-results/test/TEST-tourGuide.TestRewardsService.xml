@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestRewardsService" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-10-04T09:20:51" hostname="DESKTOP-0EHUHEG" time="1.089">
+  <properties/>
+  <testcase name="userGetRewards" classname="tourGuide.TestRewardsService" time="1.089"/>
+  <system-out><![CDATA[11:20:51.827 [Test worker] DEBUG tourGuide.service.TripPricerServiceImpl - constructor TripPricerService
+11:20:51.839 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+11:20:51.847 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+11:20:51.849 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+11:20:51.849 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+11:20:51.862 [Test worker] INFO tourGuide.service.TourGuideService - addShutDownHook
+11:20:51.882 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+11:20:51.882 [pool-3-thread-1] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+11:20:51.902 [pool-3-thread-1] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :0
+11:20:51.902 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - visitedLocations.size : 0
+11:20:51.902 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+11:20:51.910 [pool-3-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+11:20:52.011 [Test worker] INFO tourGuide.service.TourGuideService - trackUserLocationForAllUsers
+11:20:52.113 [pool-2-thread-1] DEBUG tourGuide.service.RewardsService - calculateRewards => ******************* passage nearAttraction : jon
+11:20:52.778 [Test worker] DEBUG tourGuide.service.TourGuideService - attractionResponsesWithRewardPoint size :1
+]]></system-out>
+  <system-err><![CDATA[Oct 04, 2020 11:20:51 AM org.javamoney.moneta.DefaultMonetaryContextFactory createMonetaryContextNonNullConfig
+INFO: Using custom MathContext: precision=256, roundingMode=HALF_EVEN
+]]></system-err>
+</testsuite>

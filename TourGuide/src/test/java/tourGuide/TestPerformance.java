@@ -71,11 +71,9 @@ public class TestPerformance {
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
-        InternalTestHelper.setInternalUserNumber(10);
+        InternalTestHelper.setInternalUserNumber(100);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        // TODO OBA : attention TourGuideService lance le Tracker.. on ne devrait pas, pas propre ...
-        // TODO =>
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
         Attraction attraction = gpsService.getAttractions().get(0);
@@ -90,6 +88,7 @@ public class TestPerformance {
         for (User user : allUsers) {
             assertTrue(user.getUserRewards().size() > 0);
         }
+
         stopWatch.stop();
         tourGuideService.tracker.stopTracking();
 

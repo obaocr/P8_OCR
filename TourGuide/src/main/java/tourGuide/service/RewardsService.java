@@ -43,9 +43,8 @@ public class RewardsService {
         proximityBuffer = defaultProximityBuffer;
     }
 
-    // TODO l'appel  à getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints), à voir si on laisse
+    // TODO Il faut que cette méthode soit appelée en // en bulk
     public void calculateRewards(User user) {
-        //logger.debug("calculateRewards pour user : " + user.getUserName());
         List<VisitedLocation> userLocations = user.getVisitedLocations();
         List<Attraction> attractions = gpsService.getAttractions();
         for (VisitedLocation visitedLocation : userLocations) {
@@ -64,17 +63,19 @@ public class RewardsService {
         return Utils.calculateDistance(attraction, location) > attractionProximityRange ? false : true;
     }
 
-    // TODO proximityBuffer à 10 et distance toujours > 3000 donc pas de rewards ...
     private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
         double distance = Utils.calculateDistance(attraction, visitedLocation.location);
         //logger.debug("nearAttraction, distance, proximityBuffer :" +  distance + " / " + proximityBuffer);
         return distance > proximityBuffer ? false : true;
     }
 
-    // TODO  getAttractionRewardPoints est longue en temps de réponse : sleep...
     private int getRewardPoints(Attraction attraction, User user) {
         return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
     }
+
+    /**************************************************************************************
+     // *********** Pour calcul du reward Point en future  Async **************************
+     // ***********************************************************************************/
 
     /**
      * OBA Pour calcul du reward Point en future asynchrone, pour une attraction
@@ -83,14 +84,14 @@ public class RewardsService {
      * @param user
      * @return
      */
-    private ExecutorService executor = Executors.newFixedThreadPool(5);
+    private ExecutorService executorReward = Executors.newFixedThreadPool(5);
 
     private CompletableFuture<AttractionResponseDTO> getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
         return CompletableFuture.supplyAsync(() -> {
             int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;
-        }, executor);
+        }, executorReward);
     }
 
     /**

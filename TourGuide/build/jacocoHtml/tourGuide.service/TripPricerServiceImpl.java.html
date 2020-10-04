@@ -20,16 +20,15 @@ public class TripPricerServiceImpl implements TripPricerService {
 <span class="fc" id="L20">        this.tripPricer = new TripPricer();</span>
 <span class="fc" id="L21">    }</span>
 
-    @Override
     public TripPricer getTripPricer() {
-<span class="nc" id="L25">        logger.debug(&quot;getTripPricer&quot;);</span>
-<span class="nc" id="L26">        return tripPricer;</span>
+<span class="nc" id="L24">        logger.debug(&quot;getTripPricer&quot;);</span>
+<span class="nc" id="L25">        return tripPricer;</span>
     }
 
     @Override
     public List&lt;Provider&gt; getPrice(String apiKey, UUID attractionId, int adults, int children, int nightsStay, int rewardsPoints) {
-<span class="nc" id="L31">        logger.debug(&quot;getPrice&quot;);</span>
-<span class="nc" id="L32">        return tripPricer.getPrice(apiKey, attractionId, adults, children, nightsStay, rewardsPoints);</span>
+<span class="nc" id="L30">        logger.debug(&quot;getPrice&quot;);</span>
+<span class="nc" id="L31">        return tripPricer.getPrice(apiKey, attractionId, adults, children, nightsStay, rewardsPoints);</span>
     }
 
 }

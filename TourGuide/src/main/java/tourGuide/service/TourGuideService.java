@@ -123,24 +123,6 @@ public class TourGuideService {
         return providers;
     }
 
-    // TODO perfs  à voir ...
-    // TODO 27/08/2020 ...  à voir gpsUtil.getUserLocation, asynchrone
-    // TODO appel en HTTP de GPS, 1/ regarder par curiosité en Spring en restTemplate mais deprecated...,
-    //  2/ Regarder FeignClient, annotation pour dire que le projet est client http
-    // C'est appelé actuellment en séquentiel pour chaque utilisateur
-    // A faire : l'appelant (tracker) doit faire apppel en asynchrone, et l'appelant doit être capable de savoir que les n appels sont faits pour se remettre
-    // en wait ..
-
-    // TODO voir pour une méthode externe  du code intérieur pour ne pas avoir de code dupliqué ...
-    // TODO Remplaé par trackUserLocationBulk
-    /*public VisitedLocation trackUserLocation(User user) {
-        logger.info("trackUserLocation");
-        VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
-        user.addToVisitedLocations(visitedLocation);
-        rewardsService.calculateRewards(user);
-        return visitedLocation;
-    }*/
-
     /**************************************************************************************
     // *********** trackUserLocationForAllUsers Async *************************************
     // ************************************************************************************/
@@ -186,13 +168,13 @@ public class TourGuideService {
         );
         visitedLocations = allCompletableFuture.join();
         logger.debug("attractionResponsesWithRewardPoint size :" + visitedLocations.size());
-        // TODO Finalement l'appelant n'a pas besoin des VisitedLocation
+
         return visitedLocations;
     }
 
-    // *********************************************************
+    /**************************************************************************************/
 
-    /**
+     /**
      * getNearByAttractionsAsyncMgt : calcul en parallel avec Completable Future
      * @param userName
      * @return
