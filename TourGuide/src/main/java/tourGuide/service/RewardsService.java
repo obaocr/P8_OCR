@@ -77,7 +77,7 @@ public class RewardsService {
     // *********** Calculate Rewards for N users parallel mode   *************************
     // ***********************************************************************************/
 
-    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(200);
+    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(100);
 
     private CompletableFuture<Boolean> calculateRewardsAsync (User user) {
         return CompletableFuture.supplyAsync(() -> {

@@ -29,6 +29,12 @@ public class UserController {
         return tourGuideService.getUser(userName);
     }
 
+    @GetMapping("/userpreferences")
+    public UserPreferences getUserPreferences(@RequestParam String userName) {
+        logger.debug("getUserPreferences");
+        return userService.getUserPreferences(tourGuideService.getUser(userName));
+    }
+
     @GetMapping("/userpreferencessummary")
     public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
         logger.debug("getUserPreferences");

@@ -109,10 +109,6 @@ public class TourGuideService {
         }
     }
 
-    // TODO Put pour preferences
-    //  Url avec /Id et en body un JSON d'un user pref .. ex UserPreferencesDTO ...
-    //      Sinon autre méthode avec class "StdSerializer", @JsonSerialize(using = CurrencyUnitSerializer.class), @NotNull, private CurrencyUnit currency;
-    // TODO : pas de pb de performance, on peut laisser en l'état
     public List<Provider> getTripDeals(User user) {
         logger.info("getTripDeals");
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
@@ -127,13 +123,9 @@ public class TourGuideService {
     // ************************************************************************************/
 
     // TODO Gérer les exceptions
-    // TODO 100 Thread max sinon ne sert plus  à rien...
+    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(100);
 
-    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(200);
-
-    // TODO ... trackUserLocation pour un User en asycnhrone
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
-        //logger.info("trackUserLocationAsync for user : " + user.getUserName());
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
