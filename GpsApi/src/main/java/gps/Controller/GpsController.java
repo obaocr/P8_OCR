@@ -1,5 +1,6 @@
 package gps.Controller;
 
+import com.jsoniter.output.JsonStream;
 import gps.Service.GpsService;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
@@ -28,10 +29,10 @@ public class GpsController {
     }
 
     @GetMapping("/gpsattractions")
-    public List<Attraction> gpsGetAttractions() {
+    public String gpsGetAttractions() {
         logger.debug("gpsGetAttractions");
         List<Attraction> attractions = gpsService.getAttractions();
-        return  attractions;
+        return JsonStream.serialize(gpsService.getAttractions());
     }
 
     @GetMapping("/gpsuserlocation")

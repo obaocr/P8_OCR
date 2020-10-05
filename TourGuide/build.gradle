@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE")
     }
 }
 
@@ -27,6 +27,10 @@ repositories {
     }
 }
 
+ext {
+    set('springCloudVersion', "Hoxton.SR8")
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -41,11 +45,21 @@ dependencies {
     compile(name:'TripPricer', ext:'jar')
 
     testCompile("junit:junit")
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.6.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.5.RELEASE'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
+    compile 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    compile 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
+    compile 'io.github.openfeign:feign-httpclient'
+    compile 'io.github.openfeign:feign-jackson'
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
 
 jacoco {
     toolVersion = "0.8.4"
