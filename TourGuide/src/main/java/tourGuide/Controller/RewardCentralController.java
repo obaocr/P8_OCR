@@ -19,7 +19,7 @@ public class RewardCentralController {
 
     private Logger logger = LoggerFactory.getLogger(RewardCentralController.class);
 
-    @GetMapping("/getAttractionRewardPoints")
+    @GetMapping("/attractionrewardpoints")
     public String getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
         Integer points = rewardCentralService.getAttractionRewardPoints(attractionId, userId);
         String response = "{ \"points\" :" + points + " }";

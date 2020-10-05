@@ -50,7 +50,6 @@ public class TestRewardsService {
 
     // TODO / Needs fixed - can throw ConcurrentModificationException
     // TODO / stopTracking mis après new TourGuideService pour éviter l'ajout de rewards par le tracker ...
-    // TODO / améliorer les perfs, calculateRewards peut être appelée avec nouvelle méthode en parallèle
     @Test
     public void nearAllAttractions() {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());

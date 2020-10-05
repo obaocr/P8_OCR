@@ -13,6 +13,7 @@ import tourGuide.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -76,7 +77,7 @@ public class RewardsService {
     // *********** Calculate Rewards for N users parallel mode   *************************
     // ***********************************************************************************/
 
-    private ExecutorService executorCalcReward = Executors.newFixedThreadPool(200);
+    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(200);
 
     private CompletableFuture<Boolean> calculateRewardsAsync (User user) {
         return CompletableFuture.supplyAsync(() -> {
@@ -86,7 +87,7 @@ public class RewardsService {
     }
 
     public Integer calculateRewardsForUsers(List<User> users) {
-        logger.debug("calculateRewardsForUsers size" + users.size());
+        logger.debug("calculateRewardsForUsers size: " + users.size());
         List<Boolean> results = new ArrayList<>();
 
         List<CompletableFuture<Boolean>> calculateRewardsFuture = users.stream()
@@ -122,11 +123,11 @@ public class RewardsService {
      * @param user
      * @return
      */
-    private ExecutorService executorReward = Executors.newFixedThreadPool(5);
+    private final ExecutorService executorReward = Executors.newFixedThreadPool(5);
 
     private CompletableFuture<AttractionResponseDTO> getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
         return CompletableFuture.supplyAsync(() -> {
-            int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());
+            int reward = rewardsCentral.getAttractionRewardPoints(UUID.fromString(attractionResponse.getAttractionId()), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;
         }, executorReward);

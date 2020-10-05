@@ -53,8 +53,7 @@ public class TourGuideService {
         this.rewardsService = rewardsService;
 
         if (testMode) {
-            logger.info("TestMode enabled");
-            logger.debug("Initializing users");
+            logger.debug("TestMode enabled / Initializing users");
             initializeInternalUsers();
             logger.debug("Finished initializing users");
         }
@@ -130,7 +129,7 @@ public class TourGuideService {
     // TODO Gérer les exceptions
     // TODO 100 Thread max sinon ne sert plus  à rien...
 
-    private ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(200);
+    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(200);
 
     // TODO ... trackUserLocation pour un User en asycnhrone
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
@@ -138,7 +137,8 @@ public class TourGuideService {
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
-            rewardsService.calculateRewards(user);
+            // "calculateRewards" is processed in bulk mode
+            //rewardsService.calculateRewards(user);
             return visitedLocation;
         }, executorTrackUserLocation);
     }
@@ -152,6 +152,7 @@ public class TourGuideService {
 
     public List<VisitedLocation> trackUserLocationBulk(List<User> users){
         logger.info("trackUserLocationForAllUsers");
+        Date d1 = new Date();
         List<VisitedLocation> visitedLocations = new ArrayList<>();
         List<CompletableFuture<VisitedLocation>> trackUserLocationFuture = users.stream()
                 .map(u -> getTrackUserLocationAsync(u))
@@ -167,7 +168,14 @@ public class TourGuideService {
                 }
         );
         visitedLocations = allCompletableFuture.join();
-        logger.debug("attractionResponsesWithRewardPoint size :" + visitedLocations.size());
+        Date d2 = new Date();
+        logger.debug("trackUserLocationBulk Part1 OK, Size / Time ms  :" + visitedLocations.size() + " / " + (d2.getTime() - d1.getTime()));
+
+        // Process "CalculateReward" Bulk
+        Integer nbCalcRewardProcess =  rewardsService.calculateRewardsForUsers(users);
+        Date d3 = new Date();
+        logger.debug("calculateRewardsForUsers Part2 OK, Size / Time ms  :" + nbCalcRewardProcess + " / " + (d3.getTime() - d2.getTime()));
+        logger.debug("trackUserLocationBulk / Time ms  :" + (d3.getTime() - d1.getTime()));
 
         return visitedLocations;
     }
@@ -191,6 +199,7 @@ public class TourGuideService {
             Double distance = Utils.calculateDistance(attraction, visitedLocation.location);
             AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
             attractionResponse.setAttractionName(attraction.attractionName);
+            attractionResponse.setAttractionId(attraction.attractionId);
             attractionResponse.setCity(attraction.city);
             attractionResponse.setState(attraction.state);
             attractionResponse.setLatitude(attraction.latitude);

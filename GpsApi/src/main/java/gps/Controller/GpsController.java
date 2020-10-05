@@ -27,14 +27,14 @@ public class GpsController {
         return  "P8 gpsHome";
     }
 
-    @GetMapping("/gpsAttractions")
+    @GetMapping("/gpsattractions")
     public List<Attraction> gpsGetAttractions() {
         logger.debug("gpsGetAttractions");
         List<Attraction> attractions = gpsService.getAttractions();
         return  attractions;
     }
 
-    @GetMapping("/gpsUserLocation")
+    @GetMapping("/gpsuserlocation")
     public VisitedLocation gpsGetUserLocation(@RequestParam UUID userId) {
         logger.debug("gpsGetUserLocation");
         // Exemple de UUID f07621a4-6365-4074-b040-ac655217f82f

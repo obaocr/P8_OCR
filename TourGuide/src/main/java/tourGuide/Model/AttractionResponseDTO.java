@@ -6,8 +6,7 @@ import java.util.UUID;
 
 public class AttractionResponseDTO {
 
-    @JsonIgnore
-    private UUID attractionId;
+    private String attractionId;
     private String attractionName;
     private String city;
     private String state;
@@ -21,22 +20,52 @@ public class AttractionResponseDTO {
     }
 
     public void setAttractionId(UUID attractionId) {
-        this.attractionId = attractionId;
+
+        this.attractionId = attractionId.toString();
     }
 
-    public UUID getAttractionId() {
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public int getRewardsPoints() {
+        return rewardsPoints;
+    }
+
+    @JsonIgnore
+    public String getAttractionId() {
+
         return attractionId;
     }
 
     public void setAttractionName(String attractionName) {
+
         this.attractionName = attractionName;
     }
 
     public void setCity(String city) {
+
         this.city = city;
     }
 
     public void setState(String state) {
+
         this.state = state;
     }
 
@@ -45,18 +74,22 @@ public class AttractionResponseDTO {
     }
 
     public void setLatitude(double latitude) {
+
         this.latitude = latitude;
     }
 
     public double getDistanceWithCurrLoc() {
+
         return distanceWithCurrLoc;
     }
 
     public void setDistanceWithCurrLoc(double distanceWithCurrLoc) {
+
         this.distanceWithCurrLoc = distanceWithCurrLoc;
     }
 
     public void setRewardsPoints(int rewardsPoints) {
+
         this.rewardsPoints = rewardsPoints;
     }
 

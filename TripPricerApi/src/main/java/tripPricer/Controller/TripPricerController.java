@@ -26,7 +26,7 @@ public class TripPricerController {
         return  "P8 tripPricerHome";
     }
 
-    @GetMapping("/tripPrice")
+    @GetMapping("/tripprice")
     public List<Provider> tripPrice(@RequestParam String apiKey, @RequestParam UUID attractionId, @RequestParam int adults
             , @RequestParam int children, @RequestParam int nightsStay, @RequestParam int rewardsPoints) {
         return tripPricerService.getPrice(apiKey, attractionId, adults, children, nightsStay, rewardsPoints);

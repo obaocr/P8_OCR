@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Model.UserPreferencesDTO;
 import tourGuide.service.TourGuideService;
 import tourGuide.service.UserService;
@@ -32,10 +33,10 @@ public class TourGuideController {
         return "Greetings from TourGuide! OCR P8 by OBA";
     }
 
-    @GetMapping("/getLocation")
+    @GetMapping("/location")
     public String getLocation(@RequestParam String userName) {
         logger.debug("getLocation");
-        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
+        VisitedLocation visitedLocation = tourGuideService.getUserLocation(tourGuideService.getUser(userName));
         return JsonStream.serialize(visitedLocation.location);
     }
 
@@ -48,21 +49,20 @@ public class TourGuideController {
     // The distance in miles between the user's location and each of the attractions.
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
-    @GetMapping("/getNearbyAttractions")
-    public String getNearbyAttractions(@RequestParam String userName) {
+    @GetMapping("/nearbyAttractions")
+    public List<AttractionResponseDTO> getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
-        String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));
-        return response;
+        return tourGuideService.getNearByAttractions(userName);
     }
 
-    @GetMapping("/getRewards")
+    @GetMapping("/rewards")
     // TODO A voir pour éventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {
         logger.debug("getRewards");
-        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
+        return JsonStream.serialize(tourGuideService.getUserRewards(tourGuideService.getUser(userName)));
     }
 
-    @GetMapping("/getAllCurrentLocations")
+    @GetMapping("/allCurrentLocations")
     public String getAllCurrentLocations() {
         // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
         // TODO: Get a list of every user's most recent location as JSON
@@ -79,44 +79,11 @@ public class TourGuideController {
         return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());
     }
 
-    @GetMapping("/getTripDeals")
+    @GetMapping("/tripdeals")
     public String getTripDeals(@RequestParam String userName) {
         logger.debug("getTripDeals");
-        List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
+        List<Provider> providers = tourGuideService.getTripDeals(tourGuideService.getUser(userName));
         return JsonStream.serialize(providers);
     }
-
-    // TODO nouveeau endpoint get et put pour mise à jour des preferences
-    // TODO avoir tous les champs sinon lever une exception ,annotation @valid et mettre @notnull dans le modele (passer en Integer)...
-    // TODO pour la réponse filter que les champs voulus des objets comme Money... à voir
-    // TODO à voir pour mettre dans une classe dédié UserController ?
-    // TODO Gérer les codes HTTP si KO ...
-    @GetMapping("/getUserPreferences")
-    public UserPreferences getUserPreferences(@RequestParam String userName) {
-        logger.debug("getUserPreferences");
-        return userService.getUserPreferences(tourGuideService.getUser(userName));
-    }
-
-    // TODO OBA
-    @GetMapping("/getUserPreferencesSummary")
-    public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
-        logger.debug("getUserPreferences");
-        return userService.getUserPreferencesSummary(tourGuideService.getUser(userName));
-    }
-
-    // TODO  à voir pour faire le checkInput ????
-    // TODO faire comme le P7 on peut ajouter un biding result en input et l'utiliser pour gérer .. sinon voir P5 Exceptions...
-    @PutMapping(value = "/setUserPreferences/{userName}")
-    public UserPreferences setUserPreferences(@PathVariable("userName") String userName, @RequestBody @Valid UserPreferencesDTO userPreferencesDTO) {
-        logger.debug("Update UserPreferences for a user");
-        //checkInput(userPreferencesDTO);
-        return userService.setUserPreferences(tourGuideService.getUser(userName), userPreferencesDTO);
-    }
-
-    private User getUser(String userName) {
-        logger.debug("getUser");
-        return tourGuideService.getUser(userName);
-    }
-
 
 }

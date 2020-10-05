@@ -22,7 +22,7 @@ public class TripPricerController {
 
     private Logger logger = LoggerFactory.getLogger(GpsController.class);
 
-    @GetMapping("/tripGetPrice")
+    @GetMapping("/triprice")
     public List<Provider> tripGetPrice(@RequestParam String apiKey, @RequestParam UUID attractionId, @RequestParam int adults
             , @RequestParam int children, @RequestParam int nightsStay, @RequestParam int rewardsPoints) {
         return tripPricerService.getPrice(apiKey, attractionId, adults, children, nightsStay, rewardsPoints);
