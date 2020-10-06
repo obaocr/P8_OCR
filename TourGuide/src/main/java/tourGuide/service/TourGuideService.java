@@ -6,9 +6,10 @@ import gpsUtil.location.VisitedLocation;
 import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tourGuide.Model.AttractionResponseDTO;
-import tourGuide.Model.UserPreferencesDTO;
+import tourGuide.Model.*;
+import tourGuide.Proxies.GpsProxy;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
@@ -29,6 +30,9 @@ import java.util.stream.IntStream;
 
 @Service
 public class TourGuideService {
+
+    @Autowired
+    private GpsProxy gpsProxy;
 
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
     private final GpsService gpsService;
@@ -174,6 +178,7 @@ public class TourGuideService {
 
     /*************************************************************************************
     // *********** getNearByAttractions parallel mode ************************************
+    // *********** call Gps en micro SVC              ************************************
     // ***********************************************************************************/
 
      /**
@@ -185,9 +190,18 @@ public class TourGuideService {
         logger.info("getNearByAttractions");
         List<AttractionResponseDTO> attractionResponses = new ArrayList<>();
         logger.debug("getAllUsers.size:" + getAllUsers().size());
-        VisitedLocation visitedLocation = getUserLocation(getUser(userName));
-        // Première étape pour ne retenir que les 5 premier items ...
-        for (Attraction attraction : gpsService.getAttractions()) {
+
+
+        //VisitedLocation visitedLocation = getUserLocation(getUser(userName));
+
+        // Appel GpsApi micro service
+        VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(getUser(userName).getUserId());
+
+        // Appel GpsApi micro service
+        List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
+        logger.info("Appel GpsApi micro service attractionMappers , nb attractions:"+attractionMappers.size());
+
+        /*for (Attraction attraction : gpsService.getAttractions()) {
             Double distance = Utils.calculateDistance(attraction, visitedLocation.location);
             AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
             attractionResponse.setAttractionName(attraction.attractionName);
@@ -199,7 +213,24 @@ public class TourGuideService {
             attractionResponse.setDistanceWithCurrLoc(distance);
             attractionResponse.setRewardsPoints(0);
             attractionResponses.add(attractionResponse);
+        }*/
+
+        for (AttractionMapper attraction : attractionMappers) {
+            LocationMapper loc1 = new LocationMapper(attraction.getLongitude(), attraction.getLatitude());
+            LocationMapper loc2 = new LocationMapper(visitedLocationMapper.getLocation().getLongitude(), visitedLocationMapper.getLocation().getLatitude());
+            Double distance = Utils.calculateDistanceMapper(loc1, loc2);
+            AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
+            attractionResponse.setAttractionName(attraction.getAttractionName());
+            attractionResponse.setAttractionId(attraction.getAttractionId());
+            attractionResponse.setCity(attraction.getCity());
+            attractionResponse.setState(attraction.getState());
+            attractionResponse.setLatitude(attraction.getLatitude());
+            attractionResponse.setLongitude(attraction.getLongitude());
+            attractionResponse.setDistanceWithCurrLoc(distance);
+            attractionResponse.setRewardsPoints(0);
+            attractionResponses.add(attractionResponse);
         }
+
         logger.debug("attractionResponses size : " + attractionResponses.size());
         logger.debug("nbMaxAttractions : " + nbMaxAttractions);
         // Sort the list by Distance and keep 5 first items

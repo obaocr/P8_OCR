@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="TripPricerApi" />
         <module name="RewardCentralApi" />
         <module name="GpsApi" />
-        <module name="TripPricerApi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

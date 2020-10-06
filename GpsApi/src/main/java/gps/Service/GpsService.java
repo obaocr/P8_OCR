@@ -1,5 +1,7 @@
 package gps.Service;
 
+import gps.Model.AttractionMapper;
+import gps.Model.VisitedLocationMapper;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 
@@ -8,7 +10,6 @@ import java.util.UUID;
 
 public interface GpsService {
 
-    List<Attraction> getAttractions();
-
-    public VisitedLocation getUserLocation(UUID userID);
+    List<AttractionMapper> getAttractions();
+    VisitedLocationMapper getUserLocation(UUID userID);
 }

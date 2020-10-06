@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tourGuide.Model.AttractionMapper;
+import tourGuide.Model.VisitedLocationMapper;
 import tourGuide.Proxies.GpsProxy;
 
 import java.util.List;
@@ -21,25 +23,26 @@ public class GpsController {
 
     private Logger logger = LoggerFactory.getLogger(GpsController.class);
 
-    // TODO  à voir pour un bean ??? /
-    GpsUtil gpsUtil = new GpsUtil();
-
     @Autowired
-    GpsProxy gpsProxy;
+    private GpsProxy gpsProxy;
+
+    /**
+     * Call GpsApi micro service
+     * @return
+     */
 
     @GetMapping("/gpsattractions")
-    public String gpsGetAttractions() {
-        logger.debug("gpsGetAttractions  / appel microservice");
-        //List<Attraction> attractions = gpsUtil.getAttractions();
-        String attractions = gpsProxy.gpsGetAttractions();
-        return  attractions;
+    public List<AttractionMapper> gpsGetAttractions() {
+        logger.debug("gpsGetAttractions / appel microservice");
+        List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
+        return  attractionMappers;
     }
 
     @GetMapping("/gpsuserlocation")
-    public VisitedLocation gpsGetUserLocation(@RequestParam UUID userId) {
-        logger.debug("gpsGetUserLocation");
-        VisitedLocation visitedLocation = gpsUtil.getUserLocation(userId);
-        return visitedLocation;
+    public VisitedLocationMapper gpsGetUserLocation(@RequestParam UUID userId) {
+        logger.debug("gpsGetUserLocation / appel microservice");
+        VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(userId);
+        return visitedLocationMapper;
     }
 
 }

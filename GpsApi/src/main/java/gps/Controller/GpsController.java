@@ -1,6 +1,8 @@
 package gps.Controller;
 
 import com.jsoniter.output.JsonStream;
+import gps.Model.AttractionMapper;
+import gps.Model.VisitedLocationMapper;
 import gps.Service.GpsService;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
@@ -29,18 +31,19 @@ public class GpsController {
     }
 
     @GetMapping("/gpsattractions")
-    public String gpsGetAttractions() {
-        logger.debug("gpsGetAttractions");
-        List<Attraction> attractions = gpsService.getAttractions();
-        return JsonStream.serialize(gpsService.getAttractions());
+    public List<AttractionMapper> gpsGetAttractions() {
+        logger.debug("GpsApi gpsGetAttractions");
+        //List<Attraction> attractions = gpsService.getAttractions();
+        //return JsonStream.serialize(gpsService.getAttractions());
+        return gpsService.getAttractions();
     }
 
     @GetMapping("/gpsuserlocation")
-    public VisitedLocation gpsGetUserLocation(@RequestParam UUID userId) {
+    public VisitedLocationMapper gpsGetUserLocation(@RequestParam UUID userId) {
         logger.debug("gpsGetUserLocation");
         // Exemple de UUID f07621a4-6365-4074-b040-ac655217f82f
-        VisitedLocation visitedLocation = gpsService.getUserLocation(userId);
-        return visitedLocation;
+        VisitedLocationMapper visitedLocationMapper = gpsService.getUserLocation(userId);
+        return visitedLocationMapper;
     }
 
 }

@@ -1,5 +1,7 @@
 package gps.Service;
 
+import gps.Model.AttractionMapper;
+import gps.Model.VisitedLocationMapper;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 import org.junit.jupiter.api.Test;
@@ -32,15 +34,15 @@ public class GpsServiceTest {
 
     @Test
     void getAttractions() {
-        List<Attraction> attractions = gpsService.getAttractions();
-        assertTrue(attractions.size() > 0);
+        List<AttractionMapper> attractionMappers = gpsService.getAttractions();
+        assertTrue(attractionMappers.size() > 0);
     }
 
 
     @Test
     void getUserLocation() {
-        VisitedLocation visitedLocation = gpsService.getUserLocation(UUID.randomUUID());
-        assertTrue(!visitedLocation.location.equals(""));
+        VisitedLocationMapper visitedLocationMapper = gpsService.getUserLocation(UUID.randomUUID());
+        assertTrue(!(visitedLocationMapper.getLocation()==null));
     }
 
 }

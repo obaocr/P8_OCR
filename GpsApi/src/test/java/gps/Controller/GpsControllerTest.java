@@ -1,5 +1,8 @@
 package gps.Controller;
 
+import gps.Model.AttractionMapper;
+import gps.Model.LocationMapper;
+import gps.Model.VisitedLocationMapper;
 import gps.Service.GpsService;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
@@ -34,18 +37,18 @@ public class GpsControllerTest {
 
     @Test
     void gpsGetAttractions() throws Exception {
-        List<Attraction> attractions = new ArrayList<>();
-        Mockito.when(gpsService.getAttractions()).thenReturn(attractions);
-        this.mockMvc.perform(get("/gpsAttractions").characterEncoding("utf-8"))
+        List<AttractionMapper> attractionMappers = new ArrayList<>();
+        Mockito.when(gpsService.getAttractions()).thenReturn(attractionMappers);
+        this.mockMvc.perform(get("/gpsattractions").characterEncoding("utf-8"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
     }
 
     @Test
     void gpsGetUserLocation() throws Exception {
-        Location location = new Location(10.0,10.0);
-        VisitedLocation visitedLocation = new VisitedLocation(UUID.randomUUID(), location, new Date());
-        Mockito.when(gpsService.getUserLocation(UUID.fromString("79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75"))).thenReturn(visitedLocation);
-        this.mockMvc.perform(get("/gpsUserLocation").param("userId", "79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75").characterEncoding("utf-8"))
+        LocationMapper locationMapper = new LocationMapper(10.0,10.0);
+        VisitedLocationMapper visitedLocationMapper = new VisitedLocationMapper(UUID.randomUUID(), locationMapper, new Date());
+        Mockito.when(gpsService.getUserLocation(UUID.fromString("79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75"))).thenReturn(visitedLocationMapper);
+        this.mockMvc.perform(get("/gpsuserlocation").param("userId", "79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75").characterEncoding("utf-8"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
     }
 
