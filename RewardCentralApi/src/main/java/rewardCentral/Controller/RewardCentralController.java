@@ -1,5 +1,7 @@
 package rewardCentral.Controller;
 
+import com.jsoniter.output.JsonStream;
+import rewardCentral.Model.RewardPointsMapper;
 import rewardCentral.Service.RewardCentralService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,11 @@ public class RewardCentralController {
     }
 
     @GetMapping("/attractionrewardpoints")
-    public String getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
-        logger.debug("getAttractionRewardPoints");
+    public RewardPointsMapper getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
+        logger.info("getAttractionRewardPoints Api");
         Integer points = rewardCentralService.getAttractionRewardPoints(attractionId, userId);
-        String response = "{ \"points\" :" + points + " }";
-        return (response);
+        RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(points);
+        return rewardPointsMapper;
     }
 
 }

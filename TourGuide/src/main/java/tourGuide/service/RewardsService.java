@@ -1,12 +1,17 @@
 package tourGuide.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import rewardCentral.RewardCentral;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.RewardPointsMapper;
+import tourGuide.Proxies.RewardProxy;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 import tourGuide.util.Utils;
@@ -23,6 +28,9 @@ import java.util.stream.Collectors;
 public class RewardsService {
     private Logger logger = LoggerFactory.getLogger(RewardsService.class);
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+
+    @Autowired
+    private RewardProxy rewardProxy;
 
     // proximity in miles
     private int defaultProximityBuffer = 10;
@@ -47,12 +55,12 @@ public class RewardsService {
     public void calculateRewards(User user) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
         List<Attraction> attractions = gpsService.getAttractions();
-        for (VisitedLocation visitedLocation : userLocations) {
+         for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
                         logger.debug("calculateRewards => ******************* passage nearAttraction : " + user.getUserName());
-                        user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+                        user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction.attractionId, user.getUserId())));
                     }
                 }
             }
@@ -65,12 +73,13 @@ public class RewardsService {
 
     private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
         double distance = Utils.calculateDistance(attraction, visitedLocation.location);
-        //logger.debug("nearAttraction, distance, proximityBuffer :" +  distance + " / " + proximityBuffer);
         return distance > proximityBuffer ? false : true;
     }
 
-    private int getRewardPoints(Attraction attraction, User user) {
-        return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+    private Integer getRewardPoints(UUID attractionId, UUID userId) {
+        // Appel micro service
+        RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId, userId);
+        return rewardPointsMapper.getPoints();
     }
 
     /*************************************************************************************
@@ -127,7 +136,7 @@ public class RewardsService {
 
     private CompletableFuture<AttractionResponseDTO> getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
         return CompletableFuture.supplyAsync(() -> {
-            int reward = rewardsCentral.getAttractionRewardPoints(UUID.fromString(attractionResponse.getAttractionId()), user.getUserId());
+            int reward = getRewardPoints(UUID.fromString(attractionResponse.getAttractionId()), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;
         }, executorReward);

@@ -191,29 +191,12 @@ public class TourGuideService {
         List<AttractionResponseDTO> attractionResponses = new ArrayList<>();
         logger.debug("getAllUsers.size:" + getAllUsers().size());
 
-
-        //VisitedLocation visitedLocation = getUserLocation(getUser(userName));
-
         // Appel GpsApi micro service
         VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(getUser(userName).getUserId());
 
         // Appel GpsApi micro service
         List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
         logger.info("Appel GpsApi micro service attractionMappers , nb attractions:"+attractionMappers.size());
-
-        /*for (Attraction attraction : gpsService.getAttractions()) {
-            Double distance = Utils.calculateDistance(attraction, visitedLocation.location);
-            AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
-            attractionResponse.setAttractionName(attraction.attractionName);
-            attractionResponse.setAttractionId(attraction.attractionId);
-            attractionResponse.setCity(attraction.city);
-            attractionResponse.setState(attraction.state);
-            attractionResponse.setLatitude(attraction.latitude);
-            attractionResponse.setLongitude(attraction.longitude);
-            attractionResponse.setDistanceWithCurrLoc(distance);
-            attractionResponse.setRewardsPoints(0);
-            attractionResponses.add(attractionResponse);
-        }*/
 
         for (AttractionMapper attraction : attractionMappers) {
             LocationMapper loc1 = new LocationMapper(attraction.getLongitude(), attraction.getLatitude());

@@ -30,7 +30,7 @@ public class RewardCentralControllerTest {
     void getAttractionRewardPoints() throws Exception {
         Mockito.when(rewardCentralService.getAttractionRewardPoints(UUID.fromString("79ad4e7d-49b9-4c82-bd88-0e5dbc41fe85")
                 , UUID.fromString("79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75"))).thenReturn(999);
-        this.mockMvc.perform(get("/attractionRewardPoints")
+        this.mockMvc.perform(get("/attractionrewardpoints")
                 .param("attractionId", "79ad4e7d-49b9-4c82-bd88-0e5dbc41fe85")
                 .param("userId", "79ad4e7d-49b9-4c82-bd88-0e5dbc41fe75")
                 .characterEncoding("utf-8"))
