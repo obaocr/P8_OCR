@@ -27,7 +27,7 @@ public class RewardCentralController {
 
     @GetMapping("/attractionrewardpoints")
     @JsonProperty("RewardPointsMapper")
-    public RewardPointsMapper getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) throws JsonProcessingException {
+    public RewardPointsMapper getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
         logger.debug("attractionrewardpoints");
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId, userId);
         return rewardPointsMapper;

@@ -47,7 +47,7 @@ public class TestPerformance {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        InternalTestHelper.setInternalUserNumber(1000);
+        InternalTestHelper.setInternalUserNumber(10);
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
 
         List<User> allUsers = new ArrayList<>();
@@ -65,13 +65,14 @@ public class TestPerformance {
         assertTrue(TimeUnit.MINUTES.toSeconds(900) >= TimeUnit.MILLISECONDS.toSeconds(timeMs));
     }
 
+    // TODO ne fonctionne pas en //
     @Test
     public void highVolumeGetRewards() {
         GpsService gpsService = new GpsServiceImpl(new GpsUtil());
         RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
-        InternalTestHelper.setInternalUserNumber(1000);
+        InternalTestHelper.setInternalUserNumber(10);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);

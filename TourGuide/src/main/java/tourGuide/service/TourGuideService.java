@@ -149,7 +149,9 @@ public class TourGuideService {
     public List<VisitedLocation> trackUserLocationBulk(List<User> users){
         logger.info("trackUserLocationForAllUsers");
         Date d1 = new Date();
+
         List<VisitedLocation> visitedLocations = new ArrayList<>();
+
         List<CompletableFuture<VisitedLocation>> trackUserLocationFuture = users.stream()
                 .map(u -> getTrackUserLocationAsync(u))
                 .collect(Collectors.toList());
@@ -164,6 +166,7 @@ public class TourGuideService {
                 }
         );
         visitedLocations = allCompletableFuture.join();
+
         Date d2 = new Date();
         logger.debug("trackUserLocationBulk Part1 OK, Size / Time ms  :" + visitedLocations.size() + " / " + (d2.getTime() - d1.getTime()));
 

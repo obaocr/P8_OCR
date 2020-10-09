@@ -58,14 +58,20 @@ public class RewardsService {
     }
 
     public void calculateRewards(User user) {
+    //public void calculateRewards(User user) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
-        List<Attraction> attractions = getGpsAttractions();
-         for (VisitedLocation visitedLocation : userLocations) {
+        //List<Attraction> attractions = getGpsAttractions();
+        List<Attraction> attractions = gpsService.getAttractions();
+        for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
                         logger.debug("calculateRewards => ******************* passage nearAttraction : " + user.getUserName());
-                        user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction.attractionId, user.getUserId())));
+                        /*int reward = getRewardPoints(attraction.attractionId, user.getUserId());
+                        user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+
+                         */
+                        user.addUserReward(new UserReward(visitedLocation, attraction, rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId())));
                     }
                 }
             }
@@ -81,9 +87,12 @@ public class RewardsService {
         return distance > proximityBuffer ? false : true;
     }
 
+    // TODO apparemment fait planter si on utiliser dans les tests de perfs !!!!!
     private Integer getRewardPoints(UUID attractionId, UUID userId) {
         // Appel micro service
+        System.out.println("***** dans getRewardPoints :" + attractionId + ", userId = " + userId);
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId, userId);
+        System.out.println("***** retour de getRewardPoints :" + rewardPointsMapper.getPoints());
         return rewardPointsMapper.getPoints();
     }
 
