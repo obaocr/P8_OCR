@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import rewardCentral.RewardCentral;
+import tourGuide.Model.AttractionMapper;
 import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Model.RewardPointsMapper;
+import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
@@ -31,6 +33,9 @@ public class RewardsService {
 
     @Autowired
     private RewardProxy rewardProxy;
+
+    @Autowired
+    private GpsProxy gpsProxy;
 
     // proximity in miles
     private int defaultProximityBuffer = 10;
@@ -54,7 +59,7 @@ public class RewardsService {
 
     public void calculateRewards(User user) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
-        List<Attraction> attractions = gpsService.getAttractions();
+        List<Attraction> attractions = getGpsAttractions();
          for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
@@ -80,6 +85,16 @@ public class RewardsService {
         // Appel micro service
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId, userId);
         return rewardPointsMapper.getPoints();
+    }
+
+    private List<Attraction> getGpsAttractions() {
+        List<Attraction> attractions = new ArrayList<>();
+        List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
+        for(AttractionMapper a : attractionMappers) {
+            Attraction attraction = new Attraction(a.getAttractionName(), a.getCity(), a.getState(), a.getLatitude(), a.getLongitude());
+            attractions.add(attraction);
+        }
+        return attractions;
     }
 
     /*************************************************************************************

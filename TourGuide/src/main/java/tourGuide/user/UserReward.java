@@ -27,5 +27,4 @@ public class UserReward {
 		this.rewardPoints = rewardPoints;
 	}
 
-	
 }
