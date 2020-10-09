@@ -1,14 +1,12 @@
 package tourGuide.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import rewardCentral.RewardCentral;
+import org.springframework.stereotype.Service;
 import tourGuide.Model.AttractionMapper;
 import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Model.RewardPointsMapper;
@@ -26,7 +24,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-// TODO  à passer en SVC mais enlever du bean ???
 public class RewardsService {
     private Logger logger = LoggerFactory.getLogger(RewardsService.class);
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
@@ -41,12 +38,9 @@ public class RewardsService {
     private int defaultProximityBuffer = 10;
     private int proximityBuffer = defaultProximityBuffer;
     private int attractionProximityRange = 200;
-    private final GpsService gpsService;
-    private final RewardCentral rewardsCentral;
 
-    public RewardsService(GpsService gpsService, RewardCentral rewardCentral) {
-        this.gpsService = gpsService;
-        this.rewardsCentral = rewardCentral;
+    public RewardsService() {
+
     }
 
     public void setProximityBuffer(int proximityBuffer) {
@@ -58,20 +52,15 @@ public class RewardsService {
     }
 
     public void calculateRewards(User user) {
-    //public void calculateRewards(User user) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
-        //List<Attraction> attractions = getGpsAttractions();
-        List<Attraction> attractions = gpsService.getAttractions();
+        List<Attraction> attractions = getGpsAttractions();
         for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
                         logger.debug("calculateRewards => ******************* passage nearAttraction : " + user.getUserName());
-                        /*int reward = getRewardPoints(attraction.attractionId, user.getUserId());
+                        int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                         user.addUserReward(new UserReward(visitedLocation, attraction, reward));
-
-                         */
-                        user.addUserReward(new UserReward(visitedLocation, attraction, rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId())));
                     }
                 }
             }
@@ -99,7 +88,7 @@ public class RewardsService {
     private List<Attraction> getGpsAttractions() {
         List<Attraction> attractions = new ArrayList<>();
         List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
-        for(AttractionMapper a : attractionMappers) {
+        for (AttractionMapper a : attractionMappers) {
             Attraction attraction = new Attraction(a.getAttractionName(), a.getCity(), a.getState(), a.getLatitude(), a.getLongitude());
             attractions.add(attraction);
         }
@@ -107,12 +96,12 @@ public class RewardsService {
     }
 
     /*************************************************************************************
-    // *********** Calculate Rewards for N users parallel mode   *************************
-    // ***********************************************************************************/
+     // *********** Calculate Rewards for N users parallel mode   *************************
+     // ***********************************************************************************/
 
     private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(100);
 
-    private CompletableFuture<Boolean> calculateRewardsAsync (User user) {
+    private CompletableFuture<Boolean> calculateRewardsAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
             calculateRewards(user);
             return true;
@@ -137,7 +126,7 @@ public class RewardsService {
         results = allCompletableFuture.join();
         Integer nbResultOK = 0;
         for (Boolean b : results) {
-            if(b == true) {
+            if (b == true) {
                 nbResultOK++;
             }
         }
@@ -146,8 +135,8 @@ public class RewardsService {
     }
 
     /**************************************************************************************
-    // *********** Pour calcul du reward Point en future  Async **************************
-    // ***********************************************************************************/
+     // *********** Pour calcul du reward Point en future  Async **************************
+     // ***********************************************************************************/
 
     /**
      * OBA Pour calcul du reward Point en future asynchrone, pour une attraction

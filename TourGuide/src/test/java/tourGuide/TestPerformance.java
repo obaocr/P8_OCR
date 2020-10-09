@@ -1,14 +1,10 @@
 package tourGuide;
 
-import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
-import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
-import tourGuide.service.GpsService;
-import tourGuide.service.GpsServiceImpl;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -44,11 +40,10 @@ public class TestPerformance {
 
     @Test
     public void highVolumeTrackLocation() {
-        GpsService gpsService = new GpsServiceImpl(new GpsUtil());
-        RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
+        RewardsService rewardsService = new RewardsService();
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
         InternalTestHelper.setInternalUserNumber(10);
-        TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(rewardsService);
 
         List<User> allUsers = new ArrayList<>();
         allUsers = tourGuideService.getAllUsers();
@@ -68,16 +63,15 @@ public class TestPerformance {
     // TODO ne fonctionne pas en //
     @Test
     public void highVolumeGetRewards() {
-        GpsService gpsService = new GpsServiceImpl(new GpsUtil());
-        RewardsService rewardsService = new RewardsService(gpsService, new RewardCentral());
+        RewardsService rewardsService = new RewardsService();
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
         InternalTestHelper.setInternalUserNumber(10);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        TourGuideService tourGuideService = new TourGuideService(gpsService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(rewardsService);
 
-        Attraction attraction = gpsService.getAttractions().get(0);
+        Attraction attraction = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
         List<User> allUsers = new ArrayList<>();
         allUsers = tourGuideService.getAllUsers();
 

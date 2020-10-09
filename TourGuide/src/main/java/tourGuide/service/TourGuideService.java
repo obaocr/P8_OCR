@@ -35,7 +35,6 @@ public class TourGuideService {
     private GpsProxy gpsProxy;
 
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-    private final GpsService gpsService;
     private final RewardsService rewardsService;
     private final TripPricerService trTripPricerService = new TripPricerServiceImpl();
     public final Tracker tracker;
@@ -44,16 +43,13 @@ public class TourGuideService {
 
     /**
      * TourGuideService constructor
-     *
-     * @param gpsService
-     * @param rewardsService
      */
     // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
     // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
-    public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
+    //public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
+    public TourGuideService(RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
-        this.gpsService = gpsService;
         this.rewardsService = rewardsService;
 
         if (testMode) {
@@ -131,7 +127,10 @@ public class TourGuideService {
 
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
-            VisitedLocation visitedLocation = gpsService.getUserLocation(user.getUserId());
+            VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(user.getUserId());
+            VisitedLocation visitedLocation = new VisitedLocation(visitedLocationMapper.getUserId()
+                ,new Location(visitedLocationMapper.getLocation().getLatitude(), visitedLocationMapper.getLocation().getLongitude())
+                ,visitedLocationMapper.getTimeVisited());
             user.addToVisitedLocations(visitedLocation);
             // "calculateRewards" is processed in bulk mode
             //rewardsService.calculateRewards(user);
@@ -204,7 +203,7 @@ public class TourGuideService {
         for (AttractionMapper attraction : attractionMappers) {
             LocationMapper loc1 = new LocationMapper(attraction.getLongitude(), attraction.getLatitude());
             LocationMapper loc2 = new LocationMapper(visitedLocationMapper.getLocation().getLongitude(), visitedLocationMapper.getLocation().getLatitude());
-            Double distance = Utils.calculateDistanceMapper(loc1, loc2);
+            Double distance = Utils.calculateDistance(loc1, loc2);
             AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
             attractionResponse.setAttractionName(attraction.getAttractionName());
             attractionResponse.setAttractionId(attraction.getAttractionId());

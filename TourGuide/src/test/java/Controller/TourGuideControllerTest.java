@@ -1,31 +1,14 @@
 package Controller;
 
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import tourGuide.Controller.TourGuideController;
-import tourGuide.service.GpsServiceImpl;
-import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
-import tourGuide.user.User;
-
-import java.util.Date;
-import java.util.UUID;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = TourGuideController.class)
@@ -45,5 +28,6 @@ public class TourGuideControllerTest {
                 .param("userName", "u1")
                 .characterEncoding("utf-8"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
-    */}
+    */
+    }
 }

@@ -11,6 +11,15 @@ public class AttractionMapper {
     private double longitude;
     private double latitude;
 
+    public AttractionMapper(String attractionName, String city, String state, UUID attractionId, double longitude, double latitude) {
+        this.attractionName = attractionName;
+        this.city = city;
+        this.state = state;
+        this.attractionId = attractionId;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public String getAttractionName() {
         return attractionName;
     }
