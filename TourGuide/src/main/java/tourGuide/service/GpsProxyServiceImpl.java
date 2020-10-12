@@ -32,10 +32,9 @@ public class GpsProxyServiceImpl implements GpsProxyService {
 
     @Override
     public VisitedLocation gpsUserLocation(UUID userId) {
-        VisitedLocationMapper v = gpsProxy.gpsGetUserLocation(userId);
+        VisitedLocationMapper v = gpsProxy.gpsGetUserLocation(userId.toString());
         Location location = new Location(v.getLocation().getLongitude(), v.getLocation().getLatitude());
         VisitedLocation visitedLocation = new VisitedLocation(userId, location, v.getTimeVisited());
         return visitedLocation;
     }
-
 }

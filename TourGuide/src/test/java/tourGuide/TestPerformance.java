@@ -43,7 +43,7 @@ public class TestPerformance {
     @Test
     public void highVolumeTrackLocation() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
         InternalTestHelper.setInternalUserNumber(10);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
@@ -67,7 +67,7 @@ public class TestPerformance {
     @Test
     public void highVolumeGetRewards() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
         InternalTestHelper.setInternalUserNumber(10);

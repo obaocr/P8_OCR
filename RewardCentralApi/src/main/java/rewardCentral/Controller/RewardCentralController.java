@@ -27,9 +27,9 @@ public class RewardCentralController {
     }
 
     @GetMapping("/attractionrewardpoints")
-    public RewardPointsMapper getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
+    public RewardPointsMapper getAttractionRewardPoints(@RequestParam String attractionId, @RequestParam String userId) {
         logger.info("getAttractionRewardPoints Api");
-        Integer points = rewardCentralService.getAttractionRewardPoints(attractionId, userId);
+        Integer points = rewardCentralService.getAttractionRewardPoints(UUID.fromString(attractionId), UUID.fromString(userId));
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(points);
         return rewardPointsMapper;
     }

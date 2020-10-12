@@ -39,10 +39,10 @@ public class GpsController {
     }
 
     @GetMapping("/gpsuserlocation")
-    public VisitedLocationMapper gpsGetUserLocation(@RequestParam UUID userId) {
+    public VisitedLocationMapper gpsGetUserLocation(@RequestParam String userId) {
         logger.debug("gpsGetUserLocation");
         // Exemple de UUID f07621a4-6365-4074-b040-ac655217f82f
-        VisitedLocationMapper visitedLocationMapper = gpsService.getUserLocation(userId);
+        VisitedLocationMapper visitedLocationMapper = gpsService.getUserLocation(UUID.fromString(userId));
         return visitedLocationMapper;
     }
 

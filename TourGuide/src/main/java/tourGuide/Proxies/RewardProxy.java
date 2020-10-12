@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface RewardProxy {
 
     @GetMapping(value = "/attractionrewardpoints")
-    RewardPointsMapper getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId);
+    RewardPointsMapper getAttractionRewardPoints(@RequestParam String attractionId, @RequestParam String userId);
 
 }

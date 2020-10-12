@@ -31,15 +31,24 @@ public class RewardsService {
     @Autowired
     private RewardProxy rewardProxy;
 
+    @Autowired
+    private GpsProxyService gpsProxyService;
+
     // proximity in miles
     private int defaultProximityBuffer = 10;
     private int proximityBuffer = defaultProximityBuffer;
     private int attractionProximityRange = 200;
-    private GpsProxyService gpsProxyService;
 
-    public RewardsService(GpsProxyService gpsProxyService) {
+    //private GpsProxyService gpsProxyService;
+
+    public RewardsService() {
+    }
+
+    /*public RewardsService(GpsProxyService gpsProxyService) {
         this.gpsProxyService = gpsProxyService;
     }
+
+     */
 
     public void setProximityBuffer(int proximityBuffer) {
         this.proximityBuffer = proximityBuffer;
@@ -78,7 +87,7 @@ public class RewardsService {
     private Integer getRewardPoints(UUID attractionId, UUID userId) {
         // Appel micro service
         System.out.println("***** dans getRewardPoints :" + attractionId + ", userId = " + userId);
-        RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId, userId);
+        RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId.toString(), userId.toString());
         System.out.println("***** retour de getRewardPoints :" + rewardPointsMapper.getPoints());
         return rewardPointsMapper.getPoints();
     }

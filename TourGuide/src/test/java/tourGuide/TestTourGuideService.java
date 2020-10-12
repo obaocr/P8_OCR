@@ -32,7 +32,7 @@ public class TestTourGuideService {
     @Test
     public void getUserLocation() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
 
@@ -47,7 +47,7 @@ public class TestTourGuideService {
     @Test
     public void getAllUsersCurrentLocationShouldReturnUsersLocations() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(55);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         tourGuideService.tracker.stopTracking();
@@ -57,7 +57,7 @@ public class TestTourGuideService {
     @Test
     public void addUser() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -74,7 +74,7 @@ public class TestTourGuideService {
     @Test
     public void getAllUsers() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -91,7 +91,7 @@ public class TestTourGuideService {
     @Test
     public void trackUser() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -103,7 +103,7 @@ public class TestTourGuideService {
     @Test
     public void getTripDeals() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -116,7 +116,7 @@ public class TestTourGuideService {
     @Test
     public void getNearbyAttractions() {
         GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        RewardsService rewardsService = new RewardsService(gpsProxyService);
+        RewardsService rewardsService = new RewardsService();
         InternalTestHelper.setInternalUserNumber(1);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = tourGuideService.getAllUsers().get(0);

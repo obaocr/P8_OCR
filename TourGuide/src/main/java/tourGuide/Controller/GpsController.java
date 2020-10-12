@@ -39,7 +39,7 @@ public class GpsController {
     }
 
     @GetMapping("/gpsuserlocation")
-    public VisitedLocationMapper gpsGetUserLocation(@RequestParam UUID userId) {
+    public VisitedLocationMapper gpsGetUserLocation(@RequestParam String userId) {
         logger.debug("gpsGetUserLocation / appel microservice");
         VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(userId);
         return visitedLocationMapper;

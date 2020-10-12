@@ -17,6 +17,6 @@ public interface GpsProxy {
     List<AttractionMapper> gpsGetAttractions();
 
     @GetMapping(value = "/gpsuserlocation")
-    VisitedLocationMapper gpsGetUserLocation(@RequestParam UUID userId);
+    VisitedLocationMapper gpsGetUserLocation(@RequestParam String userId);
 
 }

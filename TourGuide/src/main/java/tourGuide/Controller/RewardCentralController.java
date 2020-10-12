@@ -22,7 +22,7 @@ public class RewardCentralController {
 
     @GetMapping("/attractionrewardpoints")
     @JsonProperty("RewardPointsMapper")
-    public RewardPointsMapper getAttractionRewardPoints(@RequestParam UUID attractionId, @RequestParam UUID userId) {
+    public RewardPointsMapper getAttractionRewardPoints(@RequestParam String attractionId, @RequestParam String userId) {
         logger.debug("attractionrewardpoints");
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId, userId);
         return rewardPointsMapper;
