@@ -2,18 +2,13 @@ package tourGuide;
 
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
-import org.hamcrest.core.AnyOf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Any;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tourGuide.Model.AttractionMapper;
 import tourGuide.Model.LocationMapper;
@@ -33,13 +28,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 
-//@SpringBootTest
-//@ContextConfiguration
 @ExtendWith(SpringExtension.class)
 public class TestRewardsService {
 
@@ -72,8 +66,6 @@ public class TestRewardsService {
 
     @Test
     public void isWithinAttractionProximity() {
-        //GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
-        //RewardsService rewardsService = new RewardsService();
         Attraction attraction = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
         assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
     }
@@ -86,7 +78,7 @@ public class TestRewardsService {
         Mockito.when(gpsProxy.gpsGetAttractions()).thenReturn(attractions);
 
         UUID userId = UUID.randomUUID();
-        LocationMapper locationMapper = new LocationMapper(1.0,1.0);
+        LocationMapper locationMapper = new LocationMapper(1.0, 1.0);
         Date dt = new Date();
         VisitedLocationMapper visitedLocationMapper = new VisitedLocationMapper(userId, locationMapper, dt);
         Mockito.when(gpsProxy.gpsGetUserLocation(userId.toString())).thenReturn(visitedLocationMapper);
@@ -130,4 +122,5 @@ public class TestRewardsService {
 
         assertEquals(attractions.size(), userRewards.size());
     }
+
 }
