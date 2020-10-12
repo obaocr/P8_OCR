@@ -16,6 +16,8 @@ public class GpsApiProxyTest {
     @Autowired
     private GpsProxy gpsProxy;
 
+    // Test intégration / OK ça passe
+
     @Test
     public void testProxyGetAttractions() {
         List<AttractionMapper> attractionMappers = this.gpsProxy.gpsGetAttractions();

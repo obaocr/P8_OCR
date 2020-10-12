@@ -8,7 +8,7 @@ import tourGuide.Proxies.GpsProxy;
 //@EnableFeignClients(clients = GpsProxy.class)
 @EnableFeignClients("tourGuide")
 @Configuration
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 public class FeignConfig {
 
 }
