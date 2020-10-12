@@ -80,7 +80,6 @@ public class TestRewardsService {
 
     @Test
     public void userGetRewards() {
-
         AttractionMapper attraction1 = new AttractionMapper("Musee", "Paris", "France", UUID.randomUUID(), 1.0, 2.0);
         List<AttractionMapper> attractions = new ArrayList<>();
         attractions.add(attraction1);
@@ -95,6 +94,7 @@ public class TestRewardsService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
+        rewardsService.setProximityBuffer(Integer.MAX_VALUE);
         InternalTestHelper.setInternalUserNumber(0);
         TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(userId, "jon", "000", "jon@tourGuide.com");
@@ -104,8 +104,7 @@ public class TestRewardsService {
 
         List<UserReward> userRewards = user.getUserRewards();
         tourGuideService.tracker.stopTracking();
-        System.out.println("userRewards.size() " + userRewards.size());
-        assertTrue(userRewards.size() == 2);
+        assertTrue(userRewards.size() == 1);
     }
 
     @Test

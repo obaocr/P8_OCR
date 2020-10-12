@@ -86,9 +86,7 @@ public class RewardsService {
     // TODO apparemment fait planter si on utiliser dans les tests de perfs !!!!!
     private Integer getRewardPoints(UUID attractionId, UUID userId) {
         // Appel micro service
-        System.out.println("***** dans getRewardPoints :" + attractionId + ", userId = " + userId);
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId.toString(), userId.toString());
-        System.out.println("***** retour de getRewardPoints :" + rewardPointsMapper.getPoints());
         return rewardPointsMapper.getPoints();
     }
 
