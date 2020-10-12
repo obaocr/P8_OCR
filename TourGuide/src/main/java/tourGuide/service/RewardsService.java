@@ -31,16 +31,14 @@ public class RewardsService {
     @Autowired
     private RewardProxy rewardProxy;
 
-    @Autowired
-    private GpsProxy gpsProxy;
-
     // proximity in miles
     private int defaultProximityBuffer = 10;
     private int proximityBuffer = defaultProximityBuffer;
     private int attractionProximityRange = 200;
+    private GpsProxyService gpsProxyService;
 
-    public RewardsService() {
-
+    public RewardsService(GpsProxyService gpsProxyService) {
+        this.gpsProxyService = gpsProxyService;
     }
 
     public void setProximityBuffer(int proximityBuffer) {
@@ -86,12 +84,7 @@ public class RewardsService {
     }
 
     private List<Attraction> getGpsAttractions() {
-        List<Attraction> attractions = new ArrayList<>();
-        List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
-        for (AttractionMapper a : attractionMappers) {
-            Attraction attraction = new Attraction(a.getAttractionName(), a.getCity(), a.getState(), a.getLatitude(), a.getLongitude());
-            attractions.add(attraction);
-        }
+        List<Attraction> attractions = gpsProxyService.gpsAttractions();
         return attractions;
     }
 

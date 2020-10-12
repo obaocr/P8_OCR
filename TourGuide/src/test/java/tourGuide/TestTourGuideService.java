@@ -8,6 +8,8 @@ import org.springframework.test.context.ContextConfiguration;
 import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.service.GpsProxyService;
+import tourGuide.service.GpsProxyServiceImpl;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -29,9 +31,10 @@ public class TestTourGuideService {
     // TODO => plante...
     @Test
     public void getUserLocation() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
 
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user).get(0);
@@ -43,18 +46,20 @@ public class TestTourGuideService {
     // TODO OBA -  Tester plus finement ... par exemple les résultats attendus comme les UserName.. et que la location ne soit pas vide ...
     @Test
     public void getAllUsersCurrentLocationShouldReturnUsersLocations() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(55);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         tourGuideService.tracker.stopTracking();
         assertTrue(tourGuideService.getAllUsersCurrentLocation().size() == 55);
     }
 
     @Test
     public void addUser() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
         tourGuideService.addUser(user);
@@ -68,9 +73,10 @@ public class TestTourGuideService {
 
     @Test
     public void getAllUsers() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
         tourGuideService.addUser(user);
@@ -84,9 +90,10 @@ public class TestTourGuideService {
     // TODO => plante
     @Test
     public void trackUser() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user).get(0);
         tourGuideService.tracker.stopTracking();
@@ -95,9 +102,10 @@ public class TestTourGuideService {
 
     @Test
     public void getTripDeals() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         List<Provider> providers = tourGuideService.getTripDeals(user);
         tourGuideService.tracker.stopTracking();
@@ -107,9 +115,10 @@ public class TestTourGuideService {
     // TODO => plante
     @Test
     public void getNearbyAttractions() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(1);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
         User user = tourGuideService.getAllUsers().get(0);
         List<AttractionResponseDTO> attractions = tourGuideService.getNearByAttractions(user.getUserName());
         tourGuideService.tracker.stopTracking();

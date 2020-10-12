@@ -5,15 +5,20 @@ import gpsUtil.location.VisitedLocation;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tourGuide.Model.AttractionMapper;
 import tourGuide.Model.RewardPointsMapper;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.service.GpsProxyService;
+import tourGuide.service.GpsProxyServiceImpl;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -27,11 +32,13 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@SpringBootTest
+@ContextConfiguration
 @ExtendWith(SpringExtension.class)
 public class TestRewardsService {
 
     @MockBean
-    private GpsProxy gpsProxy;
+    private GpsProxyService gpsProxyService;
 
     @MockBean
     private RewardProxy rewardProxy;
@@ -39,21 +46,23 @@ public class TestRewardsService {
     // TODO => plante
     @Test
     public void userGetRewards() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+
+        Attraction attraction1 = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
+        Attraction attraction2 = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
+        List<Attraction> attractions = new ArrayList<>();
+        attractions.add(attraction1);
+        attractions.add(attraction2);
+        Mockito.when(gpsProxyService.gpsAttractions()).thenReturn(attractions);
 
         UUID userId = UUID.randomUUID();
         UUID attractionId = UUID.randomUUID();
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(attractionId, userId)).thenReturn(rewardPointsMapper);
 
-        AttractionMapper attractionMapper1 = new AttractionMapper("Musee", "Paris", "France", UUID.randomUUID(), 1.0, 2.0);
-        AttractionMapper attractionMapper2 = new AttractionMapper("Musee", "Paris", "France", UUID.randomUUID(), 1.0, 2.0);
-        List<AttractionMapper> attractionMappers = new ArrayList<>();
-        attractionMappers.add(attractionMapper1);
-        attractionMappers.add(attractionMapper2);
-        Mockito.when(gpsProxy.gpsGetAttractions()).thenReturn(attractionMappers);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
 
         User user = new User(userId, "jon", "000", "jon@tourGuide.com");
         Attraction attraction = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
@@ -66,7 +75,8 @@ public class TestRewardsService {
 
     @Test
     public void isWithinAttractionProximity() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         Attraction attraction = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
         assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
     }
@@ -76,18 +86,19 @@ public class TestRewardsService {
     // TODO => plante
     @Test
     public void nearAllAttractions() {
-        AttractionMapper attractionMapper1 = new AttractionMapper("Musee", "Paris", "France", UUID.randomUUID(), 1.0, 2.0);
-        AttractionMapper attractionMapper2 = new AttractionMapper("Musee", "Paris", "France", UUID.randomUUID(), 1.0, 2.0);
-        List<AttractionMapper> attractionMappers = new ArrayList<>();
-        attractionMappers.add(attractionMapper1);
-        attractionMappers.add(attractionMapper2);
-        Mockito.when(gpsProxy.gpsGetAttractions()).thenReturn(attractionMappers);
+        Attraction attraction1 = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
+        Attraction attraction2 = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
+        List<Attraction> attractions = new ArrayList<>();
+        attractions.add(attraction1);
+        attractions.add(attraction2);
+        Mockito.when(gpsProxyService.gpsAttractions()).thenReturn(attractions);
 
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
         InternalTestHelper.setInternalUserNumber(1);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
 
         User user = tourGuideService.getAllUsers().get(0);
         rewardsService.calculateRewards(user);
@@ -95,6 +106,6 @@ public class TestRewardsService {
 
         tourGuideService.tracker.stopTracking();
 
-        assertEquals(attractionMappers.size(), userRewards.size());
+        assertEquals(attractions.size(), userRewards.size());
     }
 }

@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.5.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
     }
 }
 
@@ -28,7 +28,7 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "Hoxton.SR8")
+    set('springCloudVersion', "Greenwich.SR6")
 }
 
 sourceCompatibility = 1.8
@@ -45,7 +45,7 @@ dependencies {
     compile(name:'TripPricer', ext:'jar')
 
     testCompile("junit:junit")
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.5.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.6.RELEASE'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 

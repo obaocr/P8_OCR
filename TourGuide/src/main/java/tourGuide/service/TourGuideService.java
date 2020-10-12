@@ -31,11 +31,9 @@ import java.util.stream.IntStream;
 @Service
 public class TourGuideService {
 
-    @Autowired
-    private GpsProxy gpsProxy;
-
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
     private final RewardsService rewardsService;
+    private final GpsProxyService gpsProxyService;
     private final TripPricerService trTripPricerService = new TripPricerServiceImpl();
     public final Tracker tracker;
     boolean testMode = true;
@@ -47,10 +45,11 @@ public class TourGuideService {
     // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
     // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
     //public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
-    public TourGuideService(RewardsService rewardsService) {
+    public TourGuideService(GpsProxyService gpsProxyService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
         this.rewardsService = rewardsService;
+        this.gpsProxyService = gpsProxyService;
 
         if (testMode) {
             logger.debug("TestMode enabled / Initializing users");
@@ -127,10 +126,7 @@ public class TourGuideService {
 
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
-            VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(user.getUserId());
-            VisitedLocation visitedLocation = new VisitedLocation(visitedLocationMapper.getUserId()
-                ,new Location(visitedLocationMapper.getLocation().getLatitude(), visitedLocationMapper.getLocation().getLongitude())
-                ,visitedLocationMapper.getTimeVisited());
+            VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
             // "calculateRewards" is processed in bulk mode
             //rewardsService.calculateRewards(user);
@@ -194,23 +190,23 @@ public class TourGuideService {
         logger.debug("getAllUsers.size:" + getAllUsers().size());
 
         // Appel GpsApi micro service
-        VisitedLocationMapper visitedLocationMapper = gpsProxy.gpsGetUserLocation(getUser(userName).getUserId());
+        VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(getUser(userName).getUserId());
 
         // Appel GpsApi micro service
-        List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
-        logger.info("Appel GpsApi micro service attractionMappers , nb attractions:"+attractionMappers.size());
+        List<Attraction> attractions = gpsProxyService.gpsAttractions();
+        logger.info("Appel GpsApi micro service attractionMappers , nb attractions:"+attractions.size());
 
-        for (AttractionMapper attraction : attractionMappers) {
-            LocationMapper loc1 = new LocationMapper(attraction.getLongitude(), attraction.getLatitude());
-            LocationMapper loc2 = new LocationMapper(visitedLocationMapper.getLocation().getLongitude(), visitedLocationMapper.getLocation().getLatitude());
+        for (Attraction attraction : attractions) {
+            Location loc1 = new Location(attraction.longitude, attraction.latitude);
+            Location loc2 = new Location(visitedLocation.location.longitude, visitedLocation.location.latitude);
             Double distance = Utils.calculateDistance(loc1, loc2);
             AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
-            attractionResponse.setAttractionName(attraction.getAttractionName());
-            attractionResponse.setAttractionId(attraction.getAttractionId());
-            attractionResponse.setCity(attraction.getCity());
-            attractionResponse.setState(attraction.getState());
-            attractionResponse.setLatitude(attraction.getLatitude());
-            attractionResponse.setLongitude(attraction.getLongitude());
+            attractionResponse.setAttractionName(attraction.attractionName);
+            attractionResponse.setAttractionId(attraction.attractionId);
+            attractionResponse.setCity(attraction.city);
+            attractionResponse.setState(attraction.state);
+            attractionResponse.setLatitude(attraction.latitude);
+            attractionResponse.setLongitude(attraction.longitude);
             attractionResponse.setDistanceWithCurrLoc(distance);
             attractionResponse.setRewardsPoints(0);
             attractionResponses.add(attractionResponse);

@@ -5,6 +5,8 @@ import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.service.GpsProxyService;
+import tourGuide.service.GpsProxyServiceImpl;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -40,10 +42,11 @@ public class TestPerformance {
 
     @Test
     public void highVolumeTrackLocation() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
         InternalTestHelper.setInternalUserNumber(10);
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
 
         List<User> allUsers = new ArrayList<>();
         allUsers = tourGuideService.getAllUsers();
@@ -63,13 +66,14 @@ public class TestPerformance {
     // TODO ne fonctionne pas en //
     @Test
     public void highVolumeGetRewards() {
-        RewardsService rewardsService = new RewardsService();
+        GpsProxyService gpsProxyService = new GpsProxyServiceImpl();
+        RewardsService rewardsService = new RewardsService(gpsProxyService);
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
         InternalTestHelper.setInternalUserNumber(10);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        TourGuideService tourGuideService = new TourGuideService(rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
 
         Attraction attraction = new Attraction("Musee", "Paris", "France", 1.0, 2.0);
         List<User> allUsers = new ArrayList<>();
