@@ -4,7 +4,6 @@ import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import tourGuide.Model.AttractionMapper;
 import tourGuide.Model.VisitedLocationMapper;
 import tourGuide.Proxies.GpsProxy;

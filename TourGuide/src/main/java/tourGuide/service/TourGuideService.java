@@ -69,9 +69,9 @@ public class TourGuideService {
         return user.getUserRewards();
     }
 
-    // TODO NB : trackUserLocation peut être, sera amélioré dans le chantier global du projet
-    // TODO : pas de pb de performance, on peut laisser en l'état
-    // TODO ==> je remplace trackUserLocation par trackUserLocationBulk
+    public VisitedLocation getUserLocationByName(String userName) {
+        return getUserLocation(getUser(userName));
+    }
     public VisitedLocation getUserLocation(User user) {
         logger.debug("getUserLocation");
         List<User> users = new ArrayList<>();

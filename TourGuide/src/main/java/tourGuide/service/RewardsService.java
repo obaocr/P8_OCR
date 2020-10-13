@@ -39,16 +39,8 @@ public class RewardsService {
     private int proximityBuffer = defaultProximityBuffer;
     private int attractionProximityRange = 200;
 
-    //private GpsProxyService gpsProxyService;
-
     public RewardsService() {
     }
-
-    /*public RewardsService(GpsProxyService gpsProxyService) {
-        this.gpsProxyService = gpsProxyService;
-    }
-
-     */
 
     public void setProximityBuffer(int proximityBuffer) {
         this.proximityBuffer = proximityBuffer;
@@ -65,7 +57,7 @@ public class RewardsService {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
-                        logger.debug("calculateRewards => ******************* passage nearAttraction : " + user.getUserName());
+                        logger.debug("calculateRewards => ******* passage nearAttraction : " + user.getUserName());
                         int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                         user.addUserReward(new UserReward(visitedLocation, attraction, reward));
                     }

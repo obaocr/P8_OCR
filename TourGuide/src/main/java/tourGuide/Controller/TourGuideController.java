@@ -1,6 +1,7 @@
 package tourGuide.Controller;
 
 import com.jsoniter.output.JsonStream;
+import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +26,6 @@ public class TourGuideController {
     @Autowired
     TourGuideService tourGuideService;
 
-    @Autowired
-    UserService userService;
-
     @GetMapping("/")
     public String index() {
         return "Greetings from TourGuide! OCR P8 by OBA";
@@ -36,7 +34,7 @@ public class TourGuideController {
     @GetMapping("/location")
     public String getLocation(@RequestParam String userName) {
         logger.debug("getLocation");
-        VisitedLocation visitedLocation = tourGuideService.getUserLocation(tourGuideService.getUser(userName));
+        VisitedLocation visitedLocation = tourGuideService.getUserLocationByName(userName);
         return JsonStream.serialize(visitedLocation.location);
     }
 
@@ -49,6 +47,7 @@ public class TourGuideController {
     // The distance in miles between the user's location and each of the attractions.
     // The reward points for visiting each Attraction.
     //    Note: Attraction reward points can be gathered from RewardsCentral
+
     @GetMapping("/nearbyattractions")
     public List<AttractionResponseDTO> getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
