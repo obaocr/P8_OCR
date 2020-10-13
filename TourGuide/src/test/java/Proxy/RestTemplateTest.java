@@ -10,6 +10,8 @@ import tourGuide.Model.AttractionMapper;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 public class RestTemplateTest {
 
     @Test
@@ -23,7 +25,6 @@ public class RestTemplateTest {
                 restTemplate.getForEntity(attractionUrl, AttractionMapper[].class);
         System.out.println(result.getBody());
         List<AttractionMapper> attractionMappers = Arrays.asList(result.getBody());
-        System.out.println(attractionMappers.size());
+        assertTrue(attractionMappers.size()>0);
     }
-
 }
