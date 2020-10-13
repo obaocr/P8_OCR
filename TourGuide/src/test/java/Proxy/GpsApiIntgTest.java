@@ -22,7 +22,7 @@ public class GpsApiIntgTest {
 
     @Test
     public void testProxyGetAttractions() {
-        List<AttractionMapper> attractionMappers = this.gpsProxy.gpsGetAttractions();
+        List<AttractionMapper> attractionMappers = gpsProxy.gpsGetAttractions();
         assertTrue(attractionMappers.size() > 0);
     }
 

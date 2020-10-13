@@ -2,7 +2,9 @@ package tourGuide;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -14,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
+@ContextConfiguration(classes = PerfConfig2.class)
+@EnableAutoConfiguration
 public class TestPerformanceTrackUser {
 
     @Autowired

@@ -60,6 +60,10 @@ public class TourGuideService {
         addShutDownHook();
     }
 
+    public RewardsService getRewardsService() {
+        return rewardsService;
+    }
+
     public List<UserReward> getUserRewards(User user) {
         logger.debug("getUserLocation");
         return user.getUserRewards();
