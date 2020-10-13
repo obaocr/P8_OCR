@@ -55,7 +55,6 @@ public class TourGuideController {
     }
 
     @GetMapping("/rewards")
-    // TODO A voir pour éventuellement retourner l'objet
     public String getRewards(@RequestParam String userName) {
         logger.debug("getRewards");
         return JsonStream.serialize(tourGuideService.getUserRewards(tourGuideService.getUser(userName)));
@@ -63,9 +62,7 @@ public class TourGuideController {
 
     @GetMapping("/allcurrentlocations")
     public String getAllCurrentLocations() {
-        // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
         // TODO: Get a list of every user's most recent location as JSON
-        // TODO OBA - faire les tests
         //- Note: does not use gpsUtil to query for their current location,
         //        but rather gathers the user's current location from their stored location history.
         //
