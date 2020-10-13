@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
+/**
+ * Abstraction layer for GpsProxy
+ */
 public class GpsProxyServiceImpl implements GpsProxyService {
 
     @Autowired

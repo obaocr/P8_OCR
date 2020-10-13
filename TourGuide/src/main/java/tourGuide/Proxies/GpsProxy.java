@@ -10,6 +10,9 @@ import tourGuide.Model.VisitedLocationMapper;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Proxy for Gps / micro service
+ */
 @FeignClient(name = "microservice-gps", url = "localhost:8046")
 public interface GpsProxy {
 

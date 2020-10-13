@@ -18,6 +18,10 @@ import tripPricer.Provider;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * TourGuideController
+ * Main controller
+ */
 @RestController
 public class TourGuideController {
 
@@ -32,9 +36,9 @@ public class TourGuideController {
     }
 
     @GetMapping("/location")
-    public String getLocation(@RequestParam String userName) {
+    public String getLocation1(@RequestParam String userName) {
         logger.debug("getLocation");
-        VisitedLocation visitedLocation = tourGuideService.getUserLocationByName(userName);
+        VisitedLocation visitedLocation = tourGuideService.getUserLocation(tourGuideService.getUser(userName));
         return JsonStream.serialize(visitedLocation.location);
     }
 
@@ -49,9 +53,10 @@ public class TourGuideController {
     //    Note: Attraction reward points can be gathered from RewardsCentral
 
     @GetMapping("/nearbyattractions")
-    public List<AttractionResponseDTO> getNearbyAttractions(@RequestParam String userName) {
+    public String  getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
-        return tourGuideService.getNearByAttractions(userName);
+        List<AttractionResponseDTO> attractionResponseDTOS = tourGuideService.getNearByAttractions(userName);
+        return JsonStream.serialize(attractionResponseDTOS);
     }
 
     @GetMapping("/rewards")

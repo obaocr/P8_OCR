@@ -10,6 +10,9 @@ import tourGuide.user.UserPreferences;
 
 import javax.money.Monetary;
 
+/**
+ * Service Layer for user
+ */
 @Service
 public class UserServiceImpl implements UserService{
 

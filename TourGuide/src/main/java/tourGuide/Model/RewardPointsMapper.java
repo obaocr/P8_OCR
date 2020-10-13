@@ -4,7 +4,6 @@ public class RewardPointsMapper {
 
     private Integer points;
 
-
     public RewardPointsMapper() {
     }
 

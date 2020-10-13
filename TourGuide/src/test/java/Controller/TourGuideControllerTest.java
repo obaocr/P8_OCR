@@ -12,14 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.service.TourGuideService;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -50,7 +48,8 @@ public class TourGuideControllerTest {
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         VisitedLocation visitedLocation = new VisitedLocation(UUID.randomUUID(), new Location(10.0, 10.0), new Date());
-        Mockito.when(tourGuideService.getUserLocationByName(anyString())).thenReturn(visitedLocation);
+        Mockito.when(tourGuideService.getUserLocation(tourGuideService.getUser(anyString()))).thenReturn(visitedLocation);
+
 
         this.mockMvc.perform(get("/location")
                 .param("userName", "user1")
@@ -68,6 +67,30 @@ public class TourGuideControllerTest {
         Mockito.when(tourGuideService.getAllUsersCurrentLocation()).thenReturn(mapUserLocation);
 
         this.mockMvc.perform(get("/allcurrentlocations")
+                .characterEncoding("utf-8"))
+                .andDo(print()).andExpect(status().isOk()).andReturn();
+    }
+
+    @Test
+    public void testNearbyattractions() throws Exception {
+
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        List<AttractionResponseDTO> attractionResponseDTOS = new ArrayList<>();
+        AttractionResponseDTO attractionResponseDTO = new AttractionResponseDTO();
+        attractionResponseDTO.setAttractionId(UUID.randomUUID().toString());
+        attractionResponseDTO.setRewardsPoints(100);
+        attractionResponseDTO.setState("FR");
+        attractionResponseDTO.setCity("Paris");
+        attractionResponseDTO.setLongitude(1.0);
+        attractionResponseDTO.setLatitude(1.0);
+        attractionResponseDTO.setDistanceWithCurrLoc(100.0);
+        attractionResponseDTO.setAttractionName("Gare");
+        attractionResponseDTOS.add(attractionResponseDTO);
+        Mockito.when(tourGuideService.getNearByAttractions(anyString())).thenReturn(attractionResponseDTOS);
+
+        this.mockMvc.perform(get("/nearbyattractions")
+                .param("userName", "user1")
                 .characterEncoding("utf-8"))
                 .andDo(print()).andExpect(status().isOk()).andReturn();
     }

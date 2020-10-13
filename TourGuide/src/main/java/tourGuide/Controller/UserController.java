@@ -12,6 +12,9 @@ import tourGuide.user.UserPreferences;
 
 import javax.validation.Valid;
 
+/**
+ * UserController for user object
+ */
 @RestController
 public class UserController {
 

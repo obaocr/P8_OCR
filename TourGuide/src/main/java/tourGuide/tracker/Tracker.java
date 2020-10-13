@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 
+/**
+ * Tracker Class for TourGuide Application
+ */
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
 	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(10);

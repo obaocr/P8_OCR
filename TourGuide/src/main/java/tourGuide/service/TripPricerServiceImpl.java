@@ -9,6 +9,9 @@ import tripPricer.TripPricer;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Service layer for TripPricer
+ */
 @Service
 public class TripPricerServiceImpl implements TripPricerService {
 

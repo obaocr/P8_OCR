@@ -2,6 +2,9 @@ package tourGuide.Model;
 
 import java.util.UUID;
 
+/**
+ * Model for Attraction  : response of GpsService
+ */
 public class AttractionMapper {
 
     private String attractionName;

@@ -1,9 +1,13 @@
 package tourGuide.Model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.UUID;
 
+/**
+ * Model for AttractionResponse / SVC nearByAttraction
+ */
 public class AttractionResponseDTO {
 
     private String attractionId;
@@ -19,9 +23,8 @@ public class AttractionResponseDTO {
     public AttractionResponseDTO() {
     }
 
-    public void setAttractionId(UUID attractionId) {
-
-        this.attractionId = attractionId.toString();
+    public void setAttractionId(String attractionId) {
+        this.attractionId = attractionId;
     }
 
     public String getAttractionName() {
@@ -48,7 +51,6 @@ public class AttractionResponseDTO {
         return rewardsPoints;
     }
 
-    @JsonIgnore
     public String getAttractionId() {
 
         return attractionId;

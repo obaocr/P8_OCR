@@ -7,6 +7,9 @@ import tourGuide.Model.RewardPointsMapper;
 
 import java.util.UUID;
 
+/**
+ * Proxy for Reward / micro service
+ */
 @FeignClient(name = "microservice-reward", url = "localhost:8047")
 public interface RewardProxy {
 

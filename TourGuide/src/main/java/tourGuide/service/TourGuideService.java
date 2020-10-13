@@ -28,6 +28,9 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * TourGuideService / Main SVC for teh application
+ */
 @Service
 public class TourGuideService {
 
@@ -69,9 +72,6 @@ public class TourGuideService {
         return user.getUserRewards();
     }
 
-    public VisitedLocation getUserLocationByName(String userName) {
-        return getUserLocation(getUser(userName));
-    }
     public VisitedLocation getUserLocation(User user) {
         logger.debug("getUserLocation");
         List<User> users = new ArrayList<>();
@@ -206,7 +206,7 @@ public class TourGuideService {
             Double distance = Utils.calculateDistance(loc1, loc2);
             AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
             attractionResponse.setAttractionName(attraction.attractionName);
-            attractionResponse.setAttractionId(attraction.attractionId);
+            attractionResponse.setAttractionId(attraction.attractionId.toString());
             attractionResponse.setCity(attraction.city);
             attractionResponse.setState(attraction.state);
             attractionResponse.setLatitude(attraction.latitude);

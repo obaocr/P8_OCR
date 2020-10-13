@@ -29,7 +29,7 @@ public class TestDTO {
         attractionResponseDTO.setLongitude(-33.817595D);
         attractionResponseDTO.setRewardsPoints(99);
         attractionResponseDTO.setState("USA");
-        attractionResponseDTO.setAttractionId(UUID.randomUUID());
+        attractionResponseDTO.setAttractionId(UUID.randomUUID().toString());
         assertTrue(attractionResponseDTO.toString() != null);
         assertTrue(attractionResponseDTO.getDistanceWithCurrLoc() == 12.00);
         assertTrue(attractionResponseDTO.getAttractionId().equals(attractionResponseDTO.getAttractionId()));
