@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
-@ContextConfiguration(classes = PerfConfig2.class)
+@ContextConfiguration(classes = PerfConfig.class)
 @EnableAutoConfiguration
 public class TestPerformanceTrackUser {
 

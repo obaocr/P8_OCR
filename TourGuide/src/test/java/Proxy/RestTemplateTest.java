@@ -19,7 +19,6 @@ public class RestTemplateTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
-        //HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         ResponseEntity<AttractionMapper[]> result =
                 restTemplate.getForEntity(attractionUrl, AttractionMapper[].class);
         System.out.println(result.getBody());
