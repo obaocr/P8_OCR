@@ -3,6 +3,7 @@ package tourGuide;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,6 +28,7 @@ public class TestPerformanceCalcReward {
     @Autowired
     private TourGuideService tourGuideService;
 
+    @Disabled("Integration")
     @Test
     public void highVolumeGetRewards() {
 

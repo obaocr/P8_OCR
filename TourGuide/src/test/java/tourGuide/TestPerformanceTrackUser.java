@@ -1,5 +1,6 @@
 package tourGuide;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,6 +24,7 @@ public class TestPerformanceTrackUser {
     @Autowired
     private TourGuideService tourGuideService;
 
+    @Disabled("Integration")
     @Test
     public void highVolumeTrackLocation() {
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
