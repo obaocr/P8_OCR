@@ -1,6 +1,7 @@
 package Proxy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TestRestTemplate {
 
+    @Disabled("test intégration")
     @Test
     public void testProxyGetAttractions() {
         String attractionUrl = "http://localhost:8046/gpsattractions";
