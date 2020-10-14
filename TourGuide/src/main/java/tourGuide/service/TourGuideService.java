@@ -11,6 +11,7 @@ import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
+import tourGuide.util.EntityNotFoundException;
 import tourGuide.util.Utils;
 import tripPricer.Provider;
 
@@ -93,6 +94,15 @@ public class TourGuideService {
         return internalUserMap.get(userName);
     }
 
+    public User getUserCtrl(String userName) {
+        User user = internalUserMap.get(userName);
+        if (user == null) {
+            throw new EntityNotFoundException("No user found for : " + userName);
+        } else {
+            return user;
+        }
+    }
+
     public List<User> getAllUsers() {
         return internalUserMap.values().stream().collect(Collectors.toList());
     }
@@ -124,7 +134,10 @@ public class TourGuideService {
             VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
             return visitedLocation;
-        }, executorTrackUserLocation);
+        }, executorTrackUserLocation).exceptionally(exception -> {
+            logger.error("getTrackUserLocationAsync for user :" + user.getUserName());
+            return null;
+        });
     }
 
 

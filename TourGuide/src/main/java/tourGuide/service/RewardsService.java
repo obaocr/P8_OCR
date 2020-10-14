@@ -54,7 +54,7 @@ public class RewardsService {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
-                        logger.debug("calculateRewards => ******* passage nearAttraction : " + user.getUserName());
+                        logger.debug("calculateRewards => passage nearAttraction : " + user.getUserName());
                         int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                         user.addUserReward(new UserReward(visitedLocation, attraction, reward));
                     }
@@ -94,7 +94,10 @@ public class RewardsService {
         return CompletableFuture.supplyAsync(() -> {
             calculateRewards(user);
             return true;
-        }, executorCalcReward);
+        }, executorCalcReward).exceptionally(exception -> {
+            logger.error("calculateRewardsAsync for user :" + user.getUserName());
+            return false;
+        });
     }
 
     public Integer calculateRewardsForUsers(List<User> users) {
@@ -141,7 +144,10 @@ public class RewardsService {
             int reward = getRewardPoints(UUID.fromString(attractionResponse.getAttractionId()), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;
-        }, executorReward);
+        }, executorReward).exceptionally(exception -> {
+            logger.error("getAttractionResponseWithRewardPoint for user :" + user.getUserName());
+            return null;
+        });
     }
 
     /**
