@@ -2,9 +2,8 @@ package tourGuide.helper;
 
 public class InternalTestHelper {
 
-	// TODO Set to 5 users for development tests...
-	private static int internalUserNumber = 5;
-	
+	private static int internalUserNumber = 100;
+
 	public static void setInternalUserNumber(int internalUserNumber) {
 		InternalTestHelper.internalUserNumber = internalUserNumber;
 	}

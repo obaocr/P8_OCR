@@ -1,61 +1,56 @@
 package tourGuide.service;
 
-import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
-import org.javamoney.moneta.Money;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rewardCentral.RewardCentral;
-import tourGuide.Model.AttractionResponse;
-import tourGuide.Model.UserPreferencesDTO;
+import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
-import tourGuide.user.UserPreferences;
 import tourGuide.user.UserReward;
+import tourGuide.util.Utils;
 import tripPricer.Provider;
-import tripPricer.TripPricer;
 
-import javax.money.Monetary;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * TourGuideService / Main SVC for teh application
+ */
 @Service
 public class TourGuideService {
 
-    @Autowired
-    RewardCentral rewardCentral;
-
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-    private final GpsUtil gpsUtil;
     private final RewardsService rewardsService;
-    private final TripPricer tripPricer = new TripPricer();
+    private final GpsProxyService gpsProxyService;
+    private final TripPricerService trTripPricerService = new TripPricerServiceImpl();
     public final Tracker tracker;
     boolean testMode = true;
-    private final Integer nbMaxAttractions = 5;
+    private final Integer nbMaxAttractions=5;
 
     /**
      * TourGuideService constructor
-     *
-     * @param gpsUtil
-     * @param rewardsService
      */
-    public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
+    // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
+    // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
+    //public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
+    public TourGuideService(GpsProxyService gpsProxyService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
-        this.gpsUtil = gpsUtil;
         this.rewardsService = rewardsService;
+        this.gpsProxyService = gpsProxyService;
 
         if (testMode) {
-            logger.info("TestMode enabled");
-            logger.debug("Initializing users");
+            logger.debug("TestMode enabled / Initializing users");
             initializeInternalUsers();
             logger.debug("Finished initializing users");
         }
@@ -63,24 +58,27 @@ public class TourGuideService {
         addShutDownHook();
     }
 
+    public RewardsService getRewardsService() {
+        return rewardsService;
+    }
+
     public List<UserReward> getUserRewards(User user) {
+        logger.debug("getUserLocation");
         return user.getUserRewards();
     }
 
-    // TODO à rendre asycnhrone ... à voir
     public VisitedLocation getUserLocation(User user) {
-        logger.info("getUserLocation");
+        logger.debug("getUserLocation");
+        List<User> users = new ArrayList<>();
+        users.add(user);
         VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
                 user.getLastVisitedLocation() :
-                trackUserLocation(user);
+        trackUserLocationBulk(users).get(0);
         return visitedLocation;
     }
 
-    // TODO OBA (Finished, to be validates)  - getAllUsersCurrentLocation
-
     /**
      * Method to get the last location for all users
-     *
      * @return al list of UserCurrentLocation
      */
     public Map<String, Location> getAllUsersCurrentLocation() {
@@ -109,107 +107,101 @@ public class TourGuideService {
         }
     }
 
-    // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
-    // TODO Gérer not found 201
-    public UserPreferences getUserPreferences(String userName) {
-        logger.info("getUserPreferences");
-        User user = this.getUser(userName);
-        if (user != null) {
-            return user.getUserPreferences();
-        }
-        logger.debug("getUserPreferences : userName null");
-        return null;
-    }
-
-    // TODO OK OBA : getUserPreferences car cela peut être interessant d'avoir le détail
-    // TODO Gérer not found 201
-    public UserPreferencesDTO getUserPreferencesSummary(String userName) {
-        logger.info("getUserPreferencesSummary");
-        User user = this.getUser(userName);
-        UserPreferencesDTO userPreferencesDTO = new UserPreferencesDTO();
-        if (user != null) {
-            UserPreferences userPreferences = user.getUserPreferences();
-            userPreferencesDTO.setAttractionProximity(userPreferences.getAttractionProximity());
-            userPreferencesDTO.setTripDuration(userPreferences.getTripDuration());
-            userPreferencesDTO.setNumberOfAdults(userPreferences.getNumberOfAdults());
-            userPreferencesDTO.setNumberOfChildren(userPreferences.getNumberOfChildren());
-            userPreferencesDTO.setTicketQuantity(userPreferences.getTicketQuantity());
-            userPreferencesDTO.setCurrency(userPreferences.getCurrency().getCurrencyCode());
-            userPreferencesDTO.setHighPricePoint(userPreferences.getHighPricePoint().getNumber().intValue());
-            userPreferencesDTO.setLowerPricePoint(userPreferences.getLowerPricePoint().getNumber().intValue());
-            return userPreferencesDTO;
-        }
-        logger.debug("getUserPreferencesSummary : userName null");
-        return null;
-    }
-
-    // TODO Update Userpreferences
-    // TODO Gérer Username not found
-    // TODO vérifier que les pref du User sont bien mises à jour ("persisté")
-    public UserPreferences setUserPreferences(String userName, UserPreferencesDTO userPreferencesDTO) {
-        logger.info("settUserPreferences : " + userName);
-        User user = this.getUser(userName);
-        if (user != null && userPreferencesDTO != null) {
-            UserPreferences userPreferences = user.getUserPreferences();
-            userPreferences.setAttractionProximity(userPreferencesDTO.getAttractionProximity());
-            userPreferences.setTripDuration(userPreferencesDTO.getTripDuration());
-            userPreferences.setTicketQuantity(userPreferencesDTO.getTicketQuantity());
-            userPreferences.setNumberOfAdults(userPreferencesDTO.getNumberOfChildren());
-            userPreferences.setNumberOfChildren(userPreferencesDTO.getNumberOfChildren());
-            userPreferences.setCurrency(Monetary.getCurrency(userPreferencesDTO.getCurrency()));
-            userPreferences.setLowerPricePoint(Money.of(userPreferencesDTO.getLowerPricePoint(), userPreferences.getCurrency()));
-            userPreferences.setHighPricePoint(Money.of(userPreferencesDTO.getHighPricePoint(), userPreferences.getCurrency()));
-            user.setUserPreferences(userPreferences);
-            return user.getUserPreferences();
-        }
-        logger.debug("settUserPreferences : Input param null ");
-        return null;
-    }
-
-    // TODO Put pour preferences
-    //  Url avec /Id et en body un JSON d'un user pref .. ex UserPreferencesDTO ...
-    //      Sinon autre méthode avec class "StdSerializer", @JsonSerialize(using = CurrencyUnitSerializer.class), @NotNull, private CurrencyUnit currency;
-
     public List<Provider> getTripDeals(User user) {
         logger.info("getTripDeals");
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-        List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
+        List<Provider> providers = trTripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
                 user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
         user.setTripDeals(providers);
         return providers;
     }
 
-    // TODO  à voir gpsUtil.getUserLocation, asynchrone
-    public VisitedLocation trackUserLocation(User user) {
-        logger.info("trackUserLocation");
-        VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
-        user.addToVisitedLocations(visitedLocation);
-        rewardsService.calculateRewards(user);
-        return visitedLocation;
+    /**************************************************************************************
+    // *********** trackUserLocationForAllUsers Async *************************************
+    // ************************************************************************************/
+
+    // TODO Gérer les exceptions
+    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(100);
+
+    private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
+        return CompletableFuture.supplyAsync(() -> {
+            VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(user.getUserId());
+            user.addToVisitedLocations(visitedLocation);
+            // "calculateRewards" is processed in bulk mode
+            //rewardsService.calculateRewards(user);
+            return visitedLocation;
+        }, executorTrackUserLocation);
     }
 
-    // TODO Calculer les rewards
-    // TODO faire classe de test
-    // TODO ne sort pas dans l'ordre les champs
-    // TODO voir pour setRewardsPoints, quel calcul de points ...
-    // TODO A voir pour RewardCentral.getAttractionRewardPoints(UUID attractionId, UUID userId) => pourquoi y a t-il un sleep ?????
-    // TODO pour simuler temps de réponse externe ? dans ce cas pour les 5 destinations faire en asychrone les 5 appels en même temps ?
-    // TODO => faire les 5 appels à Rewards en //
-    // TODO => pour 12/08/2020 le champ attractionUID s'affiche malgré @JsonIgnore !!!!
 
-    // https://www.geeksforgeeks.org/foreach-loop-vs-stream-foreach-vs-parallel-stream-foreach/
-    // https://www.baeldung.com/java-asynchronous-programming
-    // https://www.baeldung.com/java-completablefuture
+    public List<VisitedLocation> trackUserLocation(User user) {
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        return this.trackUserLocationBulk(users);
+    }
 
-    public List<AttractionResponse> getNearByAttractions(String userName) {
+    public List<VisitedLocation> trackUserLocationBulk(List<User> users){
+        logger.info("trackUserLocationForAllUsers");
+        Date d1 = new Date();
+
+        List<VisitedLocation> visitedLocations = new ArrayList<>();
+
+        List<CompletableFuture<VisitedLocation>> trackUserLocationFuture = users.stream()
+                .map(u -> getTrackUserLocationAsync(u))
+                .collect(Collectors.toList());
+
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(trackUserLocationFuture
+                .toArray(new CompletableFuture[trackUserLocationFuture.size()]));
+
+        CompletableFuture<List<VisitedLocation>> allCompletableFuture = allFutures.thenApply(
+                future -> {
+                    return trackUserLocationFuture.stream()
+                            .map(a -> a.join()).collect(Collectors.toList());
+                }
+        );
+        visitedLocations = allCompletableFuture.join();
+
+        Date d2 = new Date();
+        logger.debug("trackUserLocationBulk Part1 OK, Size / Time ms  :" + visitedLocations.size() + " / " + (d2.getTime() - d1.getTime()));
+
+        // Process "CalculateReward" Bulk
+        Integer nbCalcRewardProcess =  rewardsService.calculateRewardsForUsers(users);
+        Date d3 = new Date();
+        logger.debug("calculateRewardsForUsers Part2 OK, Size / Time ms  :" + nbCalcRewardProcess + " / " + (d3.getTime() - d2.getTime()));
+        logger.debug("trackUserLocationBulk / Time ms  :" + (d3.getTime() - d1.getTime()));
+
+        return visitedLocations;
+    }
+
+    /*************************************************************************************
+    // *********** getNearByAttractions parallel mode ************************************
+    // *********** call Gps en micro SVC              ************************************
+    // ***********************************************************************************/
+
+     /**
+     * getNearByAttractionsAsyncMgt : calcul en parallel avec Completable Future
+     * @param userName
+     * @return
+     */
+    public List<AttractionResponseDTO> getNearByAttractions(String userName) {
         logger.info("getNearByAttractions");
-        List<AttractionResponse> attractionResponses = new ArrayList<>();
-        VisitedLocation visitedLocation = getUserLocation(getUser(userName));
-        // Première étape pour ne retenir que les 5 premier items ...
-        for (Attraction attraction : gpsUtil.getAttractions()) {
-            Double distance = rewardsService.getDistance(attraction, visitedLocation.location);
-            AttractionResponse attractionResponse = new AttractionResponse();
+        List<AttractionResponseDTO> attractionResponses = new ArrayList<>();
+        logger.debug("getAllUsers.size:" + getAllUsers().size());
+
+        // Appel GpsApi micro service
+        VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(getUser(userName).getUserId());
+
+        // Appel GpsApi micro service
+        List<Attraction> attractions = gpsProxyService.gpsAttractions();
+        logger.info("Appel GpsApi micro service attractionMappers , nb attractions:"+attractions.size());
+
+        for (Attraction attraction : attractions) {
+            Location loc1 = new Location(attraction.longitude, attraction.latitude);
+            Location loc2 = new Location(visitedLocation.location.longitude, visitedLocation.location.latitude);
+            Double distance = Utils.calculateDistance(loc1, loc2);
+            AttractionResponseDTO attractionResponse = new AttractionResponseDTO();
             attractionResponse.setAttractionName(attraction.attractionName);
+            attractionResponse.setAttractionId(attraction.attractionId.toString());
             attractionResponse.setCity(attraction.city);
             attractionResponse.setState(attraction.state);
             attractionResponse.setLatitude(attraction.latitude);
@@ -218,31 +210,28 @@ public class TourGuideService {
             attractionResponse.setRewardsPoints(0);
             attractionResponses.add(attractionResponse);
         }
+
+        logger.debug("attractionResponses size : " + attractionResponses.size());
+        logger.debug("nbMaxAttractions : " + nbMaxAttractions);
         // Sort the list by Distance and keep 5 first items
         // cf. https://bezkoder.com/java-sort-arraylist-of-objects/
-        attractionResponses = (ArrayList<AttractionResponse>) attractionResponses
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
+        attractionResponses = (ArrayList<AttractionResponseDTO>) attractionResponses
+                .stream().sorted(Comparator.comparing(AttractionResponseDTO::getDistanceWithCurrLoc)).limit(nbMaxAttractions)
                 .collect(Collectors.toList());
 
+        logger.debug("attractionResponses size apres sort: " + attractionResponses.size());
         // Appels en // pour calcul de Rewards car peut mettre du temps unitairement
         Date d1 = new Date();
-        List<AttractionResponse> attractionResponsesRewards = new ArrayList<>();
-        attractionResponses
-                .parallelStream()
-                .forEach(
-                        a -> {
-                            AttractionResponse attractionResp = a;
-                            int reward = rewardCentral.getAttractionRewardPoints(attractionResp.getAttractionId(), getUser(userName).getUserId());
-                            attractionResp.setRewardsPoints(reward);
-                            attractionResponsesRewards.add(attractionResp);
-                        }
-                );
+
+        List<AttractionResponseDTO> attractionResponsesRewards = new ArrayList<>();
+        attractionResponsesRewards = rewardsService.getAllAttractionResponseWithRewardPoint(attractionResponses, getUser(userName));
+
         Date d2 = new Date();
-        logger.debug("temps d'appel rewards en ms : " + (d2.getTime() - d1.getTime()));
+        logger.debug("temps d'appel rewards complatable future en ms : " + (d2.getTime() - d1.getTime()));
 
         // Tri car le paraléllisme ne rend pas dans l'ordre
-        List<AttractionResponse> attractionResponsesResult = (ArrayList<AttractionResponse>) attractionResponsesRewards
-                .stream().sorted(Comparator.comparing(AttractionResponse::getDistanceWithCurrLoc)).collect(Collectors.toList());
+        List<AttractionResponseDTO> attractionResponsesResult = (ArrayList<AttractionResponseDTO>) attractionResponsesRewards
+                .stream().sorted(Comparator.comparing(AttractionResponseDTO::getDistanceWithCurrLoc)).collect(Collectors.toList());
 
         return attractionResponsesResult;
     }
@@ -272,7 +261,7 @@ public class TourGuideService {
             String email = userName + "@tourGuide.com";
             User user = new User(UUID.randomUUID(), userName, phone, email);
             generateUserLocationHistory(user);
-
+            //logger.debug("User : " + user.getUserId() + ' ' + user.getUserName());
             internalUserMap.put(userName, user);
         });
         logger.debug("Created " + InternalTestHelper.getInternalUserNumber() + " internal test users.");

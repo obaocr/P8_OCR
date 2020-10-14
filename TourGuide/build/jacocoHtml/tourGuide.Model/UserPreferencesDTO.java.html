@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserPreferencesDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.Model</a> &gt; <span class="el_source">UserPreferencesDTO.java</span></div><h1>UserPreferencesDTO.java</h1><pre class="source lang-java linenums">package tourGuide.Model;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * Data Transfer Object (DTO) for UserPreferences
+ */
+
+<span class="nc" id="L9">public class UserPreferencesDTO {</span>
+
+    @NotNull
+    private Integer attractionProximity;
+    @NotNull
+    private String currency;
+    @NotNull
+    private Integer lowerPricePoint;
+    @NotNull
+    private Integer highPricePoint;
+    @NotNull
+    private Integer tripDuration;
+    @NotNull
+    private Integer ticketQuantity;
+    @NotNull
+    private Integer numberOfAdults;
+    @NotNull
+    private Integer numberOfChildren;
+
+    public Integer getAttractionProximity() {
+<span class="nc" id="L29">        return attractionProximity;</span>
+    }
+
+    public void setAttractionProximity(Integer attractionProximity) {
+<span class="nc" id="L33">        this.attractionProximity = attractionProximity;</span>
+<span class="nc" id="L34">    }</span>
+
+    public String getCurrency() {
+<span class="nc" id="L37">        return currency;</span>
+    }
+
+    public void setCurrency(String currency) {
+<span class="nc" id="L41">        this.currency = currency;</span>
+<span class="nc" id="L42">    }</span>
+
+    public Integer getLowerPricePoint() {
+<span class="nc" id="L45">        return lowerPricePoint;</span>
+    }
+
+    public void setLowerPricePoint(Integer lowerPricePoint) {
+<span class="nc" id="L49">        this.lowerPricePoint = lowerPricePoint;</span>
+<span class="nc" id="L50">    }</span>
+
+    public Integer getHighPricePoint() {
+<span class="nc" id="L53">        return highPricePoint;</span>
+    }
+
+    public void setHighPricePoint(Integer highPricePoint) {
+<span class="nc" id="L57">        this.highPricePoint = highPricePoint;</span>
+<span class="nc" id="L58">    }</span>
+
+    public Integer getTripDuration() {
+<span class="nc" id="L61">        return tripDuration;</span>
+    }
+
+    public void setTripDuration(Integer tripDuration) {
+<span class="nc" id="L65">        this.tripDuration = tripDuration;</span>
+<span class="nc" id="L66">    }</span>
+
+    public Integer getTicketQuantity() {
+<span class="nc" id="L69">        return ticketQuantity;</span>
+    }
+
+    public void setTicketQuantity(Integer ticketQuantity) {
+<span class="nc" id="L73">        this.ticketQuantity = ticketQuantity;</span>
+<span class="nc" id="L74">    }</span>
+
+    public Integer getNumberOfAdults() {
+<span class="nc" id="L77">        return numberOfAdults;</span>
+    }
+
+    public void setNumberOfAdults(Integer numberOfAdults) {
+<span class="nc" id="L81">        this.numberOfAdults = numberOfAdults;</span>
+<span class="nc" id="L82">    }</span>
+
+    public Integer getNumberOfChildren() {
+<span class="nc" id="L85">        return numberOfChildren;</span>
+    }
+
+    public void setNumberOfChildren(Integer numberOfChildren) {
+<span class="nc" id="L89">        this.numberOfChildren = numberOfChildren;</span>
+<span class="nc" id="L90">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

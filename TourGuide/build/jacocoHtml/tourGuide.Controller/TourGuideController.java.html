@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TourGuideController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.Controller</a> &gt; <span class="el_source">TourGuideController.java</span></div><h1>TourGuideController.java</h1><pre class="source lang-java linenums">package tourGuide.Controller;
+
+import com.jsoniter.output.JsonStream;
+import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import tourGuide.Model.UserPreferencesDTO;
+import tourGuide.service.TourGuideService;
+import tourGuide.service.UserService;
+import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
+import tripPricer.Provider;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+<span class="nc" id="L20">public class TourGuideController {</span>
+
+<span class="nc" id="L22">    private Logger logger = LoggerFactory.getLogger(TourGuideController.class);</span>
+
+    @Autowired
+    TourGuideService tourGuideService;
+
+    @Autowired
+    UserService userService;
+
+    @GetMapping(&quot;/&quot;)
+    public String index() {
+<span class="nc" id="L32">        return &quot;Greetings from TourGuide! OCR P8 by OBA&quot;;</span>
+    }
+
+    @GetMapping(&quot;/getLocation&quot;)
+    public String getLocation(@RequestParam String userName) {
+<span class="nc" id="L37">        logger.debug(&quot;getLocation&quot;);</span>
+<span class="nc" id="L38">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
+<span class="nc" id="L39">        return JsonStream.serialize(visitedLocation.location);</span>
+    }
+
+    // TODO: Change this method to no longer return a List of Attractions.
+    //  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
+    //  Return a new JSON object that contains:
+    // Name of Tourist attraction,
+    // Tourist attractions lat/long,
+    // The user's location lat/long,
+    // The distance in miles between the user's location and each of the attractions.
+    // The reward points for visiting each Attraction.
+    //    Note: Attraction reward points can be gathered from RewardsCentral
+    @GetMapping(&quot;/getNearbyAttractions&quot;)
+    public String getNearbyAttractions(@RequestParam String userName) {
+<span class="nc" id="L53">        logger.debug(&quot;getNearbyAttractions&quot;);</span>
+<span class="nc" id="L54">        String response = JsonStream.serialize(tourGuideService.getNearByAttractions(userName));</span>
+<span class="nc" id="L55">        return response;</span>
+    }
+
+    @GetMapping(&quot;/getRewards&quot;)
+    // TODO A voir pour Ã©ventuellement retourner l'objet
+    public String getRewards(@RequestParam String userName) {
+<span class="nc" id="L61">        logger.debug(&quot;getRewards&quot;);</span>
+<span class="nc" id="L62">        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
+    }
+
+    @GetMapping(&quot;/getAllCurrentLocations&quot;)
+    public String getAllCurrentLocations() {
+        // TODO OBA (Finished, to be validated)  - getAllUsersCurrentLocation
+        // TODO: Get a list of every user's most recent location as JSON
+        // TODO OBA - faire les tests
+        //- Note: does not use gpsUtil to query for their current location,
+        //        but rather gathers the user's current location from their stored location history.
+        //
+        // Return object should be the just a JSON mapping of userId to Locations similar to:
+        //     {
+        //        &quot;019b04a9-067a-4c76-8817-ee75088c3822&quot;: {&quot;longitude&quot;:-48.188821,&quot;latitude&quot;:74.84371}
+        //        ...
+        //     }
+<span class="nc" id="L78">        logger.debug(&quot;getAllCurrentLocations&quot;);</span>
+<span class="nc" id="L79">        return JsonStream.serialize(tourGuideService.getAllUsersCurrentLocation());</span>
+    }
+
+    @GetMapping(&quot;/getTripDeals&quot;)
+    public String getTripDeals(@RequestParam String userName) {
+<span class="nc" id="L84">        logger.debug(&quot;getTripDeals&quot;);</span>
+<span class="nc" id="L85">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
+<span class="nc" id="L86">        return JsonStream.serialize(providers);</span>
+    }
+
+    // TODO nouveeau endpoint get et put pour mise Ã  jour des preferences
+    // TODO avoir tous les champs sinon lever une exception ,annotation @valid et mettre @notnull dans le modele (passer en Integer)...
+    // TODO pour la rÃ©ponse filter que les champs voulus des objets comme Money... Ã  voir
+    // TODO Ã  voir pour mettre dans une classe dÃ©diÃ© UserController ?
+    // TODO GÃ©rer les codes HTTP si KO ...
+    @GetMapping(&quot;/getUserPreferences&quot;)
+    public UserPreferences getUserPreferences(@RequestParam String userName) {
+<span class="nc" id="L96">        logger.debug(&quot;getUserPreferences&quot;);</span>
+<span class="nc" id="L97">        return userService.getUserPreferences(tourGuideService.getUser(userName));</span>
+    }
+
+    // TODO OBA
+    @GetMapping(&quot;/getUserPreferencesSummary&quot;)
+    public UserPreferencesDTO getUserPreferencesSummary(@RequestParam String userName) {
+<span class="nc" id="L103">        logger.debug(&quot;getUserPreferences&quot;);</span>
+<span class="nc" id="L104">        return userService.getUserPreferencesSummary(tourGuideService.getUser(userName));</span>
+    }
+
+    // TODO  Ã  voir pour faire le checkInput ????
+    // TODO faire comme le P7 on peut ajouter un biding result en input et l'utiliser pour gÃ©rer .. sinon voir P5 Exceptions...
+    @PutMapping(value = &quot;/setUserPreferences/{userName}&quot;)
+    public UserPreferences setUserPreferences(@PathVariable(&quot;userName&quot;) String userName, @RequestBody @Valid UserPreferencesDTO userPreferencesDTO) {
+<span class="nc" id="L111">        logger.debug(&quot;Update UserPreferences for a user&quot;);</span>
+        //checkInput(userPreferencesDTO);
+<span class="nc" id="L113">        return userService.setUserPreferences(tourGuideService.getUser(userName), userPreferencesDTO);</span>
+    }
+
+    private User getUser(String userName) {
+<span class="nc" id="L117">        logger.debug(&quot;getUser&quot;);</span>
+<span class="nc" id="L118">        return tourGuideService.getUser(userName);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

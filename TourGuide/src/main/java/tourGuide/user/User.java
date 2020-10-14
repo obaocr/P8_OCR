@@ -1,12 +1,13 @@
 package tourGuide.user;
 
+import gpsUtil.location.VisitedLocation;
+import tripPricer.Provider;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import gpsUtil.location.VisitedLocation;
-import tripPricer.Provider;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class User {
 	private final UUID userId;
@@ -33,52 +34,27 @@ public class User {
 		return userName;
 	}
 	
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-	
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-	
-	public void setLatestLocationTimestamp(Date latestLocationTimestamp) {
-		this.latestLocationTimestamp = latestLocationTimestamp;
-	}
-	
-	public Date getLatestLocationTimestamp() {
-		return latestLocationTimestamp;
-	}
-	
 	public void addToVisitedLocations(VisitedLocation visitedLocation) {
 		visitedLocations.add(visitedLocation);
 	}
-	
+
+	// TODO CopyOnWriteArrayList / pour concurrence Thread
 	public List<VisitedLocation> getVisitedLocations() {
-		return visitedLocations;
+		return new CopyOnWriteArrayList(visitedLocations);
 	}
-	
-	public void clearVisitedLocations() {
-		visitedLocations.clear();
+
+	// TODO CopyOnWriteArrayList / pour concurrence Thread
+	public List<UserReward> getUserRewards() {
+		return new CopyOnWriteArrayList(userRewards);
 	}
-	
+
+	// TODO OK / bug fix ! enlevé ... (il y avait "r -> !r.attraction")
 	public void addUserReward(UserReward userReward) {
-		if(userRewards.stream().filter(r -> !r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
+		if(userRewards.stream().filter(r -> r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
 			userRewards.add(userReward);
 		}
 	}
-	
-	public List<UserReward> getUserRewards() {
-		return userRewards;
-	}
-	
+
 	public UserPreferences getUserPreferences() {
 		return userPreferences;
 	}
@@ -97,6 +73,34 @@ public class User {
 	
 	public List<Provider> getTripDeals() {
 		return tripDeals;
+	}
+
+	public void clearVisitedLocations() {
+		visitedLocations.clear();
+	}
+
+	public Date getLatestLocationTimestamp() {
+		return latestLocationTimestamp;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setLatestLocationTimestamp(Date latestLocationTimestamp) {
+		this.latestLocationTimestamp = latestLocationTimestamp;
 	}
 
 }

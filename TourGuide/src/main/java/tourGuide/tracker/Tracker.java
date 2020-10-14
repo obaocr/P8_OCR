@@ -1,28 +1,29 @@
 package tourGuide.tracker;
 
+import gpsUtil.location.VisitedLocation;
+import org.apache.commons.lang3.time.StopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import tourGuide.service.TourGuideService;
+import tourGuide.user.User;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.time.StopWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import tourGuide.service.TourGuideService;
-import tourGuide.user.User;
-
+/**
+ * Tracker Class for TourGuide Application
+ */
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
-	// TODO OBA set to seconds for the development
-	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(300);
+	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(60);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;
 
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
-		
 		executorService.submit(this);
 	}
 	
@@ -46,13 +47,13 @@ public class Tracker extends Thread {
 			List<User> users = tourGuideService.getAllUsers();
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
-			// Ajout Try probleme crash selon locale FR
-			// TODO rendre l'appel de "trackUserLocation" non bloquant ,rendre asynchrone
+
 			try {
-				users.forEach(u -> tourGuideService.trackUserLocation(u));
+				List <VisitedLocation> visitedLocations = tourGuideService.trackUserLocationBulk(users);
+				logger.debug("visitedLocations.size : " + visitedLocations.size());
 			}
 			catch (Exception e) {
-				logger.error("exception tourGuideService.trackUserLocation(u) : " + e.toString());
+				logger.error("exception tourGuideService.trackUserLocationForAllUsers   : " + e.toString());
 			}
 
 			stopWatch.stop();

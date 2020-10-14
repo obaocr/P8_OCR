@@ -13,7 +13,11 @@ public class UserReward {
 		this.attraction = attraction;
 		this.rewardPoints = rewardPoints;
 	}
-	
+
+	public int getRewardPoints() {
+		return rewardPoints;
+	}
+
 	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {
 		this.visitedLocation = visitedLocation;
 		this.attraction = attraction;
@@ -22,9 +26,5 @@ public class UserReward {
 	public void setRewardPoints(int rewardPoints) {
 		this.rewardPoints = rewardPoints;
 	}
-	
-	public int getRewardPoints() {
-		return rewardPoints;
-	}
-	
+
 }
