@@ -1,10 +1,5 @@
 package tourGuide.Model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.UUID;
-
 /**
  * Model for AttractionResponse / SVC nearByAttraction
  */

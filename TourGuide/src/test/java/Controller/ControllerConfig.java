@@ -4,9 +4,11 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.test.web.servlet.MockMvc;
 import tourGuide.Controller.TourGuideController;
-import tourGuide.service.*;
+import tourGuide.service.GpsProxyService;
+import tourGuide.service.GpsProxyServiceImpl;
+import tourGuide.service.RewardsService;
+import tourGuide.service.TourGuideService;
 
 @Configuration
 @EnableFeignClients

@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService{
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    // TODO Gérer not found 201 ?
     @Override
     public UserPreferences getUserPreferences(User user) {
         logger.info("getUserPreferences");
@@ -29,8 +28,6 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-    // TODO Gérer not found 201 ?
-    // TODO : pas de pb de performance, on peut laisser en l'état
     @Override
     public UserPreferencesDTO getUserPreferencesSummary(User user) {
         logger.info("getUserPreferencesSummary");
@@ -51,8 +48,6 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-    // TODO Gérer Username not found 201 ?
-    // TODO : pas de pb de performance, on peut laisser en l'état
     @Override
     public UserPreferences setUserPreferences(User user, UserPreferencesDTO userPreferencesDTO) {
         logger.info("settUserPreferences : " + user.getUserName());

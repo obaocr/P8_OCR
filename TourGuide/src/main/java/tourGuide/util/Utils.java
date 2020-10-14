@@ -8,7 +8,7 @@ public class Utils {
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
     /**
-     *
+     * calculateDistance Utils
      * @param loc1 : location 1
      * @param loc2 : location 2 2
      * @return distance between two locations

@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tourGuide.Model.RewardPointsMapper;
 
-import java.util.UUID;
-
 /**
  * Proxy for Reward / micro service
  */

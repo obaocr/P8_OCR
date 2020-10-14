@@ -44,8 +44,6 @@ public class UserController {
         return userService.getUserPreferencesSummary(tourGuideService.getUser(userName));
     }
 
-    // TODO  à voir pour faire le checkInput ????
-    // TODO faire comme le P7 on peut ajouter un biding result en input et l'utiliser pour gérer .. sinon voir P5 Exceptions...
     @PutMapping(value = "/userpreferences/{userName}")
     public UserPreferences setUserPreferences(@PathVariable("userName") String userName, @RequestBody @Valid UserPreferencesDTO userPreferencesDTO) {
         logger.debug("Update UserPreferences for a user");

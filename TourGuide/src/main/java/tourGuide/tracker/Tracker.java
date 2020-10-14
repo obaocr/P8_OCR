@@ -1,24 +1,23 @@
 package tourGuide.tracker;
 
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Tracker Class for TourGuide Application
  */
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
-	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(10);
+	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(60);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;

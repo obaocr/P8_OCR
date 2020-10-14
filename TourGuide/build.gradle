@@ -62,12 +62,15 @@ dependencyManagement {
     }
 }
 
+// https://medium.com/@rhamedy/how-to-setup-jacoco-code-coverage-with-maven-gradle-76e0b2fca9fb
 jacoco {
     toolVersion = "0.8.4"
+    //reportsDir = file("$buildDir/jacocoHtml")
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 jacocoTestReport {

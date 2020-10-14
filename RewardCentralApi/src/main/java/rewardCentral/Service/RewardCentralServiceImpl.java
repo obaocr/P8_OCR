@@ -8,6 +8,9 @@ import rewardCentral.RewardCentral;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * Service layer for Rewards
+ */
 @Service
 public class RewardCentralServiceImpl implements RewardCentralService {
 

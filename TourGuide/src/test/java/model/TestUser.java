@@ -6,7 +6,6 @@ import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
 
 import javax.money.Monetary;
-
 import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;

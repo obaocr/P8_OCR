@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+/**
+ * Service layer for GpsUtils
+ */
 @Service
 public class GpsServiceImpl implements GpsService {
 

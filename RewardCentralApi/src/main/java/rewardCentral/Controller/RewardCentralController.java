@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+/**
+ * Controller for RewardService
+ */
 @RestController
 public class RewardCentralController {
 
