@@ -32,7 +32,6 @@ public class TestPerformanceTrackUser {
     public void highVolumeTrackLocation() {
 
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        List<User> allUsers = new ArrayList<>();
         int internalUserNumber = 10000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;

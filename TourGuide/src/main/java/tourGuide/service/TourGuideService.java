@@ -40,9 +40,6 @@ public class TourGuideService {
     /**
      * TourGuideService constructor
      */
-    // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
-    // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
-    //public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
     public TourGuideService(GpsProxyService gpsProxyService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
@@ -120,15 +117,12 @@ public class TourGuideService {
     // *********** trackUserLocationForAllUsers Async *************************************
     // ************************************************************************************/
 
-    // TODO Gérer les exceptions
     private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(100);
 
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
-            // "calculateRewards" is processed in bulk mode
-            //rewardsService.calculateRewards(user);
             return visitedLocation;
         }, executorTrackUserLocation);
     }
