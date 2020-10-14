@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GpsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">p8_gps</a> &gt; <a href="index.source.html" class="el_package">gps.Controller</a> &gt; <span class="el_source">GpsController.java</span></div><h1>GpsController.java</h1><pre class="source lang-java linenums">package gps.Controller;
+
+import com.jsoniter.output.JsonStream;
+import gps.Model.AttractionMapper;
+import gps.Model.VisitedLocationMapper;
+import gps.Service.GpsService;
+import gpsUtil.location.Attraction;
+import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.UUID;
+
+/**
+<span class="fc" id="L20"> * Controller for GpsService</span>
+ */
+<span class="fc" id="L22">@RestController</span>
+public class GpsController {
+
+    private Logger logger = LoggerFactory.getLogger(GpsController.class);
+
+    @Autowired
+    GpsService gpsService;
+<span class="nc" id="L29"></span>
+<span class="nc" id="L30">    @GetMapping(&quot;/&quot;)</span>
+    public String gpsHome() {
+        logger.debug(&quot;gpsHome&quot;);
+        return  &quot;P8 gpsHome&quot;;
+    }
+<span class="fc" id="L35"></span>
+    @GetMapping(&quot;/gpsattractions&quot;)
+    public List&lt;AttractionMapper&gt; gpsGetAttractions() {
+<span class="fc" id="L38">        logger.debug(&quot;GpsApi gpsGetAttractions&quot;);</span>
+        //List&lt;Attraction&gt; attractions = gpsService.getAttractions();
+        //return JsonStream.serialize(gpsService.getAttractions());
+        return gpsService.getAttractions();
+    }
+<span class="fc" id="L43"></span>
+    @GetMapping(&quot;/gpsuserlocation&quot;)
+<span class="fc" id="L45">    public VisitedLocationMapper gpsGetUserLocation(@RequestParam String userId) {</span>
+<span class="fc" id="L46">        logger.debug(&quot;gpsGetUserLocation&quot;);</span>
+        // Exemple de UUID f07621a4-6365-4074-b040-ac655217f82f
+        VisitedLocationMapper visitedLocationMapper = gpsService.getUserLocation(UUID.fromString(userId));
+        return visitedLocationMapper;
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

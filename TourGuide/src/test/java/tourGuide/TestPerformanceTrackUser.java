@@ -2,13 +2,13 @@ package tourGuide;
 
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import org.apache.commons.lang3.time.StopWatch;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 
@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertTrue;
 
@@ -31,9 +30,10 @@ public class TestPerformanceTrackUser {
     @Disabled("Integration")
     @Test
     public void highVolumeTrackLocation() {
+
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
         List<User> allUsers = new ArrayList<>();
-        int internalUserNumber = 1000;
+        int internalUserNumber = 10000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;
             String phone = "000";
@@ -53,19 +53,15 @@ public class TestPerformanceTrackUser {
             tourGuideService.addUser(user);
         };
 
-        //InternalTestHelper.setInternalUserNumber(1000);
-        allUsers = tourGuideService.getAllUsers();
-        System.out.println("**** nb users : " + allUsers.size());
+        System.out.println("**** nb users : " + tourGuideService.getAllUsers().size());
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        tourGuideService.trackUserLocationBulk(tourGuideService.getAllUsers());
 
-        Date d1 = new Date();
-        // Nouvelle méthode pour lancer trackUserLocation pour tous les users
-        tourGuideService.trackUserLocationBulk(allUsers);
-
-        Date d2 = new Date();
-        long timeMs = d2.getTime() - d1.getTime();
+        stopWatch.stop();
         tourGuideService.tracker.stopTracking();
-        System.out.println("=====> temps highVolumeTrackLocation en ms : " + (d2.getTime() - d1.getTime()));
         // 15 minutes => 900 secondes max selon la demande, pour 100.000 users
-        assertTrue(TimeUnit.MINUTES.toSeconds(900) >= TimeUnit.MILLISECONDS.toSeconds(timeMs));
+        System.out.println("highVolumeTrackLocation: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+        assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
     }
 }
