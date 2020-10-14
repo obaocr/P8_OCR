@@ -7,14 +7,20 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import tourGuide.Controller.TourGuideController;
 import tourGuide.Model.AttractionResponseDTO;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
+import tourGuide.service.GpsProxyService;
+import tourGuide.service.GpsProxyServiceImpl;
+import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 
 import java.util.*;
@@ -49,7 +55,6 @@ public class TestTourGuideController {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         VisitedLocation visitedLocation = new VisitedLocation(UUID.randomUUID(), new Location(10.0, 10.0), new Date());
         Mockito.when(tourGuideService.getUserLocation(tourGuideService.getUser(anyString()))).thenReturn(visitedLocation);
-
 
         this.mockMvc.perform(get("/location")
                 .param("userName", "user1")

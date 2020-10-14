@@ -101,7 +101,7 @@ public class TourGuideService {
     }
 
     public void addUser(User user) {
-        logger.info("addUser");
+        //logger.info("addUser");
         if (!internalUserMap.containsKey(user.getUserName())) {
             internalUserMap.put(user.getUserName(), user);
         }
