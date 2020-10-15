@@ -94,8 +94,8 @@ public class RewardsService {
         return CompletableFuture.supplyAsync(() -> {
             calculateRewards(user);
             return true;
-        }, executorCalcReward).exceptionally(exception -> {
-            logger.error("calculateRewardsAsync for user :" + user.getUserName());
+        }, executorCalcReward).exceptionally(e -> {
+            logger.error("calculateRewardsAsync for user :" + user.getUserName() + e.toString());
             return false;
         });
     }
@@ -144,8 +144,8 @@ public class RewardsService {
             int reward = getRewardPoints(UUID.fromString(attractionResponse.getAttractionId()), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;
-        }, executorReward).exceptionally(exception -> {
-            logger.error("getAttractionResponseWithRewardPoint for user :" + user.getUserName());
+        }, executorReward).exceptionally(e -> {
+            logger.error("getAttractionResponseWithRewardPoint for user :" + user.getUserName() + e.toString());
             return null;
         });
     }

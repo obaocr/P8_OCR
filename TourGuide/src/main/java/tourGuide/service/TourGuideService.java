@@ -134,8 +134,8 @@ public class TourGuideService {
             VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
             return visitedLocation;
-        }, executorTrackUserLocation).exceptionally(exception -> {
-            logger.error("getTrackUserLocationAsync for user :" + user.getUserName());
+        }, executorTrackUserLocation).exceptionally(e -> {
+            logger.error("getTrackUserLocationAsync for user :" + user.getUserName() + e.toString());
             return null;
         });
     }
