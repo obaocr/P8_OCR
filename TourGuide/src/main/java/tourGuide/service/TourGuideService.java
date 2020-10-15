@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * TourGuideService / Main SVC for teh application
+ * TourGuideService / Main SVC for the application
  */
 @Service
 public class TourGuideService {

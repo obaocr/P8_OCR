@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rewardCentral.Utils.EntityIllegalArgumentException;
 
 import java.util.UUID;
 
@@ -32,6 +33,10 @@ public class RewardCentralController {
     @GetMapping("/attractionrewardpoints")
     public RewardPointsMapper getAttractionRewardPoints(@RequestParam String attractionId, @RequestParam String userId) {
         logger.info("getAttractionRewardPoints Api");
+        if (attractionId.isEmpty() || userId.isEmpty()) {
+            logger.error("getAttractionRewardPoints : The parameters attractionId  and userId are mandatory");
+            throw new EntityIllegalArgumentException("The parameters attractionId  and userId are mandatory");
+        }
         Integer points = rewardCentralService.getAttractionRewardPoints(UUID.fromString(attractionId), UUID.fromString(userId));
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(points);
         return rewardPointsMapper;
