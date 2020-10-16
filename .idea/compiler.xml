@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="RewardCentralApi" />
-        <module name="GpsApi" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="GpsApi" target="1.8" />
       <module name="RewardCentral" target="1.5" />
+      <module name="RewardCentralApi" target="1.8" />
+      <module name="TripPricerApi" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

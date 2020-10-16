@@ -28,11 +28,7 @@ public class TestPerformanceCalcReward {
     @Autowired
     private TourGuideService tourGuideService;
 
-<<<<<<< HEAD
-    @Disabled("test intégration performance")
-=======
     @Disabled("Integration")
->>>>>>> feature/optim
     @Test
     public void highVolumeGetRewards() {
 
