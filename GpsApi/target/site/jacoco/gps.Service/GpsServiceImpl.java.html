@@ -18,37 +18,37 @@ import java.util.UUID;
 /**
  * Service layer for GpsUtils
  */
-<span class="fc" id="L21">@Service</span>
+@Service
 public class GpsServiceImpl implements GpsService {
 
 <span class="fc" id="L24">    private Logger logger = LoggerFactory.getLogger(GpsServiceImpl.class);</span>
-<span class="fc" id="L25">    private final GpsUtil gpsUtil;</span>
-<span class="fc" id="L26"></span>
+    private final GpsUtil gpsUtil;
+
 <span class="fc" id="L27">    public GpsServiceImpl() {</span>
 <span class="fc" id="L28">        logger.debug(&quot;constructor GpsServiceImpl&quot;);</span>
-        Locale.setDefault(Locale.US);
-        this.gpsUtil = new GpsUtil();
-    }
-<span class="fc" id="L32"></span>
-<span class="fc" id="L33">    @Override</span>
-<span class="fc" id="L34">    public List&lt;AttractionMapper&gt; getAttractions() {</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        logger.debug(&quot;getAttractions size : &quot; + gpsUtil.getAttractions().size());</span>
+<span class="fc" id="L29">        Locale.setDefault(Locale.US);</span>
+<span class="fc" id="L30">        this.gpsUtil = new GpsUtil();</span>
+<span class="fc" id="L31">    }</span>
+
+    @Override
+    public List&lt;AttractionMapper&gt; getAttractions() {
+<span class="fc" id="L35">        logger.debug(&quot;getAttractions size : &quot; + gpsUtil.getAttractions().size());</span>
 <span class="fc" id="L36">        List&lt;Attraction&gt; attractions =  gpsUtil.getAttractions();</span>
 <span class="fc" id="L37">        List&lt;AttractionMapper&gt; attractionMappers = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L38">        for (Attraction a : attractions) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (Attraction a : attractions) {</span>
 <span class="fc" id="L39">            AttractionMapper attractionMapper = new AttractionMapper(a.attractionName, a.city, a.state, a.attractionId, a.latitude,a.longitude);</span>
-            attractionMappers.add(attractionMapper);
-        }
-        return attractionMappers;
+<span class="fc" id="L40">            attractionMappers.add(attractionMapper);</span>
+<span class="fc" id="L41">        }</span>
+<span class="fc" id="L42">        return attractionMappers;</span>
     }
-<span class="fc" id="L44"></span>
-<span class="fc" id="L45">    @Override</span>
-<span class="fc" id="L46">    public VisitedLocationMapper getUserLocation(UUID userID) {</span>
+
+    @Override
+    public VisitedLocationMapper getUserLocation(UUID userID) {
 <span class="fc" id="L47">        logger.debug(&quot;getUserLocation for user :&quot; + userID);</span>
 <span class="fc" id="L48">        VisitedLocation vl = gpsUtil.getUserLocation(userID);</span>
-        LocationMapper locationMapper = new LocationMapper(vl.location.longitude, vl.location.latitude);
-        VisitedLocationMapper visitedLocationMapper = new VisitedLocationMapper(vl.userId, locationMapper, vl.timeVisited);
-        return visitedLocationMapper;
+<span class="fc" id="L49">        LocationMapper locationMapper = new LocationMapper(vl.location.longitude, vl.location.latitude);</span>
+<span class="fc" id="L50">        VisitedLocationMapper visitedLocationMapper = new VisitedLocationMapper(vl.userId, locationMapper, vl.timeVisited);</span>
+<span class="fc" id="L51">        return visitedLocationMapper;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

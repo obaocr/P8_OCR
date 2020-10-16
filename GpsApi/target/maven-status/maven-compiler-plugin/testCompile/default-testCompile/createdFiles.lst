@@ -1,0 +1,3 @@
+gps\Service\GpsServiceTest.class
+gps\Controller\GpsControllerTest.class
+gps\Service\GpsServiceTest$GpsTestsContextConfiguration.class
