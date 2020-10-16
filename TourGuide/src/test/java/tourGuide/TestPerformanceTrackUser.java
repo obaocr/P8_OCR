@@ -1,9 +1,6 @@
 package tourGuide;
 
-<<<<<<< HEAD
-=======
 import org.apache.commons.lang3.time.StopWatch;
->>>>>>> feature/optim
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +27,7 @@ public class TestPerformanceTrackUser {
     @Autowired
     private TourGuideService tourGuideService;
 
-<<<<<<< HEAD
-    @Disabled("test intégration performance")
-=======
     @Disabled("Integration")
->>>>>>> feature/optim
     @Test
     public void highVolumeTrackLocation() {
 
