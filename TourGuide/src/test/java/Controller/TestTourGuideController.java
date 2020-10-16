@@ -1,26 +1,20 @@
 package Controller;
 
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import tourGuide.Controller.TourGuideController;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.Location;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
-import tourGuide.service.GpsProxyService;
-import tourGuide.service.GpsProxyServiceImpl;
-import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
 
 import java.util.*;

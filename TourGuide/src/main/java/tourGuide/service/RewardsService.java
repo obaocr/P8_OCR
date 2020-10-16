@@ -1,13 +1,9 @@
 package tourGuide.service;
 
-import gpsUtil.location.Attraction;
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import tourGuide.Model.AttractionResponseDTO;
-import tourGuide.Model.RewardPointsMapper;
+import tourGuide.Model.*;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;

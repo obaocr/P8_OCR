@@ -1,6 +1,6 @@
 package tourGuide.util;
 
-import gpsUtil.location.Location;
+import tourGuide.Model.Location;
 import tourGuide.Model.LocationMapper;
 
 public class Utils {

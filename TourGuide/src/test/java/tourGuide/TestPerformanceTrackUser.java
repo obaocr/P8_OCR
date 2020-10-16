@@ -1,7 +1,5 @@
 package tourGuide;
 
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -9,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import tourGuide.Model.Location;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 

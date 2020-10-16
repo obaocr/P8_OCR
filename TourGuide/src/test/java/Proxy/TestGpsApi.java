@@ -1,7 +1,5 @@
 package Proxy;
 
-import gpsUtil.location.Attraction;
-import gpsUtil.location.VisitedLocation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -10,9 +8,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import tourGuide.Model.AttractionMapper;
-import tourGuide.Model.LocationMapper;
-import tourGuide.Model.VisitedLocationMapper;
+import tourGuide.Model.*;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.service.GpsProxyService;
 import tourGuide.service.GpsProxyServiceImpl;

@@ -1,8 +1,8 @@
 package model;
 
-import gpsUtil.location.Location;
 import org.junit.Test;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.Location;
 import tourGuide.Model.UserCurrentLocationDTO;
 import tourGuide.Model.UserPreferencesDTO;
 

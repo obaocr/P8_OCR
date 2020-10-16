@@ -1,6 +1,5 @@
 package tourGuide.Model;
 
-import gpsUtil.location.Location;
 
 /**
  * Model response for User location

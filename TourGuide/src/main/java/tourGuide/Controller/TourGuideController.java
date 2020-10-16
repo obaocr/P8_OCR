@@ -1,7 +1,6 @@
 package tourGuide.Controller;
 
 import com.jsoniter.output.JsonStream;
-import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.util.EntityIllegalArgumentException;
-import tourGuide.util.EntityNotFoundException;
 import tripPricer.Provider;
 
 import java.util.List;
