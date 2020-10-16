@@ -1,9 +1,9 @@
 package tourGuide.tracker;
 
-import gpsUtil.location.VisitedLocation;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 

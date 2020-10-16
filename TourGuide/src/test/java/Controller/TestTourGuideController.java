@@ -1,7 +1,5 @@
 package Controller;
 
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.Location;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.service.TourGuideService;
@@ -49,7 +49,6 @@ public class TestTourGuideController {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         VisitedLocation visitedLocation = new VisitedLocation(UUID.randomUUID(), new Location(10.0, 10.0), new Date());
         Mockito.when(tourGuideService.getUserLocation(tourGuideService.getUser(anyString()))).thenReturn(visitedLocation);
-
 
         this.mockMvc.perform(get("/location")
                 .param("userName", "user1")

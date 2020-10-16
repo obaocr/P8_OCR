@@ -1,11 +1,7 @@
 package tourGuide.service;
 
-import gpsUtil.location.Attraction;
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.springframework.beans.factory.annotation.Autowired;
-import tourGuide.Model.AttractionMapper;
-import tourGuide.Model.VisitedLocationMapper;
+import tourGuide.Model.*;
 import tourGuide.Proxies.GpsProxy;
 
 import java.util.ArrayList;

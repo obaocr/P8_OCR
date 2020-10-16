@@ -4,6 +4,7 @@ import com.jsoniter.output.JsonStream;
 import gps.Model.AttractionMapper;
 import gps.Model.VisitedLocationMapper;
 import gps.Service.GpsService;
+import gps.Utils.EntityIllegalArgumentException;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
@@ -45,6 +46,10 @@ public class GpsController {
     public VisitedLocationMapper gpsGetUserLocation(@RequestParam String userId) {
         logger.debug("gpsGetUserLocation");
         // Exemple de UUID f07621a4-6365-4074-b040-ac655217f82f
+        if (userId.isEmpty()) {
+            logger.error("gpsGetUserLocation : The parameter userName is mandatory");
+            throw new EntityIllegalArgumentException("The parameter userId is mandatory");
+        }
         VisitedLocationMapper visitedLocationMapper = gpsService.getUserLocation(UUID.fromString(userId));
         return visitedLocationMapper;
     }

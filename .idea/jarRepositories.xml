@@ -12,21 +12,6 @@
       <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="snapshots-mirror" />
-      <option name="name" value="snapshots-mirror" />
-      <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="central" />
-      <option name="name" value="Central Repository" />
-      <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="releases-mirror" />
-      <option name="name" value="releases-mirror" />
-      <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
       <option name="url" value="https://repo.maven.apache.org/maven2" />
@@ -42,9 +27,24 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="snapshots-mirror" />
+      <option name="name" value="snapshots-mirror" />
+      <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="releases-mirror" />
+      <option name="name" value="releases-mirror" />
+      <option name="url" value="https://afa-nrepo.azure-paas.intraxa/repository/maven-group/" />
     </remote-repository>
   </component>
 </project>

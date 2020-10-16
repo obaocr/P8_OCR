@@ -1,0 +1,11 @@
+gps\Model\VisitedLocationMapper.class
+gps\Service\GpsServiceImpl.class
+gps\Model\AttractionMapper.class
+gps\Controller\GpsController.class
+gps\Model\LocationMapper.class
+gps\Utils\RestExceptionHandler.class
+gps\Utils\EntityIllegalArgumentException.class
+gps\Service\GpsService.class
+gps\Utils\ApiError.class
+gps\GpsApplication.class
+gps\Utils\EntityNotFoundException.class

@@ -1,16 +1,17 @@
 package tourGuide.service;
 
-import gpsUtil.location.Attraction;
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tourGuide.Model.Attraction;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.Location;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
+import tourGuide.util.EntityNotFoundException;
 import tourGuide.util.Utils;
 import tripPricer.Provider;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * TourGuideService / Main SVC for teh application
+ * TourGuideService / Main SVC for the application
  */
 @Service
 public class TourGuideService {
@@ -40,9 +41,6 @@ public class TourGuideService {
     /**
      * TourGuideService constructor
      */
-    // TODO => constructeur TourGuideService apparemment ne sert que pour les test !!! gpsUtil etant instanciée car bean dans TourGuideModule ? ) voir
-    // TODO => A voir comme possibilité de ne pas lancer le tracker pour certains tests... / à voir  ? sauf que certains tests en ont besoin
-    //public TourGuideService(GpsService gpsService, RewardsService rewardsService) {
     public TourGuideService(GpsProxyService gpsProxyService, RewardsService rewardsService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
@@ -96,12 +94,21 @@ public class TourGuideService {
         return internalUserMap.get(userName);
     }
 
+    public User getUserCtrl(String userName) {
+        User user = internalUserMap.get(userName);
+        if (user == null) {
+            throw new EntityNotFoundException("No user found for : " + userName);
+        } else {
+            return user;
+        }
+    }
+
     public List<User> getAllUsers() {
         return internalUserMap.values().stream().collect(Collectors.toList());
     }
 
     public void addUser(User user) {
-        logger.info("addUser");
+        //logger.info("addUser");
         if (!internalUserMap.containsKey(user.getUserName())) {
             internalUserMap.put(user.getUserName(), user);
         }
@@ -120,17 +127,17 @@ public class TourGuideService {
     // *********** trackUserLocationForAllUsers Async *************************************
     // ************************************************************************************/
 
-    // TODO Gérer les exceptions
-    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(100);
+    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(40);
 
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
             VisitedLocation visitedLocation = gpsProxyService.gpsUserLocation(user.getUserId());
             user.addToVisitedLocations(visitedLocation);
-            // "calculateRewards" is processed in bulk mode
-            //rewardsService.calculateRewards(user);
             return visitedLocation;
-        }, executorTrackUserLocation);
+        }, executorTrackUserLocation).exceptionally(e -> {
+            logger.error("getTrackUserLocationAsync for user :" + user.getUserName() + e.toString());
+            return null;
+        });
     }
 
 

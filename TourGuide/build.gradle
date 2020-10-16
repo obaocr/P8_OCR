@@ -41,8 +41,6 @@ dependencies {
     compile group: 'com.jsoniter', name: 'jsoniter', version: '0.9.23'
     compile ("com.google.code.gson:gson:2.8.5")
 
-    compile(name:'gpsUtil', ext:'jar')
-    compile(name:'RewardCentral', ext:'jar')
     compile(name:'TripPricer', ext:'jar')
 
     testCompile("junit:junit")
@@ -65,7 +63,6 @@ dependencyManagement {
 // https://medium.com/@rhamedy/how-to-setup-jacoco-code-coverage-with-maven-gradle-76e0b2fca9fb
 jacoco {
     toolVersion = "0.8.4"
-    //reportsDir = file("$buildDir/jacocoHtml")
 }
 
 test {

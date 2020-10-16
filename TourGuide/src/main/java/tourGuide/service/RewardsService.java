@@ -1,13 +1,9 @@
 package tourGuide.service;
 
-import gpsUtil.location.Attraction;
-import gpsUtil.location.Location;
-import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import tourGuide.Model.AttractionResponseDTO;
-import tourGuide.Model.RewardPointsMapper;
+import tourGuide.Model.*;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
@@ -54,7 +50,7 @@ public class RewardsService {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
-                        logger.debug("calculateRewards => ******* passage nearAttraction : " + user.getUserName());
+                        logger.debug("calculateRewards => passage nearAttraction : " + user.getUserName());
                         int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                         user.addUserReward(new UserReward(visitedLocation, attraction, reward));
                     }
@@ -88,13 +84,16 @@ public class RewardsService {
      // *********** Calculate Rewards for N users parallel mode   *************************
      // ***********************************************************************************/
 
-    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(100);
+    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(20);
 
     private CompletableFuture<Boolean> calculateRewardsAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
             calculateRewards(user);
             return true;
-        }, executorCalcReward);
+        }, executorCalcReward).exceptionally(e -> {
+            logger.error("calculateRewardsAsync for user :" + user.getUserName() + e.toString());
+            return false;
+        });
     }
 
     public Integer calculateRewardsForUsers(List<User> users) {
@@ -141,7 +140,10 @@ public class RewardsService {
             int reward = getRewardPoints(UUID.fromString(attractionResponse.getAttractionId()), user.getUserId());
             attractionResponse.setRewardsPoints(reward);
             return attractionResponse;
-        }, executorReward);
+        }, executorReward).exceptionally(e -> {
+            logger.error("getAttractionResponseWithRewardPoint for user :" + user.getUserName() + e.toString());
+            return null;
+        });
     }
 
     /**

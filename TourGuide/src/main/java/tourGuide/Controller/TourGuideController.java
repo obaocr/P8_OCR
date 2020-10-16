@@ -1,7 +1,6 @@
 package tourGuide.Controller;
 
 import com.jsoniter.output.JsonStream;
-import gpsUtil.location.VisitedLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.VisitedLocation;
 import tourGuide.service.TourGuideService;
+import tourGuide.user.User;
+import tourGuide.util.EntityIllegalArgumentException;
 import tripPricer.Provider;
 
 import java.util.List;
@@ -34,7 +36,12 @@ public class TourGuideController {
     @GetMapping("/location")
     public String getLocation1(@RequestParam String userName) {
         logger.debug("getLocation");
-        VisitedLocation visitedLocation = tourGuideService.getUserLocation(tourGuideService.getUser(userName));
+        if (userName.isEmpty()) {
+            logger.error("getLocation : The parameter userName is mandatory");
+            throw new EntityIllegalArgumentException("The parameter userName is mandatory");
+        }
+        User user = tourGuideService.getUserCtrl(userName);
+        VisitedLocation visitedLocation = tourGuideService.getUserLocation(user);
         return JsonStream.serialize(visitedLocation.location);
     }
 
@@ -51,6 +58,11 @@ public class TourGuideController {
     @GetMapping("/nearbyattractions")
     public String  getNearbyAttractions(@RequestParam String userName) {
         logger.debug("getNearbyAttractions");
+        if (userName.isEmpty()) {
+            logger.error("getNearbyAttractions : The parameter userName is mandatory");
+            throw new EntityIllegalArgumentException("The parameter userName is mandatory");
+        }
+        User user = tourGuideService.getUserCtrl(userName);
         List<AttractionResponseDTO> attractionResponseDTOS = tourGuideService.getNearByAttractions(userName);
         return JsonStream.serialize(attractionResponseDTOS);
     }
@@ -58,6 +70,11 @@ public class TourGuideController {
     @GetMapping("/rewards")
     public String getRewards(@RequestParam String userName) {
         logger.debug("getRewards");
+        if (userName.isEmpty()) {
+            logger.error("getRewards : The parameter userName is mandatory");
+            throw new EntityIllegalArgumentException("The parameter userName is mandatory");
+        }
+        User user = tourGuideService.getUserCtrl(userName);
         return JsonStream.serialize(tourGuideService.getUserRewards(tourGuideService.getUser(userName)));
     }
 
@@ -79,6 +96,11 @@ public class TourGuideController {
     @GetMapping("/tripdeals")
     public String getTripDeals(@RequestParam String userName) {
         logger.debug("getTripDeals");
+        if (userName.isEmpty()) {
+            logger.error("getTripDeals : The parameter userName is mandatory");
+            throw new EntityIllegalArgumentException("The parameter userName is mandatory");
+        }
+        User user = tourGuideService.getUserCtrl(userName);
         List<Provider> providers = tourGuideService.getTripDeals(tourGuideService.getUser(userName));
         return JsonStream.serialize(providers);
     }
