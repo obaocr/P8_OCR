@@ -1,5 +1,8 @@
 package tourGuide.Model;
 
+/**
+ * LocationMapper Model
+ */
 public class LocationMapper {
 
     private double longitude;

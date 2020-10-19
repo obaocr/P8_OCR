@@ -1,5 +1,8 @@
 package tourGuide.Model;
 
+/**
+ * RewardPointsMapper Model, used for Reward SVC
+ */
 public class RewardPointsMapper {
 
     private Integer points;

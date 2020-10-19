@@ -3,6 +3,9 @@ package tourGuide.util;
 import tourGuide.Model.Location;
 import tourGuide.Model.LocationMapper;
 
+/**
+ * Utils to calculate distance
+ */
 public class Utils {
 
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;

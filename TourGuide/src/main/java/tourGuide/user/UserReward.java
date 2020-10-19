@@ -4,6 +4,9 @@ package tourGuide.user;
 import tourGuide.Model.Attraction;
 import tourGuide.Model.VisitedLocation;
 
+/**
+ * UserReward Model
+ */
 public class UserReward {
 
 	public final VisitedLocation visitedLocation;

@@ -2,6 +2,9 @@ package tourGuide.Model;
 
 import java.util.UUID;
 
+/**
+ * Attraction Model
+ */
 public class Attraction extends Location {
     public final String attractionName;
     public final String city;

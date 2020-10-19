@@ -1,6 +1,5 @@
 package tourGuide.Model;
 
-
 /**
  * Model response for User location
  */

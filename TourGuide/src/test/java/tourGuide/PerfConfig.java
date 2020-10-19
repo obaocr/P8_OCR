@@ -4,6 +4,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.GpsProxyService;
 import tourGuide.service.GpsProxyServiceImpl;
 import tourGuide.service.RewardsService;
@@ -13,8 +14,14 @@ import tourGuide.service.TourGuideService;
 @EnableFeignClients
 public class PerfConfig {
 
+    /*static {
+        InternalTestHelper.setInternalUserNumber(500);
+    }
+     */
+
     @TestConfiguration
     static class GpsTestsContextConfiguration {
+
 
         @Bean
         public GpsProxyService getGpsService() {
