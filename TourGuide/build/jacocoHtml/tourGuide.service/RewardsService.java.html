@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardsService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.service</a> &gt; <span class="el_source">RewardsService.java</span></div><h1>RewardsService.java</h1><pre class="source lang-java linenums">package tourGuide.service;
+
+import gpsUtil.location.Attraction;
+import gpsUtil.location.Location;
+import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rewardCentral.RewardCentral;
+import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.user.User;
+import tourGuide.user.UserReward;
+import tourGuide.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+
+// TODO  Ã  passer en SVC mais enlever du bean ???
+public class RewardsService {
+<span class="fc" id="L23">    private Logger logger = LoggerFactory.getLogger(RewardsService.class);</span>
+    private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+
+    // proximity in miles
+<span class="fc" id="L27">    private int defaultProximityBuffer = 10;</span>
+<span class="fc" id="L28">    private int proximityBuffer = defaultProximityBuffer;</span>
+<span class="fc" id="L29">    private int attractionProximityRange = 200;</span>
+    private final GpsService gpsService;
+    private final RewardCentral rewardsCentral;
+
+<span class="fc" id="L33">    public RewardsService(GpsService gpsService, RewardCentral rewardCentral) {</span>
+<span class="fc" id="L34">        this.gpsService = gpsService;</span>
+<span class="fc" id="L35">        this.rewardsCentral = rewardCentral;</span>
+<span class="fc" id="L36">    }</span>
+
+    public void setProximityBuffer(int proximityBuffer) {
+<span class="nc" id="L39">        this.proximityBuffer = proximityBuffer;</span>
+<span class="nc" id="L40">    }</span>
+
+    public void setDefaultProximityBuffer() {
+<span class="nc" id="L43">        proximityBuffer = defaultProximityBuffer;</span>
+<span class="nc" id="L44">    }</span>
+
+    // TODO l'appel  Ã  getRewardPoints ( est long apparemment... en fait rewardsCentral.getAttractionRewardPoints), Ã  voir si on laisse
+    public void calculateRewards(User user) {
+        //logger.debug(&quot;calculateRewards pour user : &quot; + user.getUserName());
+<span class="fc" id="L49">        List&lt;VisitedLocation&gt; userLocations = user.getVisitedLocations();</span>
+<span class="fc" id="L50">        List&lt;Attraction&gt; attractions = gpsService.getAttractions();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        for (VisitedLocation visitedLocation : userLocations) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            for (Attraction attraction : attractions) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                if (user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                    if (nearAttraction(visitedLocation, attraction)) {</span>
+<span class="fc" id="L55">                        logger.debug(&quot;calculateRewards =&gt; ******************* passage nearAttraction : &quot; + user.getUserName());</span>
+<span class="fc" id="L56">                        user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
+                    }
+                }
+<span class="fc" id="L59">            }</span>
+<span class="fc" id="L60">        }</span>
+<span class="fc" id="L61">    }</span>
+
+    public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        return Utils.calculateDistance(attraction, location) &gt; attractionProximityRange ? false : true;</span>
+    }
+
+    // TODO proximityBuffer Ã  10 et distance toujours &gt; 3000 donc pas de rewards ...
+    private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
+<span class="fc" id="L69">        double distance = Utils.calculateDistance(attraction, visitedLocation.location);</span>
+        //logger.debug(&quot;nearAttraction, distance, proximityBuffer :&quot; +  distance + &quot; / &quot; + proximityBuffer);
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        return distance &gt; proximityBuffer ? false : true;</span>
+    }
+
+    // TODO  getAttractionRewardPoints est longue en temps de rÃ©ponse : sleep...
+    private int getRewardPoints(Attraction attraction, User user) {
+<span class="fc" id="L76">        return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());</span>
+    }
+
+    /**
+     * OBA Pour calcul du reward Point en future asynchrone, pour une attraction
+     *
+     * @param attractionResponse
+     * @param user
+     * @return
+     */
+<span class="fc" id="L86">    private ExecutorService executor = Executors.newFixedThreadPool(5);</span>
+
+    private CompletableFuture&lt;AttractionResponseDTO&gt; getAttractionResponseWithRewardPoint(AttractionResponseDTO attractionResponse, User user) {
+<span class="nc" id="L89">        return CompletableFuture.supplyAsync(() -&gt; {</span>
+<span class="nc" id="L90">            int reward = rewardsCentral.getAttractionRewardPoints(attractionResponse.getAttractionId(), user.getUserId());</span>
+<span class="nc" id="L91">            attractionResponse.setRewardsPoints(reward);</span>
+<span class="nc" id="L92">            return attractionResponse;</span>
+        }, executor);
+    }
+
+    /**
+     * OBA Pour calcul en parallel et en future des Rewards points pour une list attractions
+     *
+     * @param attractionResponses
+     * @param user
+     * @return List&lt;AttractionResponse&gt; with rewards points
+     */
+    // TODO gÃ©rer les exceptions, cf. docs
+    public List&lt;AttractionResponseDTO&gt; getAllAttractionResponseWithRewardPoint(List&lt;AttractionResponseDTO&gt; attractionResponses, User user) {
+<span class="nc" id="L105">        logger.debug(&quot;attractionResponses size&quot; + attractionResponses.size());</span>
+<span class="nc" id="L106">        List&lt;AttractionResponseDTO&gt; attractionResponsesWithRewardPoint = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L108">        List&lt;CompletableFuture&lt;AttractionResponseDTO&gt;&gt; attractionsRespWithRewardPointFuture = attractionResponses.stream()</span>
+<span class="nc" id="L109">                .map(a -&gt; getAttractionResponseWithRewardPoint(a, user))</span>
+<span class="nc" id="L110">                .collect(Collectors.toList());</span>
+
+<span class="nc" id="L112">        CompletableFuture&lt;Void&gt; allFutures = CompletableFuture.allOf(attractionsRespWithRewardPointFuture</span>
+<span class="nc" id="L113">                .toArray(new CompletableFuture[attractionsRespWithRewardPointFuture.size()]));</span>
+
+<span class="nc" id="L115">        CompletableFuture&lt;List&lt;AttractionResponseDTO&gt;&gt; allCompletableFuture = allFutures.thenApply(</span>
+                future -&gt; {
+<span class="nc" id="L117">                    return attractionsRespWithRewardPointFuture.stream()</span>
+<span class="nc" id="L118">                            .map(a -&gt; a.join()).collect(Collectors.toList());</span>
+                }
+        );
+<span class="nc" id="L121">        attractionResponsesWithRewardPoint = allCompletableFuture.join();</span>
+<span class="nc" id="L122">        logger.debug(&quot;attractionResponsesWithRewardPoint size&quot; + attractionResponsesWithRewardPoint.size());</span>
+<span class="nc" id="L123">        return attractionResponsesWithRewardPoint;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

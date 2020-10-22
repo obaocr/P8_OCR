@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="GpsApi" target="1.8" />
+      <module name="RewardCentral" target="1.5" />
+      <module name="RewardCentralApi" target="1.8" />
+      <module name="TripPricerApi" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="GpsApi" options="-parameters" />
+      <module name="RewardCentralApi" options="-parameters" />
+      <module name="TripPricerApi" options="-parameters" />
+    </option>
+  </component>
+</project>
