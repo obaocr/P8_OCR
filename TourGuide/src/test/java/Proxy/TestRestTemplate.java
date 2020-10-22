@@ -15,11 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TestRestTemplate {
 
-<<<<<<< HEAD
-    @Disabled("test intégration")
-=======
     @Disabled("Integration")
->>>>>>> feature/optim
     @Test
     public void testProxyGetAttractions() {
         String attractionUrl = "http://localhost:8046/gpsattractions";

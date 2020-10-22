@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * User Model
+ */
 public class User {
 	private final UUID userId;
 	private final String userName;

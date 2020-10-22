@@ -1,5 +1,8 @@
 package tourGuide.Model;
 
+/**
+ * Location Model
+ */
 public class Location {
     public final double longitude;
     public final double latitude;

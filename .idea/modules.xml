@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/P8_OCR.iml" filepath="$PROJECT_DIR$/.idea/P8_OCR.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TripPricerApi/TripPricerApi.iml" filepath="$PROJECT_DIR$/TripPricerApi/TripPricerApi.iml" />
     </modules>
   </component>
 </project>

@@ -5,7 +5,9 @@ import org.javamoney.moneta.Money;
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
 
-
+/**
+ * UserPreferences Model
+ */
 public class UserPreferences {
 
 	// TODO OBA, passage en Integer

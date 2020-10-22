@@ -1,9 +1,6 @@
 package tourGuide;
 
-<<<<<<< HEAD
-=======
 import org.apache.commons.lang3.time.StopWatch;
->>>>>>> feature/optim
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +27,12 @@ public class TestPerformanceTrackUser {
     @Autowired
     private TourGuideService tourGuideService;
 
-<<<<<<< HEAD
-    @Disabled("test intégration performance")
-=======
     @Disabled("Integration")
->>>>>>> feature/optim
     @Test
     public void highVolumeTrackLocation() {
 
         // Users should be incremented up to 100,000, and test finishes within 15 minutes
-        int internalUserNumber = 10000;
+        int internalUserNumber = 1000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;
             String phone = "000";

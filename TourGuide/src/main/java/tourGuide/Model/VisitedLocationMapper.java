@@ -3,6 +3,9 @@ package tourGuide.Model;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * VisitedLocationMapper for the Gps SVC
+ */
 public class VisitedLocationMapper {
 
     private UUID userId;

@@ -28,17 +28,13 @@ public class TestPerformanceCalcReward {
     @Autowired
     private TourGuideService tourGuideService;
 
-<<<<<<< HEAD
-    @Disabled("test intégration performance")
-=======
     @Disabled("Integration")
->>>>>>> feature/optim
     @Test
     public void highVolumeGetRewards() {
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
         List<User> allUsers = new ArrayList<>();
-        int internalUserNumber = 10000;
+        int internalUserNumber = 1000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;
             String phone = "000";
