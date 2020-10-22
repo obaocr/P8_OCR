@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
-	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(20);
+	private static final long trackingPollingInterval = TimeUnit.SECONDS.toSeconds(300);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;

@@ -34,7 +34,7 @@ public class TestPerformanceCalcReward {
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
         List<User> allUsers = new ArrayList<>();
-        int internalUserNumber = 1000;
+        int internalUserNumber = 10000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;
             String phone = "000";
