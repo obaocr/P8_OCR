@@ -10,10 +10,12 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 This project need GpsApi & RewardCentralApi
+
 https://github.com/obaocr/P8_GpsApi.git
 https://github.com/obaocr/P8_RewardCentralApi.git
 
-Pleas Install and run the two project below
+
+Please Install and run the two project below
 
 For Tourguide (main project)
 - Java 1.8
