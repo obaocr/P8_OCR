@@ -34,7 +34,7 @@ public class TestPerformanceCalcReward {
 
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
         List<User> allUsers = new ArrayList<>();
-        int internalUserNumber = 10000;
+        int internalUserNumber = 100000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;
             String phone = "000";
@@ -69,7 +69,7 @@ public class TestPerformanceCalcReward {
         stopWatch.stop();
         tourGuideService.tracker.stopTracking();
 
-        System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+        System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toMillis(stopWatch.getTime()) + " seconds.");
         assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
     }
 }

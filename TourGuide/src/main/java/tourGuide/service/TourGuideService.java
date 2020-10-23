@@ -127,7 +127,7 @@ public class TourGuideService {
     // *********** trackUserLocationForAllUsers Async *************************************
     // ************************************************************************************/
 
-    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(40);
+    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(50);
 
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {

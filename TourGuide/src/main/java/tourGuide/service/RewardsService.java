@@ -1,9 +1,9 @@
 package tourGuide.service;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import tourGuide.Model.*;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.user.User;
@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -48,9 +49,8 @@ public class RewardsService {
         proximityBuffer = defaultProximityBuffer;
     }
 
-    public void calculateRewards(User user) {
+    public void calculateRewards(User user, List<Attraction> attractions) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
-        List<Attraction> attractions = getGpsAttractions();
         for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
@@ -89,11 +89,11 @@ public class RewardsService {
      // *********** Calculate Rewards for N users parallel mode   *************************
      // ***********************************************************************************/
 
-    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(20);
+    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(50);
 
-    private CompletableFuture<Boolean> calculateRewardsAsync(User user) {
+    private CompletableFuture<Boolean> calculateRewardsAsync(User user, List<Attraction> attractions) {
         return CompletableFuture.supplyAsync(() -> {
-            calculateRewards(user);
+            calculateRewards(user, attractions);
             return true;
         }, executorCalcReward).exceptionally(e -> {
             logger.error("calculateRewardsAsync for user :" + user.getUserName() + e.toString());
@@ -103,10 +103,11 @@ public class RewardsService {
 
     public Integer calculateRewardsForUsers(List<User> users) {
         logger.debug("calculateRewardsForUsers size: " + users.size());
+        final List<Attraction> attractions = getGpsAttractions();
         List<Boolean> results = new ArrayList<>();
 
         List<CompletableFuture<Boolean>> calculateRewardsFuture = users.stream()
-                .map(u -> calculateRewardsAsync(u))
+                .map(u -> calculateRewardsAsync(u,attractions))
                 .collect(Collectors.toList());
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(calculateRewardsFuture
                 .toArray(new CompletableFuture[calculateRewardsFuture.size()]));
