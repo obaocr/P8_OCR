@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class RewardsService {
     private Logger logger = LoggerFactory.getLogger(RewardsService.class);
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+    private Integer nbAddReward = 0;
 
     @Autowired
     private RewardProxy rewardProxy;
@@ -55,9 +56,9 @@ public class RewardsService {
             for (Attraction attraction : attractions) {
                 if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
                     if (nearAttraction(visitedLocation, attraction)) {
-                        logger.debug("calculateRewards => passage nearAttraction : " + user.getUserName());
                         int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                         user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                        this.nbAddReward++;
                     }
                 }
             }
@@ -89,7 +90,7 @@ public class RewardsService {
      // *********** Calculate Rewards for N users parallel mode   *************************
      // ***********************************************************************************/
 
-    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(50);
+    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(100);
 
     private CompletableFuture<Boolean> calculateRewardsAsync(User user, List<Attraction> attractions) {
         return CompletableFuture.supplyAsync(() -> {
@@ -102,7 +103,8 @@ public class RewardsService {
     }
 
     public Integer calculateRewardsForUsers(List<User> users) {
-        logger.debug("calculateRewardsForUsers size: " + users.size());
+        logger.debug("calculateRewardsForUsers size: " + users.size() + " users");
+        this.nbAddReward = 0;
         final List<Attraction> attractions = getGpsAttractions();
         List<Boolean> results = new ArrayList<>();
 
@@ -124,13 +126,9 @@ public class RewardsService {
                 nbResultOK++;
             }
         }
-        logger.debug("calculateRewardsForUsers nbResultOK:" + nbResultOK);
+        logger.debug("nb appels CalculateReward OK:" + nbResultOK);
         return nbResultOK;
     }
-
-    /**************************************************************************************
-     // *********** Pour calcul du reward Point en future  Async **************************
-     // ***********************************************************************************/
 
     /**
      * OBA Pour calcul du reward Point en future asynchrone, pour une attraction
@@ -153,7 +151,7 @@ public class RewardsService {
     }
 
     /**
-     * OBA Pour calcul en parallel et en future des Rewards points pour une list attractions
+     * Calculate Rewards points in parallel mode with future for an attraction list
      *
      * @param attractionResponses
      * @param user
