@@ -127,7 +127,7 @@ public class TourGuideService {
     // *********** trackUserLocationForAllUsers Async *************************************
     // ************************************************************************************/
 
-    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(40);
+    private final ExecutorService executorTrackUserLocation = Executors.newFixedThreadPool(50);
 
     private CompletableFuture<VisitedLocation> getTrackUserLocationAsync(User user) {
         return CompletableFuture.supplyAsync(() -> {
@@ -257,6 +257,7 @@ public class TourGuideService {
      * Methods Below: For Internal Testing
      *
      **********************************************************************************/
+
     private static final String tripPricerApiKey = "test-server-api-key";
     // Database connection will be used for external users, but for testing purposes internal users are provided and stored in memory
     private final Map<String, User> internalUserMap = new HashMap<>();
