@@ -2,18 +2,16 @@ package tourGuide.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tourGuide.Model.Attraction;
-import tourGuide.Model.AttractionResponseDTO;
-import tourGuide.Model.Location;
-import tourGuide.Model.VisitedLocation;
+import tourGuide.Model.*;
+import tourGuide.Proxies.TripPricerProxy;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 import tourGuide.util.EntityNotFoundException;
 import tourGuide.util.Utils;
-import tripPricer.Provider;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -31,9 +29,10 @@ import java.util.stream.IntStream;
 public class TourGuideService {
 
     private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
+
     private final RewardsService rewardsService;
     private final GpsProxyService gpsProxyService;
-    private final TripPricerService trTripPricerService = new TripPricerServiceImpl();
+    private final TripPricerService tripPricerService;
     public final Tracker tracker;
     boolean testMode = true;
     private final Integer nbMaxAttractions=5;
@@ -41,11 +40,12 @@ public class TourGuideService {
     /**
      * TourGuideService constructor
      */
-    public TourGuideService(GpsProxyService gpsProxyService, RewardsService rewardsService) {
+    public TourGuideService(GpsProxyService gpsProxyService, RewardsService rewardsService, TripPricerService tripPricerService) {
         // Set Locale to "US" to fix the crash of the gpsUtil JAR ...
         Locale.setDefault(Locale.US);
         this.rewardsService = rewardsService;
         this.gpsProxyService = gpsProxyService;
+        this.tripPricerService = tripPricerService;
 
         if (testMode) {
             logger.debug("TestMode enabled / Initializing users");
@@ -117,7 +117,7 @@ public class TourGuideService {
     public List<Provider> getTripDeals(User user) {
         logger.info("getTripDeals");
         int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-        List<Provider> providers = trTripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
+        List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId().toString(), user.getUserPreferences().getNumberOfAdults(),
                 user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
         user.setTripDeals(providers);
         return providers;

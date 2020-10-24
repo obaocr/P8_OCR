@@ -1,6 +1,5 @@
 package tourGuide.service;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
+ * RewardsService
  * RewardsService
  */
 
@@ -58,24 +57,11 @@ public class RewardsService {
                         && nearAttraction(visitedLocation, attraction)){
                     int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                     user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                    logger.debug("*** addUserReward pour *** " + user.getUserId() + " / " + user.getUserName());
                     this.nbAddReward++;
                 }
             });
         });
-
-        /*
-        for (VisitedLocation visitedLocation : userLocations) {
-            for (Attraction attraction : attractions) {
-                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0
-                    && nearAttraction(visitedLocation, attraction)){
-                    int reward = getRewardPoints(attraction.attractionId, user.getUserId());
-                    user.addUserReward(new UserReward(visitedLocation, attraction, reward));
-                    this.nbAddReward++;
-                }
-            }
-        }
-
-         */
 
     }
 

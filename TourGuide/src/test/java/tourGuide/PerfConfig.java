@@ -5,10 +5,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tourGuide.helper.InternalTestHelper;
-import tourGuide.service.GpsProxyService;
-import tourGuide.service.GpsProxyServiceImpl;
-import tourGuide.service.RewardsService;
-import tourGuide.service.TourGuideService;
+import tourGuide.service.*;
 
 @Configuration
 @EnableFeignClients
@@ -34,8 +31,13 @@ public class PerfConfig {
         }
 
         @Bean
+        public TripPricerService getTripPricerService() {
+            return new TripPricerServiceImpl();
+        }
+
+        @Bean
         public TourGuideService getTourGuideService() {
-            return new TourGuideService(getGpsService(), getRewardsService());
+            return new TourGuideService(getGpsService(), getRewardsService(), getTripPricerService());
         }
 
     }

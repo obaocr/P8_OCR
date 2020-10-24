@@ -11,11 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tourGuide.Model.*;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
+import tourGuide.Proxies.TripPricerProxy;
 import tourGuide.helper.InternalTestHelper;
-import tourGuide.service.GpsProxyService;
-import tourGuide.service.GpsProxyServiceImpl;
-import tourGuide.service.RewardsService;
-import tourGuide.service.TourGuideService;
+import tourGuide.service.*;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
@@ -44,6 +42,9 @@ public class TestRewardsService {
             return new RewardsService();
         }
 
+        @Bean
+        public TripPricerService getTripPricerService() { return new TripPricerServiceImpl(); }
+
     }
 
     @Autowired
@@ -52,11 +53,17 @@ public class TestRewardsService {
     @Autowired
     private RewardsService rewardsService;
 
+    @Autowired
+    private TripPricerService tripPricerService;
+
     @MockBean
     private GpsProxy gpsProxy;
 
     @MockBean
     private RewardProxy rewardProxy;
+
+    @MockBean
+    private TripPricerProxy tripPricerProxy;
 
     @Test
     public void isWithinAttractionProximity() {
@@ -82,7 +89,7 @@ public class TestRewardsService {
 
         rewardsService.setProximityBuffer(Integer.MAX_VALUE);
         InternalTestHelper.setInternalUserNumber(0);
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService, tripPricerService);
         User user = new User(userId, "jon", "000", "jon@tourGuide.com");
         Attraction attraction = new Attraction("Musee", "Paris", "France", 1.0, 1.0);
         user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
@@ -100,7 +107,7 @@ public class TestRewardsService {
 
         rewardsService.setProximityBuffer(Integer.MAX_VALUE);
         InternalTestHelper.setInternalUserNumber(1);
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
 
         User user = tourGuideService.getAllUsers().get(0);
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(555);

@@ -15,6 +15,7 @@ import tourGuide.Model.Location;
 import tourGuide.Model.VisitedLocation;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
+import tourGuide.Proxies.TripPricerProxy;
 import tourGuide.service.TourGuideService;
 
 import java.util.*;
@@ -34,6 +35,9 @@ public class TestTourGuideController {
 
     @MockBean
     private RewardProxy rewardProxy;
+
+    @MockBean
+    private TripPricerProxy tripPricerProxy;
 
     @MockBean
     private TourGuideService tourGuideService;

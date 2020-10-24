@@ -2,9 +2,8 @@ package tourGuide;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import tourGuide.service.GpsProxyService;
-import tourGuide.service.GpsProxyServiceImpl;
-import tourGuide.service.RewardsService;
+import tourGuide.Proxies.TripPricerProxy;
+import tourGuide.service.*;
 
 @Configuration
 public class TourGuideModule {
@@ -17,6 +16,10 @@ public class TourGuideModule {
     @Bean
     public RewardsService getRewardsService() {
         return new RewardsService();
+    }
+
+    @Bean
+    public TripPricerService getTripPricerService() { return new TripPricerServiceImpl();
     }
 
 }
