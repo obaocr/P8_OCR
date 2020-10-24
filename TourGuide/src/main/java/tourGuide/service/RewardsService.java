@@ -1,9 +1,9 @@
 package tourGuide.service;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import tourGuide.Model.*;
 import tourGuide.Proxies.RewardProxy;
 import tourGuide.user.User;
@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class RewardsService {
     private Logger logger = LoggerFactory.getLogger(RewardsService.class);
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+    private Integer nbAddReward = 0;
 
     @Autowired
     private RewardProxy rewardProxy;
@@ -48,20 +50,33 @@ public class RewardsService {
         proximityBuffer = defaultProximityBuffer;
     }
 
-    public void calculateRewards(User user) {
+    public void calculateRewards(User user, List<Attraction> attractions) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
-        List<Attraction> attractions = getGpsAttractions();
+        userLocations.stream().forEach( visitedLocation -> {
+            attractions.stream().forEach(attraction -> {
+                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0
+                        && nearAttraction(visitedLocation, attraction)){
+                    int reward = getRewardPoints(attraction.attractionId, user.getUserId());
+                    user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                    this.nbAddReward++;
+                }
+            });
+        });
+
+        /*
         for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
-                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
-                    if (nearAttraction(visitedLocation, attraction)) {
-                        logger.debug("calculateRewards => passage nearAttraction : " + user.getUserName());
-                        int reward = getRewardPoints(attraction.attractionId, user.getUserId());
-                        user.addUserReward(new UserReward(visitedLocation, attraction, reward));
-                    }
+                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0
+                    && nearAttraction(visitedLocation, attraction)){
+                    int reward = getRewardPoints(attraction.attractionId, user.getUserId());
+                    user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                    this.nbAddReward++;
                 }
             }
         }
+
+         */
+
     }
 
     public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
@@ -89,11 +104,11 @@ public class RewardsService {
      // *********** Calculate Rewards for N users parallel mode   *************************
      // ***********************************************************************************/
 
-    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(20);
+    private final ExecutorService executorCalcReward = Executors.newFixedThreadPool(100);
 
-    private CompletableFuture<Boolean> calculateRewardsAsync(User user) {
+    private CompletableFuture<Boolean> calculateRewardsAsync(User user, List<Attraction> attractions) {
         return CompletableFuture.supplyAsync(() -> {
-            calculateRewards(user);
+            calculateRewards(user, attractions);
             return true;
         }, executorCalcReward).exceptionally(e -> {
             logger.error("calculateRewardsAsync for user :" + user.getUserName() + e.toString());
@@ -102,11 +117,13 @@ public class RewardsService {
     }
 
     public Integer calculateRewardsForUsers(List<User> users) {
-        logger.debug("calculateRewardsForUsers size: " + users.size());
+        logger.debug("calculateRewardsForUsers size: " + users.size() + " users");
+        this.nbAddReward = 0;
+        final List<Attraction> attractions = getGpsAttractions();
         List<Boolean> results = new ArrayList<>();
 
         List<CompletableFuture<Boolean>> calculateRewardsFuture = users.stream()
-                .map(u -> calculateRewardsAsync(u))
+                .map(u -> calculateRewardsAsync(u, attractions))
                 .collect(Collectors.toList());
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(calculateRewardsFuture
                 .toArray(new CompletableFuture[calculateRewardsFuture.size()]));
@@ -123,13 +140,9 @@ public class RewardsService {
                 nbResultOK++;
             }
         }
-        logger.debug("calculateRewardsForUsers nbResultOK:" + nbResultOK);
+        logger.debug("nb appels CalculateReward OK:" + nbResultOK);
         return nbResultOK;
     }
-
-    /**************************************************************************************
-     // *********** Pour calcul du reward Point en future  Async **************************
-     // ***********************************************************************************/
 
     /**
      * OBA Pour calcul du reward Point en future asynchrone, pour une attraction
@@ -152,7 +165,7 @@ public class RewardsService {
     }
 
     /**
-     * OBA Pour calcul en parallel et en future des Rewards points pour une list attractions
+     * Calculate Rewards points in parallel mode with future for an attraction list
      *
      * @param attractionResponses
      * @param user

@@ -95,12 +95,8 @@ public class TestRewardsService {
 
     @Test
     public void nearAllAttractions() {
-        AttractionMapper attraction1 = new AttractionMapper("Musee", "Paris", "France", UUID.randomUUID(), 1.0, 2.0);
-        AttractionMapper attraction2 = new AttractionMapper("Gare", "Paris", "France", UUID.randomUUID(), 10.0, 2.0);
-        List<AttractionMapper> attractions = new ArrayList<>();
-        attractions.add(attraction1);
-        attractions.add(attraction2);
-        Mockito.when(gpsProxy.gpsGetAttractions()).thenReturn(attractions);
+        List<AttractionMapper> attractionMappers = new ArrayList<>();
+        Mockito.when(gpsProxy.gpsGetAttractions()).thenReturn(attractionMappers);
 
         rewardsService.setProximityBuffer(Integer.MAX_VALUE);
         InternalTestHelper.setInternalUserNumber(1);
@@ -110,7 +106,13 @@ public class TestRewardsService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(555);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
-        rewardsService.calculateRewards(user);
+        Attraction attraction1 = new Attraction("Musee", "Paris", "France",  1.0, 2.0);
+        Attraction attraction2 = new Attraction("Gare", "Paris", "France",  10.0, 2.0);
+        List<Attraction> attractions = new ArrayList<>();
+        attractions.add(attraction1);
+        attractions.add(attraction2);
+
+        rewardsService.calculateRewards(user,attractions);
         List<UserReward> userRewards = tourGuideService.getUserRewards(user);
         tourGuideService.tracker.stopTracking();
 
