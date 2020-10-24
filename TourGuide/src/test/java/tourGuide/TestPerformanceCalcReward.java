@@ -42,7 +42,7 @@ public class TestPerformanceCalcReward {
     @Test
     public void highVolumeGetRewards() {
         // Users should be incremented up to 100,000, and test finishes within 20 minutes
-        int internalUserNumber = 100;
+        int internalUserNumber = 1000;
         for (int i = 0; i < internalUserNumber; i++) {
             String userName = "internalUser" + i;
             String phone = "000";

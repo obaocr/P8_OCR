@@ -52,17 +52,31 @@ public class RewardsService {
 
     public void calculateRewards(User user, List<Attraction> attractions) {
         List<VisitedLocation> userLocations = user.getVisitedLocations();
+        userLocations.stream().forEach( visitedLocation -> {
+            attractions.stream().forEach(attraction -> {
+                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0
+                        && nearAttraction(visitedLocation, attraction)){
+                    int reward = getRewardPoints(attraction.attractionId, user.getUserId());
+                    user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                    this.nbAddReward++;
+                }
+            });
+        });
+
+        /*
         for (VisitedLocation visitedLocation : userLocations) {
             for (Attraction attraction : attractions) {
-                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
-                    if (nearAttraction(visitedLocation, attraction)) {
-                        int reward = getRewardPoints(attraction.attractionId, user.getUserId());
-                        user.addUserReward(new UserReward(visitedLocation, attraction, reward));
-                        this.nbAddReward++;
-                    }
+                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0
+                    && nearAttraction(visitedLocation, attraction)){
+                    int reward = getRewardPoints(attraction.attractionId, user.getUserId());
+                    user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                    this.nbAddReward++;
                 }
             }
         }
+
+         */
+
     }
 
     public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
@@ -109,7 +123,7 @@ public class RewardsService {
         List<Boolean> results = new ArrayList<>();
 
         List<CompletableFuture<Boolean>> calculateRewardsFuture = users.stream()
-                .map(u -> calculateRewardsAsync(u,attractions))
+                .map(u -> calculateRewardsAsync(u, attractions))
                 .collect(Collectors.toList());
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(calculateRewardsFuture
                 .toArray(new CompletableFuture[calculateRewardsFuture.size()]));
