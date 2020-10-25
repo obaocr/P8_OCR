@@ -35,9 +35,6 @@ https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.
 
 https://spring.io
 
-### Documentation : Architecture applicative TourGuide
-
-![UML diagram](/TourGuide/img/Archi_appli_tourguide.JPG)
 
 ### Documentation : Architecture globale
 
