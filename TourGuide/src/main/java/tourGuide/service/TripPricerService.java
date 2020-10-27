@@ -4,7 +4,6 @@ package tourGuide.service;
 import tourGuide.Model.Provider;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface TripPricerService {
 

@@ -18,8 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
- * RewardsService
- * RewardsService
+ * RewardsService service Layer
  */
 
 public class RewardsService {
@@ -62,7 +61,6 @@ public class RewardsService {
                 }
             });
         });
-
     }
 
     public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
@@ -74,7 +72,6 @@ public class RewardsService {
         return distance > proximityBuffer ? false : true;
     }
 
-    // TODO apparemment fait planter si on utiliser dans les tests de perfs !!!!!
     private Integer getRewardPoints(UUID attractionId, UUID userId) {
         // Appel micro service
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId.toString(), userId.toString());
@@ -157,7 +154,6 @@ public class RewardsService {
      * @param user
      * @return List<AttractionResponse> with rewards points
      */
-    // TODO gérer les exceptions, cf. docs
     public List<AttractionResponseDTO> getAllAttractionResponseWithRewardPoint(List<AttractionResponseDTO> attractionResponses, User user) {
         logger.debug("attractionResponses size" + attractionResponses.size());
         List<AttractionResponseDTO> attractionResponsesWithRewardPoint = new ArrayList<>();

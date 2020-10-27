@@ -5,7 +5,7 @@ package tourGuide.helper;
  */
 public class InternalTestHelper {
 
-	private static int internalUserNumber = 1000;
+	private static int internalUserNumber = 10;
 
 	public static void setInternalUserNumber(int internalUserNumber) {
 		InternalTestHelper.internalUserNumber = internalUserNumber;
