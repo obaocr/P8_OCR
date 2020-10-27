@@ -1,6 +1,6 @@
 package tourGuide;
 
-import org.apache.commons.lang3.time.StopWatch;
+import org.apache.commons.lang.time.StopWatch;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +8,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import tourGuide.Model.Attraction;
-import tourGuide.Model.Location;
 import tourGuide.Model.VisitedLocation;
-import tourGuide.Proxies.GpsProxy;
-import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.GpsProxyService;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
@@ -36,7 +33,7 @@ public class TestPerformanceCalcReward {
 
     /**
      * Test de charge pour CalculateReward
-     *  1 "new UserReward" par User est déclenché
+     * 1 "new UserReward" par User est déclenché
      */
     @Disabled("Integration")
     @Test
@@ -49,7 +46,8 @@ public class TestPerformanceCalcReward {
             String email = userName + "@tourGuide.com";
             User user = new User(UUID.randomUUID(), userName, phone, email);
             tourGuideService.addUser(user);
-        };
+        }
+        ;
 
         Attraction attraction = gpsProxyService.gpsAttractions().get(0);
         List<User> allUsers = tourGuideService.getAllUsers();

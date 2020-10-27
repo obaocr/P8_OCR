@@ -2,10 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="GpsApi" target="1.8" />
       <module name="RewardCentral" target="1.5" />
-      <module name="RewardCentralApi" target="1.8" />
-      <module name="TripPricerApi" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -1,6 +1,5 @@
 package tourGuide.service;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * RewardsService
+ * RewardsService service Layer
  */
 
 public class RewardsService {
@@ -58,25 +56,11 @@ public class RewardsService {
                         && nearAttraction(visitedLocation, attraction)){
                     int reward = getRewardPoints(attraction.attractionId, user.getUserId());
                     user.addUserReward(new UserReward(visitedLocation, attraction, reward));
+                    logger.debug("*** addUserReward pour *** " + user.getUserId() + " / " + user.getUserName());
                     this.nbAddReward++;
                 }
             });
         });
-
-        /*
-        for (VisitedLocation visitedLocation : userLocations) {
-            for (Attraction attraction : attractions) {
-                if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0
-                    && nearAttraction(visitedLocation, attraction)){
-                    int reward = getRewardPoints(attraction.attractionId, user.getUserId());
-                    user.addUserReward(new UserReward(visitedLocation, attraction, reward));
-                    this.nbAddReward++;
-                }
-            }
-        }
-
-         */
-
     }
 
     public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
@@ -88,7 +72,6 @@ public class RewardsService {
         return distance > proximityBuffer ? false : true;
     }
 
-    // TODO apparemment fait planter si on utiliser dans les tests de perfs !!!!!
     private Integer getRewardPoints(UUID attractionId, UUID userId) {
         // Appel micro service
         RewardPointsMapper rewardPointsMapper = rewardProxy.getAttractionRewardPoints(attractionId.toString(), userId.toString());
@@ -171,7 +154,6 @@ public class RewardsService {
      * @param user
      * @return List<AttractionResponse> with rewards points
      */
-    // TODO gérer les exceptions, cf. docs
     public List<AttractionResponseDTO> getAllAttractionResponseWithRewardPoint(List<AttractionResponseDTO> attractionResponses, User user) {
         logger.debug("attractionResponses size" + attractionResponses.size());
         List<AttractionResponseDTO> attractionResponsesWithRewardPoint = new ArrayList<>();

@@ -1,5 +1,7 @@
 package tourGuide.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import tourGuide.Model.*;
 import tourGuide.Proxies.GpsProxy;
@@ -12,6 +14,8 @@ import java.util.UUID;
  * Abstraction layer for GpsProxy
  */
 public class GpsProxyServiceImpl implements GpsProxyService {
+
+    private Logger logger = LoggerFactory.getLogger(GpsProxyServiceImpl.class);
 
     @Autowired
     private GpsProxy gpsProxy;

@@ -10,8 +10,6 @@ import javax.money.Monetary;
  */
 public class UserPreferences {
 
-	// TODO OBA, passage en Integer
-
 	private Integer attractionProximity = Integer.MAX_VALUE;
 	private CurrencyUnit currency = Monetary.getCurrency("USD");
 	private Money lowerPricePoint = Money.of(0, currency);
