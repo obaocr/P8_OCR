@@ -1,7 +1,7 @@
 package tourGuide.user;
 
+import tourGuide.Model.Provider;
 import tourGuide.Model.VisitedLocation;
-import tripPricer.Provider;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,12 +41,12 @@ public class User {
 		visitedLocations.add(visitedLocation);
 	}
 
-	// TODO CopyOnWriteArrayList / pour concurrence Thread
+	// CopyOnWriteArrayList / pour concurrence Thread
 	public List<VisitedLocation> getVisitedLocations() {
 		return new CopyOnWriteArrayList(visitedLocations);
 	}
 
-	// TODO CopyOnWriteArrayList / pour concurrence Thread
+	// CopyOnWriteArrayList / pour concurrence Thread
 	public List<UserReward> getUserRewards() {
 		return new CopyOnWriteArrayList(userRewards);
 	}

@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import tourGuide.Model.AttractionResponseDTO;
+import tourGuide.Model.Provider;
 import tourGuide.Model.VisitedLocation;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.util.EntityIllegalArgumentException;
-import tripPricer.Provider;
 
 import java.util.List;
 

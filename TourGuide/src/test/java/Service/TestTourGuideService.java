@@ -11,11 +11,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tourGuide.Model.*;
 import tourGuide.Proxies.GpsProxy;
 import tourGuide.Proxies.RewardProxy;
+import tourGuide.Proxies.TripPricerProxy;
 import tourGuide.helper.InternalTestHelper;
-import tourGuide.service.GpsProxyService;
-import tourGuide.service.GpsProxyServiceImpl;
-import tourGuide.service.RewardsService;
-import tourGuide.service.TourGuideService;
+import tourGuide.service.*;
 import tourGuide.user.User;
 
 import java.util.ArrayList;
@@ -43,6 +41,9 @@ public class TestTourGuideService {
             return new RewardsService();
         }
 
+        @Bean
+        public TripPricerService getTripPricerService() { return new TripPricerServiceImpl(); }
+
     }
 
     @Autowired
@@ -51,11 +52,17 @@ public class TestTourGuideService {
     @Autowired
     private RewardsService rewardsService;
 
+    @Autowired
+    private TripPricerService tripPricerService;
+
     @MockBean
     private GpsProxy gpsProxy;
 
     @MockBean
     private RewardProxy rewardProxy;
+
+    @MockBean
+    private TripPricerProxy tripPricerProxy;
 
     @Test
     public void getUserLocation() {
@@ -75,7 +82,7 @@ public class TestTourGuideService {
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
         InternalTestHelper.setInternalUserNumber(1);
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
 
         User user = tourGuideService.getAllUsers().get(0);
         VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user).get(0);
@@ -101,7 +108,7 @@ public class TestTourGuideService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
         tourGuideService.tracker.stopTracking();
         assertTrue(tourGuideService.getAllUsersCurrentLocation().size() == 55);
     }
@@ -124,7 +131,7 @@ public class TestTourGuideService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
         tourGuideService.addUser(user);
@@ -154,7 +161,7 @@ public class TestTourGuideService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         User user2 = new User(UUID.randomUUID(), "jon2", "000", "jon2@tourGuide.com");
         tourGuideService.addUser(user);
@@ -183,7 +190,7 @@ public class TestTourGuideService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
         User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
         VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user).get(0);
         tourGuideService.tracker.stopTracking();
@@ -210,7 +217,7 @@ public class TestTourGuideService {
         RewardPointsMapper rewardPointsMapper = new RewardPointsMapper(765);
         Mockito.when(rewardProxy.getAttractionRewardPoints(anyString(), anyString())).thenReturn(rewardPointsMapper);
 
-        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService);
+        TourGuideService tourGuideService = new TourGuideService(gpsProxyService, rewardsService,tripPricerService);
         User user = tourGuideService.getAllUsers().get(0);
         List<AttractionResponseDTO> attractionDTOs = tourGuideService.getNearByAttractions(user.getUserName());
         tourGuideService.tracker.stopTracking();
